@@ -1,0 +1,63 @@
+{
+    "services": [
+        {
+            "id": "interoperability",
+            "title": "Interoperability Architecture",
+            "shortTitle": "Interoperability",
+            "icon": "Network",
+            "description": "Designing national Health Information Exchanges (HIE) using HL7 FHIR R4 and OpenHIE standards. We architect systems that enable seamless data exchange between disparate healthcare systems—from primary health centers to tertiary hospitals.",
+            "features": [
+                "HL7 FHIR R4 resource mapping and validation",
+                "OpenHIE-compliant mediator development",
+                "Patient identity matching and MPI integration",
+                "Consent management and data governance frameworks"
+            ],
+            "compliance": [
+                "OpenHIE Architecture",
+                "HL7 FHIR R4",
+                "IHE Profiles"
+            ],
+            "experience": "8+ years designing HIE systems"
+        },
+        {
+            "id": "enterprise",
+            "title": "Enterprise Implementation",
+            "shortTitle": "Implementation",
+            "icon": "Building2",
+            "description": "11+ years of hands-on experience deploying OpenMRS, Bahmni, and Odoo in low-resource settings across Nepal, India, Middle East, and Africa. We specialize in implementations that work offline-first and scale from single clinics to national health programs.",
+            "features": [
+                "OpenMRS 3.x distribution and customization",
+                "Bahmni clinical workflow configuration",
+                "Odoo ERP integration for billing and inventory",
+                "DHIS2 aggregate reporting pipelines"
+            ],
+            "compliance": [
+                "Nepal MoHP Directive 2081",
+                "WHO Digital Health Guidelines"
+            ],
+            "experience": "50+ healthcare facilities deployed"
+        },
+        {
+            "id": "ai-diagnostics",
+            "title": "AI & Diagnostic Intelligence",
+            "shortTitle": "AI Diagnostics",
+            "icon": "Brain",
+            "description": "Integrating predictive models and automated laboratory workflows via LabBridge. Our AI solutions augment clinical decision-making with machine learning models trained on real-world health data from diverse populations.",
+            "features": [
+                "Automated lab result validation and flagging",
+                "Clinical decision support system integration",
+                "Predictive analytics for disease surveillance",
+                "LabBridge bi-directional analyzer integration"
+            ],
+            "compliance": [
+                "ASTM E1381-02",
+                "HL7 LIS2-A2"
+            ],
+            "experience": "12+ analyzer integrations deployed"
+        }
+    ],
+    "metadata": {
+        "version": "1.0.0",
+        "lastUpdated": "2026-01-13"
+    }
+}

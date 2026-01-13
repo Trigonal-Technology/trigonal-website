@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Priority pages for health sector discovery
+# Architecture, Solutions, and Compliance pages
+
+Sitemap: https://trigonal.technology/sitemap.xml

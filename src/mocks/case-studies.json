@@ -1,0 +1,82 @@
+{
+    "data": {
+        "caseStudies": {
+            "nodes": [
+                {
+                    "id": "cs-001",
+                    "title": "Provincial Hospital EMR Rollout",
+                    "slug": "provincial-hospital-emr",
+                    "excerpt": "End-to-end digital transformation of a 500-bed provincial hospital in Nepal.",
+                    "impactMetrics": {
+                        "patientsServed": "120,000+",
+                        "timeToDeployment": "6 weeks",
+                        "uptimePercentage": "99.7%",
+                        "dataPointsDaily": "45,000+"
+                    },
+                    "techStack": [
+                        "OpenMRS",
+                        "Bahmni",
+                        "Docker",
+                        "PostgreSQL",
+                        "Redis"
+                    ],
+                    "compliance": [
+                        "Nepal MoHP Directive 2081",
+                        "HL7 FHIR R4"
+                    ],
+                    "featuredImage": null,
+                    "date": "2024-03-15"
+                },
+                {
+                    "id": "cs-002",
+                    "title": "National DHIS2 Integration",
+                    "slug": "national-dhis2-integration",
+                    "excerpt": "Connecting 45 district health offices to a centralized reporting system.",
+                    "impactMetrics": {
+                        "facilitiesConnected": "45",
+                        "reportingAccuracy": "98.5%",
+                        "timeToDeployment": "12 weeks",
+                        "monthlyReports": "2,500+"
+                    },
+                    "techStack": [
+                        "DHIS2",
+                        "OpenHIE",
+                        "Apache Kafka",
+                        "PostgreSQL"
+                    ],
+                    "compliance": [
+                        "WHO Digital Health Guidelines",
+                        "OpenHIE Architecture"
+                    ],
+                    "featuredImage": null,
+                    "date": "2024-01-20"
+                },
+                {
+                    "id": "cs-003",
+                    "title": "Laboratory Information System Modernization",
+                    "slug": "lis-modernization",
+                    "excerpt": "Upgrading legacy LIS to OpenELIS with FHIR-compliant interoperability.",
+                    "impactMetrics": {
+                        "testsProcessedDaily": "1,200+",
+                        "resultTurnaround": "-40%",
+                        "errorReduction": "85%",
+                        "integrationPoints": "12"
+                    },
+                    "techStack": [
+                        "OpenELIS",
+                        "LabBridge",
+                        "HL7 FHIR",
+                        "Docker"
+                    ],
+                    "compliance": [
+                        "ISO 15189",
+                        "HL7 FHIR R4",
+                        "Nepal MoHP Directive 2081"
+                    ],
+                    "featuredImage": null,
+                    "date": "2023-11-10"
+                }
+            ]
+        }
+    }
+}
