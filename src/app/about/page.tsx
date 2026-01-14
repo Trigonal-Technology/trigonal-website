@@ -29,7 +29,10 @@ export const metadata: Metadata = {
 export default function AboutPage() {
     return (
         <>
-            <ManifestoHero />
+            <ManifestoHero
+                headline="Architecting Sovereignty."
+                subheadline="Synthesizing over a decade of domain mastery to build the digital nervous system of the Global South."
+            />
             <FounderManifesto />
             <SeniorEngineeringUnit />
             <TechnicalTimeline />

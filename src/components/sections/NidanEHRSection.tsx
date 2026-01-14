@@ -60,7 +60,7 @@ export function NidanEHRSection() {
                             </p>
 
                             <p className="text-white/70 leading-relaxed mb-8">
-                                NidanEHR integrates clinical workflows, laboratory systems, imaging, billing, and health analytics into a single, modular platform—designed for diverse healthcare systems from rural clinics to national health programs.
+                                NidanEHR integrates clinical workflows, laboratory systems, imaging, billing, and health analytics into a single, modular platform-designed for diverse healthcare systems from rural clinics to national health programs.
                             </p>
 
                             {/* CTA Buttons */}

@@ -45,7 +45,7 @@ export default function ConsultPage() {
                         </h1>
                         <p className="text-xl text-foreground/70 leading-relaxed">
                             Share your project requirements and an architect will review your technical brief
-                            within 24 hours. No sales pitches—just engineering-focused consultation.
+                            within 24 hours. No sales pitches-just engineering-focused consultation.
                         </p>
                     </div>
 

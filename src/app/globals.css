@@ -10,8 +10,6 @@
   --color-blueprint-line: #CBD5E1;
   --color-precision-blue: #1E4E9B;
   --color-execution-orange: #D97706;
-  --color-background: var(--color-blueprint-gray);
-  --color-foreground: #1E293B;
 
   /* Typography */
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
@@ -22,14 +20,108 @@
 }
 
 /* ===================================================
-   Blueprint Grid Background (subtle 0.1 opacity)
+   Theme-Specific CSS Variables
    =================================================== */
-.bg-blueprint-grid {
+
+/* ===================================================
+   LIGHT MODE: The Engineering Blueprint
+   =================================================== */
+:root,
+html.light {
+  /* Core Colors */
+  --color-background: #FFFFFF;
+  --color-foreground: #0F172A;
+  --color-surface: #F8FAFC;
+  --color-surface-hover: #F1F5F9;
+  --color-border: #E2E8F0;
+  --color-border-hover: #CBD5E1;
+  
+  /* Typography */
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #64748B;
+  
+  /* Grid & Diagrams */
+  --color-grid: #F1F5F9;
+  --color-grid-opacity: 1;
+  --color-diagram-stroke: #000000;
+  --color-diagram-fill: #FFFFFF;
+  --color-diagram-glow: transparent;
+  
+  /* Spine */
+  --color-spine: #1E4E9B;
+  --color-spine-glow: rgba(30, 78, 155, 0.2);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+/* ===================================================
+   DARK MODE: The Neural Command Center
+   =================================================== */
+html.dark {
+  /* Core Colors - Deep Midnight */
+  --color-background: #020617;
+  --color-foreground: #E2E8F0;
+  --color-surface: #0F172A;
+  --color-surface-hover: #1E293B;
+  --color-border: #1E293B;
+  --color-border-hover: #334155;
+  
+  /* Typography - High Contrast */
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #CBD5E1;
+  --color-text-tertiary: #94A3B8;
+  
+  /* Grid & Diagrams - Neural Mesh */
+  --color-grid: rgba(30, 78, 155, 0.15);
+  --color-grid-opacity: 0.15;
+  --color-diagram-stroke: #1E4E9B;
+  --color-diagram-fill: transparent;
+  --color-diagram-glow: rgba(30, 78, 155, 0.6);
+  
+  /* Spine - Glowing Neon */
+  --color-spine: #D97706;
+  --color-spine-glow: rgba(217, 119, 6, 0.8);
+  
+  /* Shadows - Glowing */
+  --shadow-sm: 0 0 10px rgba(30, 78, 155, 0.3);
+  --shadow-md: 0 0 20px rgba(30, 78, 155, 0.5);
+}
+
+/* ===================================================
+   Apply Theme to Body & Main Elements
+   =================================================== */
+html.light body,
+html body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Dark mode body styling removed */
+
+/* ===================================================
+   FORCED LIGHT MODE: Blueprint Grid (Engineering Drawing)
+   =================================================== */
+html,
+html body {
+  background-color: #F8FAFC; /* Slate-50 Blueprint Base */
   background-image:
-    linear-gradient(rgba(203, 213, 225, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(203, 213, 225, 0.1) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: -1px -1px;
+    linear-gradient(to right, #E2E8F0 1px, transparent 1px), /* Slate-200 */
+    linear-gradient(to bottom, #E2E8F0 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: center center;
+}
+
+/* ===================================================
+   DARK MODE: REMOVED - Light Blueprint Mode Only
+   =================================================== */
+/* Dark mode removed to enforce consistent Blueprint aesthetic */
+
+/* Legacy support for bg-blueprint-grid class */
+.bg-blueprint-grid {
+  background: transparent;
 }
 
 /* ===================================================
@@ -41,17 +133,25 @@
 }
 
 /* ===================================================
-   Base Styles
+   Base Styles (Theme-Adaptive)
    =================================================== */
 body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Theme Transition */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
 }
 
 /* ===================================================

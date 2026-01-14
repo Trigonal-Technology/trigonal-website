@@ -5,7 +5,7 @@
             "title": "Interoperability Architecture",
             "shortTitle": "Interoperability",
             "icon": "Network",
-            "description": "Designing national Health Information Exchanges (HIE) using HL7 FHIR R4 and OpenHIE standards. We architect systems that enable seamless data exchange between disparate healthcare systems—from primary health centers to tertiary hospitals.",
+            "description": "Designing national Health Information Exchanges (HIE) using HL7 FHIR R4 and OpenHIE standards. We architect systems that enable seamless data exchange between disparate healthcare systems-from primary health centers to tertiary hospitals.",
             "features": [
                 "HL7 FHIR R4 resource mapping and validation",
                 "OpenHIE-compliant mediator development",

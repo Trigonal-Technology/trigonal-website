@@ -1,71 +1,120 @@
-import Link from 'next/link'
-import NetworkMapSVG from '@/components/sections/Hero/NetworkMapSVG'
+'use client';
+
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { SovereignDataFlow } from './SovereignDataFlow';
+import { Briefcase, Globe } from 'lucide-react';
 
 export function Hero() {
     return (
-        <section className="relative bg-blueprint-grid bg-blueprint-gray overflow-hidden">
-            {/* Decorative elements */}
+        <section className="relative bg-white overflow-hidden">
+            {/* Blueprint Grid Background */}
+            <div
+                className="absolute inset-0 opacity-20 pointer-events-none"
+                style={{
+                    backgroundImage: `
+                        linear-gradient(to right, rgba(226, 232, 240, 0.3) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(226, 232, 240, 0.3) 1px, transparent 1px)
+                    `,
+                    backgroundSize: '24px 24px'
+                }}
+            />
+
+            {/* Decorative radial gradients */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute -top-24 -right-24 w-96 h-96 bg-precision-blue/5 rounded-full blur-3xl" />
                 <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-execution-orange/5 rounded-full blur-3xl" />
             </div>
 
-            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                     {/* Left Content */}
-                    <div>
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                            <span className="text-precision-blue">Architecting</span>{' '}
-                            <span className="text-foreground">the Future of</span>
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6 }}
+                    >
+
+                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-4">
+                            A Digital Health
                             <br />
-                            <span className="text-execution-orange">Global Health Infrastructure.</span>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-precision-blue via-execution-orange to-emerald-500">
+                                Engineering Firm
+                            </span>
                         </h1>
 
-                        <p className="mt-6 text-lg text-foreground/70 max-w-xl">
-                            We design interoperable digital health systems used by hospitals, clinics, and public health programs worldwide. AI-Powered. Precision-Built. Health-Engineered.
+                        {/* Primary Tagline */}
+                        <p className="text-xl font-mono text-precision-blue mb-6">
+                            AI-Powered. Precision-Built. Health-Engineered.
                         </p>
 
-                        <div className="mt-8 flex flex-wrap gap-4">
-                            <Link href="/nidanehr" className="btn-primary">
-                                Explore NidanEHR
-                            </Link>
-                            <Link href="/architecture" className="btn-secondary">
+                        <p className="text-lg text-slate-600 max-w-xl mb-8">
+                            We architect sovereign digital health ecosystems for hospitals, national health programs, and global development organizations. From OpenHIE interoperability to offline-first mobile health—engineered for scale, compliance, and zero vendor lock-in.
+                        </p>
+
+                        {/* Key Credentials */}
+                        <div className="flex flex-wrap gap-4 mb-8">
+                            <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg">
+                                <Briefcase className="w-4 h-4 text-precision-blue" />
+                                <span className="text-sm font-mono text-slate-700">
+                                    Health Solution Architects
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg">
+                                <Globe className="w-4 h-4 text-execution-orange" />
+                                <span className="text-sm font-mono text-slate-700">
+                                    Venevital • LafiaHMS
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* CTAs */}
+                        <div className="flex flex-wrap gap-4">
+                            <Link href="/architecture" className="btn-primary">
                                 View System Architecture
+                            </Link>
+                            <Link href="/consult" className="btn-secondary">
+                                Consult an Architect
                             </Link>
                         </div>
 
                         {/* Trust indicators */}
                         <div className="mt-12 pt-8 border-t border-slate-200">
-                            <p className="text-sm text-foreground/50 mb-3 uppercase tracking-wider">
-                                Built on global open standards
+                            <p className="text-xs text-slate-500 mb-3 uppercase tracking-wider font-mono">
+                                CORE_TECHNOLOGIES
                             </p>
-                            <div className="flex flex-wrap items-center gap-6 text-foreground/60">
-                                <span className="font-semibold">Bahmni</span>
-                                <span className="font-semibold">OpenMRS</span>
-                                <span className="font-semibold">OpenELIS</span>
-                                <span className="font-semibold">Odoo</span>
-                                <span className="font-semibold">DHIS2</span>
-                                <span className="font-mono text-sm">HL7 FHIR</span>
+                            <div className="flex flex-wrap items-center gap-4 text-slate-600 text-sm">
+                                <span className="font-mono">OpenMRS</span>
+                                <span className="font-mono">Bahmni</span>
+                                <span className="font-mono">Odoo</span>
+                                <span className="font-mono">LabBridge</span>
+                                <span className="font-mono">DHIS2</span>
+                                <span className="font-mono text-precision-blue">HL7_FHIR_R4</span>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    {/* Right Content - Network Map SVG */}
-                    <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-br from-precision-blue/10 to-transparent rounded-3xl transform rotate-2 scale-105" />
-                        <div className="relative bg-white rounded-2xl p-6 shadow-xl border border-slate-200">
-                            <NetworkMapSVG />
-                            {/* Caption */}
-                            <div className="mt-4 text-center">
-                                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-precision-blue/10 text-precision-blue text-xs font-mono rounded-full">
-                                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                                    Interoperable Health Exchange Architecture
-                                </span>
-                            </div>
+                    {/* Right Content - Live Sovereign Data Flow */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="relative"
+                    >
+                        <SovereignDataFlow />
+
+                        {/* Caption */}
+                        <div className="mt-6 text-center">
+                            <p className="text-sm font-mono text-slate-600">
+                                Live Sovereign Data Flow Visualization
+                            </p>
+                            <p className="text-xs text-slate-500 mt-1">
+                                OpenHIE-compliant architecture for national health exchanges
+                            </p>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>
-    )
+    );
 }

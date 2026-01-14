@@ -36,8 +36,12 @@ export function NidanDashboardMockup() {
                 <div className="flex">
                     {/* Sidebar */}
                     <div className="w-14 bg-slate-800 py-4 flex flex-col items-center gap-4">
-                        <div className="w-8 h-8 bg-execution-orange rounded-lg flex items-center justify-center">
-                            <Activity className="w-4 h-4 text-white" />
+                        <div className="w-8 h-8 relative p-1">
+                            <img
+                                src="/logos/trigonal.webp"
+                                alt="Trigonal"
+                                className="w-full h-full object-contain brightness-0 invert"
+                            />
                         </div>
                         <div className="flex flex-col gap-3 mt-2">
                             <SidebarIcon icon={LayoutDashboard} active />

@@ -57,7 +57,7 @@ export function GlobalFootprintMap() {
                         The Global Footprint
                     </h2>
                     <p className="mt-4 text-foreground/60 max-w-2xl mx-auto">
-                        Architecting health systems across continents—from Kathmandu to Kampala.
+                        Architecting health systems across continents-from Kathmandu to Kampala.
                     </p>
                 </div>
 

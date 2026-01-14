@@ -1,6 +1,6 @@
 import { User } from 'lucide-react'
 
-export function ManifestoHero() {
+export function ManifestoHero({ headline, subheadline }: { headline?: string; subheadline?: string }) {
     return (
         <section className="py-24 bg-blueprint-gray bg-blueprint-grid">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,7 +12,7 @@ export function ManifestoHero() {
                         </p>
 
                         <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-8 leading-tight">
-                            Global Digital Health <span className="text-precision-blue">Engineering</span> & Architecture
+                            {headline || "Global Digital Health Engineering & Architecture"}
                         </h1>
 
                         <div className="space-y-6 text-lg text-foreground/70 leading-relaxed">
@@ -21,27 +21,27 @@ export function ManifestoHero() {
                             </p>
 
                             <p>
-                                Since our founder entered the digital health domain in <span className="font-mono text-precision-blue">2017</span>, we have focused on building systems that don&apos;t just collect data, but <span className="font-bold text-foreground">save lives through technical excellence</span>.
+                                {subheadline || "Synthesizing over a decade of domain mastery to build the digital nervous system of the Global South."}
                             </p>
 
                             <p>
-                                With <span className="font-bold text-execution-orange">60+ years of combined senior experience</span>, Trigonal is no longer a startup, it is an <span className="font-bold text-foreground">Elite Engineering Unit</span> delivering open-source EHR implementation and interoperability architecture across the Global South.
+                                With <span className="font-bold text-execution-orange">12+ Years Avg. Seniority</span> per Architect, Trigonal is an <span className="font-bold text-foreground">Elite Engineering Unit</span> delivering open-source EHR implementation and interoperability architecture across the Global South.
                             </p>
                         </div>
 
                         {/* Key stats */}
                         <div className="mt-10 grid grid-cols-3 gap-6">
                             <div className="text-center">
-                                <p className="text-3xl font-bold text-precision-blue font-mono">60+</p>
-                                <p className="text-sm text-foreground/60">Years Combined Experience</p>
+                                <p className="text-3xl font-bold text-precision-blue font-mono">12+</p>
+                                <p className="text-sm text-foreground/60">Years Avg. Seniority</p>
                             </div>
                             <div className="text-center">
-                                <p className="text-3xl font-bold text-execution-orange font-mono">6</p>
-                                <p className="text-sm text-foreground/60">Senior Architects</p>
+                                <p className="text-3xl font-bold text-execution-orange font-mono">8</p>
+                                <p className="text-sm text-foreground/60">Years Health Mastery</p>
                             </div>
                             <div className="text-center">
-                                <p className="text-3xl font-bold text-precision-blue font-mono">5</p>
-                                <p className="text-sm text-foreground/60">Continents</p>
+                                <p className="text-3xl font-bold text-precision-blue font-mono">6</p>
+                                <p className="text-sm text-foreground/60">Elite Architects</p>
                             </div>
                         </div>
                     </div>

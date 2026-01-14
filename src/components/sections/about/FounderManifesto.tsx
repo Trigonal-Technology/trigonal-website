@@ -17,7 +17,7 @@ export function FounderManifesto() {
 
                         <div className="space-y-6 text-xl text-foreground/80 leading-relaxed font-light">
                             <p>
-                                &quot;At Trigonal, <span className="font-bold text-foreground">Engineering Integrity</span> means building systems that don&apos;t just work—they work under pressure, at scale, and for decades. Every line of code, every architecture decision, and every integration must withstand the demands of real-world healthcare operations.
+                                &quot;At Trigonal, <span className="font-bold text-foreground">Engineering Integrity</span> means building systems that don&apos;t just work-they work under pressure, at scale, and for decades. Every line of code, every architecture decision, and every integration must withstand the demands of real-world healthcare operations.
                             </p>
 
                             <p>

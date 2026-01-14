@@ -21,7 +21,7 @@ export function ExpertiseSection() {
                         Engineering Health Infrastructure at Scale
                     </h2>
                     <p className="text-foreground/60 leading-relaxed">
-                        We specialize in three core domains that together enable comprehensive digital health transformation—from architecture design to production deployment.
+                        We specialize in three core domains that together enable comprehensive digital health transformation-from architecture design to production deployment.
                     </p>
                 </div>
 

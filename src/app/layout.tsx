@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AIConcierge } from "@/components/layout/AIConcierge";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -50,8 +51,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="antialiased min-h-screen flex flex-col">
+    <html lang="en" className={`light ${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Force Light Mode - Clear any dark mode preferences
+              document.documentElement.classList.remove('dark');
+              document.documentElement.classList.add('light');
+              localStorage.removeItem('theme');
+              localStorage.removeItem('trigonal-theme');
+            `,
+          }}
+        />
+      </head>
+      <body className="antialiased min-h-screen flex flex-col bg-white">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

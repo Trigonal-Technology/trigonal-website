@@ -105,8 +105,7 @@ export function SeniorEngineeringUnit() {
                         The Senior Engineering Unit
                     </h2>
                     <p className="mt-4 text-foreground/60 max-w-3xl mx-auto">
-                        60+ years of combined engineering mastery in software development,
-                        digital health systems, and global health infrastructure.
+                        Architectural seniority meets healthcare domain mastery.
                     </p>
                 </div>
 
@@ -198,18 +197,18 @@ export function SeniorEngineeringUnit() {
                 <div className="mt-16 text-center">
                     <div className="inline-flex flex-wrap items-center justify-center gap-6 sm:gap-8 px-8 py-6 bg-white rounded-2xl border border-slate-200 shadow-sm">
                         <div className="text-center px-4">
-                            <span className="text-3xl font-bold font-mono text-precision-blue">60+</span>
-                            <p className="text-xs text-foreground/60 mt-1">Combined Years</p>
+                            <span className="text-3xl font-bold font-mono text-precision-blue whitespace-nowrap">12+ Years</span>
+                            <p className="text-xs text-foreground/60 mt-1">Avg. Seniority</p>
                         </div>
                         <div className="w-px h-12 bg-slate-200 hidden sm:block" />
                         <div className="text-center px-4">
-                            <span className="text-3xl font-bold font-mono text-execution-orange">6</span>
-                            <p className="text-xs text-foreground/60 mt-1">Senior Engineers</p>
+                            <span className="text-3xl font-bold font-mono text-execution-orange whitespace-nowrap">8 Years</span>
+                            <p className="text-xs text-foreground/60 mt-1">Domain Mastery</p>
                         </div>
                         <div className="w-px h-12 bg-slate-200 hidden sm:block" />
                         <div className="text-center px-4">
-                            <span className="text-3xl font-bold font-mono text-precision-blue">5</span>
-                            <p className="text-xs text-foreground/60 mt-1">Continents</p>
+                            <span className="text-3xl font-bold font-mono text-precision-blue">6</span>
+                            <p className="text-xs text-foreground/60 mt-1">Senior Architects</p>
                         </div>
                         <div className="w-px h-12 bg-slate-200 hidden sm:block" />
                         <div className="flex items-center gap-2 px-4">

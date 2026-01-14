@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Database, Activity, Beaker, Smartphone, Brain, Shield, Server, Cpu, BadgeCheck, Terminal } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { AnimatedSyncHub } from './AnimatedSyncHub';
 import {
     LabBridgeBlueprint,
     DigitalBrainBlueprint,
@@ -20,7 +21,7 @@ const layers = [
         label: 'The Interoperable Spine',
         icon: Database,
         color: '#1E4E9B',
-        mechanicalStory: 'The Data Highway. We architect National Health Information Exchanges (HIE) using OpenHIE standards and FHIR R4 resource mapping—ensuring every clinical event is recorded exactly once across the sovereign grid.',
+        mechanicalStory: 'The Data Highway. We architect National Health Information Exchanges (HIE) using OpenHIE standards and FHIR R4 resource mapping-ensuring every clinical event is recorded exactly once across the sovereign grid.',
         techDNA: ['OpenHIE Architecture', 'FHIR R4 Native Mapping', 'Health Info Mediators (HIM)', 'TLS 1.3 Transport Security'],
         protocol: 'FHIR R4 • OpenHIE • IHE',
         compliance: 'Nepal MoHP Directive 2081',
@@ -34,7 +35,7 @@ const layers = [
         label: 'Integrated Hospital OS',
         icon: Activity,
         color: '#D97706',
-        mechanicalStory: 'Closing the Revenue Gap. Our 12+ years of Odoo engineering prevent revenue leaks through real-time EHR synchronization. Every drug dispensed, every test ordered, every procedure performed—automatically captured in the financial layer with zero manual entry.',
+        mechanicalStory: 'Closing the Revenue Gap. Our 12+ years of Odoo engineering prevent revenue leaks through real-time EHR synchronization. Every drug dispensed, every test ordered, every procedure performed-automatically captured in the financial layer with zero manual entry.',
         techDNA: ['OpenMRS Clinical Events', 'Odoo 18 ERP Integration', 'Bahmni Clinical Workflows', 'PostgreSQL Replication'],
         protocol: 'REST API • OAuth 2.0',
         compliance: 'IRD Tax Compliant (Nepal)',
@@ -47,7 +48,7 @@ const layers = [
         layerNum: '03',
         label: 'LabBridge Automation',
         icon: Beaker,
-        color: '#EF4444',
+        color: '#1E4E9B',
         mechanicalStory: 'Zero-Error Diagnostics. Manual lab transcription is the silent killer of diagnostic accuracy. Our HL7/ASTM middleware connects analyzers (CBC, Chemistry, PCR) directly to the LIS (OpenELIS/SENAITE), achieving 0% transcription error and ISO 15189 compliance.',
         techDNA: ['HL7 v2.x / ASTM 1394 Parsers', 'Serial/TCP Analyzer Drivers', 'OpenELIS / SENAITE Integration', 'Real-time Result Validation'],
         protocol: 'HL7 v2.x • ASTM 1394',
@@ -126,7 +127,7 @@ export function VerticalNervousSystem({ onOpenConsult }: VerticalNervousSystemPr
     return (
         <div ref={containerRef} className="relative bg-white">
             {/* === THE SPINE === */}
-            <div className="fixed left-1/2 top-0 bottom-0 w-1 z-10 pointer-events-none hidden lg:block" ref={spineRef}>
+            <div className="absolute left-1/2 w-1 z-10 pointer-events-none hidden lg:block" ref={spineRef} style={{ top: '100vh', height: 'calc(100% - 100vh - 600px)' }}>
                 {/* The Glowing Spine Line */}
                 <motion.div
                     className="absolute left-0 w-full bg-gradient-to-b from-execution-orange via-precision-blue to-execution-orange"
@@ -159,46 +160,16 @@ export function VerticalNervousSystem({ onOpenConsult }: VerticalNervousSystemPr
                 ))}
             </div>
 
-            {/* === SYNC HUB (Top Section) === */}
-            <section className="relative min-h-screen flex items-center justify-center bg-slate-950 overflow-hidden">
-                <div className="absolute inset-0 bg-blueprint-grid opacity-5" />
+            {/* === ANIMATED SYNC HUB (Hero) === */}
+            <AnimatedSyncHub onOpenConsult={onOpenConsult} />
 
-                <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1 }}
-                    >
-                        <img src="/favicon.svg" className="w-24 h-24 mx-auto mb-8 opacity-90" alt="Trigonal" />
-                        <h1 className="text-6xl font-bold text-white mb-6 font-mono tracking-tight">
-                            THE SYNC HUB
-                        </h1>
-                        <p className="text-xl text-slate-300 mb-4 leading-relaxed">
-                            The Digital Nervous System of Sovereign Health
-                        </p>
-                        <p className="text-sm text-slate-500 font-mono uppercase tracking-widest">
-                            60+ Years Combined Engineering • 5 Architectural Layers • Zero Vendor Lock-In
-                        </p>
-                    </motion.div>
-
-                    {/* Scroll Indicator */}
-                    <motion.div
-                        className="absolute bottom-20 left-1/2 -translate-x-1/2"
-                        animate={{ y: [0, 10, 0] }}
-                        transition={{ repeat: Infinity, duration: 2 }}
-                    >
-                        <div className="w-px h-20 bg-gradient-to-b from-transparent via-execution-orange to-transparent" />
-                    </motion.div>
-                </div>
-
-                {/* Floating Console Trigger */}
-                <button
-                    onClick={() => setConsoleExpanded(!consoleExpanded)}
-                    className="fixed top-24 right-8 z-50 bg-slate-900 text-white p-3 rounded-lg shadow-2xl border border-precision-blue hover:bg-slate-800 transition-all"
-                >
-                    <Terminal className="w-5 h-5" />
-                </button>
-            </section>
+            {/* Floating Console Trigger */}
+            <button
+                onClick={() => setConsoleExpanded(!consoleExpanded)}
+                className="fixed top-24 right-8 z-50 bg-slate-900 text-white p-3 rounded-lg shadow-2xl border border-precision-blue hover:bg-slate-800 transition-all"
+            >
+                <Terminal className="w-5 h-5" />
+            </button>
 
             {/* === PERSISTENT ARCHITECTURE CONSOLE === */}
             <AnimatePresence>
@@ -407,8 +378,8 @@ export function VerticalNervousSystem({ onOpenConsult }: VerticalNervousSystemPr
                     <h2 className="text-5xl font-bold text-white mb-8 leading-tight">
                         Ready to Architect Your<br />Sovereign Health Infrastructure?
                     </h2>
-                    <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-                        Join the global grid of sovereign health systems. Our elite engineering team (60+ years combined experience) is ready to audit your infrastructure against Nepal Directive 2081 and global interoperability standards.
+                    <p className="text-xl text-slate-400 font-mono mb-12 max-w-3xl mx-auto leading-relaxed">
+                        Synthesized insights from over a decade of architecting global health infrastructure across four continents.
                     </p>
                     <button
                         onClick={onOpenConsult}

@@ -17,7 +17,7 @@ const footerLinks = {
         { href: '/security', label: 'Security Policy' },
     ],
     Company: [
-        { href: '/company', label: 'About Us' },
+        { href: '/about', label: 'About Us' },
         { href: '/open-source', label: 'Open Source' },
     ],
 }
@@ -30,7 +30,13 @@ export function Footer() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="py-10 flex flex-col md:flex-row items-center justify-between gap-6">
                         <div className="flex items-center gap-3">
-                            <Flame className="w-8 h-8 text-execution-orange fill-execution-orange animate-pulse" />
+                            <div className="w-8 h-8 relative">
+                                <img
+                                    src="/logos/trigonal.webp"
+                                    alt="FIRE"
+                                    className="w-full h-full object-contain brightness-0 invert"
+                                />
+                            </div>
                             <span className="text-xl font-bold tracking-wide">
                                 TRIGONAL: We BUILD with FIRE.
                             </span>
@@ -62,14 +68,12 @@ export function Footer() {
                     {/* Company Info */}
                     <div className="col-span-2 md:col-span-1">
                         <div className="flex items-center gap-2 mb-4">
-                            <div className="w-10 h-10">
-                                <svg viewBox="0 0 32 32" className="w-full h-full fill-none stroke-execution-orange stroke-[1.5]">
-                                    <path d="M16 4L28 26H4L16 4Z" />
-                                    <circle cx="16" cy="4" r="1.5" className="fill-execution-orange" />
-                                    <circle cx="28" cy="26" r="1.5" className="fill-execution-orange" />
-                                    <circle cx="4" cy="26" r="1.5" className="fill-execution-orange" />
-                                    <path d="M16 4V14M4 26L12 20M28 26L20 20" strokeOpacity="0.5" />
-                                </svg>
+                            <div className="w-10 h-10 relative">
+                                <img
+                                    src="/logos/trigonal.webp"
+                                    alt="Trigonal Technology"
+                                    className="w-full h-full object-contain"
+                                />
                             </div>
                             <span className="font-bold text-xl text-precision-blue">TRIGONAL</span>
                         </div>
@@ -77,7 +81,7 @@ export function Footer() {
                             Trigonal Technology Pvt. Ltd.
                         </p>
                         <p className="text-sm text-foreground/60">
-                            Pioneering interoperable digital health systems across Nepal, India, Middle East, and Africa since 2019.
+                            Pioneering interoperable digital health systems across Nepal, India, Middle East, and Africa since 2022.
                         </p>
                         <div className="flex gap-4 mt-6 text-xs text-foreground/60">
                             <Link href="/privacy" className="hover:text-foreground transition-colors">
