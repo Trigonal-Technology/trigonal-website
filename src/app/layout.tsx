@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AIConcierge } from "@/components/layout/AIConcierge";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { TrigonalLoader } from "@/components/layout/TrigonalLoader";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -66,6 +67,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased min-h-screen flex flex-col bg-white">
+        <TrigonalLoader durationMs={3000} />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

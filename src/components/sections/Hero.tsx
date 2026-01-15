@@ -73,7 +73,7 @@ export function Hero() {
                             <Link href="/architecture" className="btn-primary">
                                 View System Architecture
                             </Link>
-                            <Link href="/consult" className="btn-secondary">
+                            <Link href="/#consult-console" className="btn-secondary">
                                 Consult an Architect
                             </Link>
                         </div>

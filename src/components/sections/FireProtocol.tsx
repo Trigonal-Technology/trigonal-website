@@ -150,7 +150,7 @@ export function FireProtocol() {
                                 </motion.div>
                             );
                         })}
-                    </div>
+                </div>
                 </motion.div>
 
                 {/* Culture Grid - FIRE Values */}
@@ -194,8 +194,8 @@ export function FireProtocol() {
                                         </p>
                                     </div>
                                     <span className="font-mono text-xs text-white/30">
-                                        0{index + 1}
-                                    </span>
+                                    0{index + 1}
+                                </span>
                                 </div>
                                 
                                 {/* Practical Example */}
@@ -228,8 +228,8 @@ export function FireProtocol() {
                         </p>
                         <p className="text-sm text-white/60 mt-3 font-mono">
                             The foundation of every line of code we ship.
-                        </p>
-                    </div>
+                    </p>
+                </div>
                 </motion.div>
             </div>
         </section>

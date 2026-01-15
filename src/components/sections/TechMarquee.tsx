@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { motion, AnimatePresence, useAnimationFrame, useMotionValue } from 'framer-motion';
+import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Tech stack with technical DNA, architectural layer, and specs
 const techStack = [
@@ -82,8 +82,8 @@ const techStack = [
         dna: 'Enterprise ERP for hospital billing, inventory, and financial management.',
         archLayer: 'Fiscal',
         domain: 'FISCAL_ENGINE',
-        spec: 'ODOO_18',
-        use: 'REVENUE_LEAKAGE_PREVENTION',
+        spec: 'ERP_SYNC',
+        use: 'REVENUE_INTEGRITY',
         link: 'https://www.odoo.com/documentation/19.0/'
     },
     {
@@ -158,7 +158,7 @@ const techStack = [
     },
     {
         name: 'SORMAS',
-        logo: '/logos/sormas.svg',
+        logo: '/logos/sormas.png',
         dna: 'Surveillance Outbreak Response Management & Analysis System for epidemic management.',
         archLayer: 'Intelligence',
         domain: 'EPIDEMIOLOGY',
@@ -172,180 +172,200 @@ export function TechMarquee() {
     const [hoveredTech, setHoveredTech] = useState<string | null>(null);
     const [isPaused, setIsPaused] = useState(false);
     const [popoverPosition, setPopoverPosition] = useState<{ x: number; y: number; placement: 'top' | 'bottom' } | null>(null);
+    const x = useMotionValue(0);
+    const cycleWidth = 2816;
 
     const hoveredTechData = techStack.find(t => t.name === hoveredTech);
 
     // Triple the array for seamless infinite loop
     const duplicatedTechStack = [...techStack, ...techStack, ...techStack];
 
+    useAnimationFrame((_, delta) => {
+        if (isPaused) return;
+        const next = x.get() - delta * 0.03;
+        x.set(next <= -cycleWidth ? 0 : next);
+    });
+
     return (
         <section className="relative py-12 bg-white border-y border-slate-200">
-            {/* Label */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-                <p className="text-xs font-mono uppercase tracking-wider text-slate-500 text-center">
-                    Built on global open standards
-                </p>
-            </div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            {/* Continuous Marquee Wrapper */}
-            <div className="relative overflow-hidden mb-32">
-                <motion.div
-                    className="flex gap-12 items-center whitespace-nowrap py-4"
-                    animate={isPaused ? {} : {
-                        x: [0, -2816] // Total width to translate (16 items × 176px)
-                    }}
-                    transition={isPaused ? {} : {
-                        duration: 60,
-                        repeat: Infinity,
-                        repeatType: "loop",
-                        ease: "linear"
-                    }}
-                >
-                    {duplicatedTechStack.map((tech, idx) => (
-                        <a
-                            key={`${tech.name}-${idx}`}
-                            href={tech.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-shrink-0 relative group"
-                            onMouseEnter={(event) => {
-                                const rect = event.currentTarget.getBoundingClientRect();
-                                const centerX = rect.left + rect.width / 2;
-                                const centerY = rect.top + rect.height / 2;
-                                const viewportWidth = window.innerWidth;
-                                const viewportHeight = window.innerHeight;
-                                const maxPopoverHalf = Math.min(192, viewportWidth / 2 - 16);
-                                const clampedX = Math.max(16 + maxPopoverHalf, Math.min(centerX, viewportWidth - 16 - maxPopoverHalf));
-                                const placement = centerY > viewportHeight * 0.6 ? 'top' : 'bottom';
 
-                                setHoveredTech(tech.name);
-                                setPopoverPosition({
-                                    x: clampedX,
-                                    y: centerY,
-                                    placement
-                                });
-                                setIsPaused(true);
-                            }}
-                            onMouseLeave={() => {
-                                setHoveredTech(null);
-                                setPopoverPosition(null);
-                                setIsPaused(false);
-                            }}
-                        >
-                            <motion.div 
-                                className="w-32 h-20 flex items-center justify-center p-4 rounded-lg cursor-pointer border border-transparent hover:border-slate-200 hover:shadow-md"
-                                animate={{
-                                    scale: hoveredTech === tech.name ? 1.1 : 1,
-                                    backgroundColor: hoveredTech === tech.name 
-                                        ? 'rgb(248 250 252)' // slate-50
-                                        : 'rgba(255, 255, 255, 0)' // transparent
-                                }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <img
-                                    src={tech.logo}
-                                    alt={tech.name}
-                                    className="max-w-full max-h-full object-contain transition-opacity duration-300"
-                                    style={{
-                                        opacity: hoveredTech === tech.name ? 1 : 0.8
-                                    }}
-                                />
-                            </motion.div>
-                        </a>
-                    ))}
-                </motion.div>
+                {/* Continuous Marquee Wrapper with Floating Arrows */}
+                <div className="relative group/marquee">
+                    {/* Left Floating Arrow */}
+                    <button
+                        type="button"
+                        onClick={() => x.set(x.get() + 240)}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-3 rounded-full shadow-lg border border-slate-200 hover:bg-white cursor-pointer z-20 opacity-0 group-hover/marquee:opacity-100 transition-opacity duration-300"
+                        aria-label="Previous"
+                    >
+                        <ChevronLeft className="w-6 h-6 text-slate-600" />
+                    </button>
 
-                {/* Gradient fade on edges */}
-                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
-                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
-
-                {/* Technical DNA Popover - fixed position to hovered icon */}
-                <AnimatePresence>
-                    {hoveredTechData && popoverPosition && (
+                    {/* Marquee Container */}
+                    <div className="overflow-hidden">
                         <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.2 }}
-                            className="fixed z-50 pointer-events-none w-full max-w-sm"
-                            style={{
-                                left: popoverPosition.x,
-                                top: popoverPosition.y
-                            }}
+                            className="flex gap-12 items-center whitespace-nowrap py-4"
+                            style={{ x }}
                         >
-                        <div 
-                            className="border-l border-blue-500 rounded-lg p-3 shadow-2xl relative"
-                            style={{
-                                backgroundColor: '#0F172A', // Solid fallback for Firefox
-                                backdropFilter: 'blur(16px)',
-                                WebkitBackdropFilter: 'blur(16px)',
-                                transform: popoverPosition.placement === 'top'
-                                    ? 'translate(-50%, -16px)'
-                                    : 'translate(-50%, 16px)'
-                            }}
-                        >
-                            <div className="space-y-3">
-                                {/* Tool Name with Logo */}
-                                <div className="flex items-center gap-3">
-                                    <div className="p-1.5 bg-white rounded-sm flex-shrink-0">
-                                        <img
-                                            src={hoveredTechData.logo}
-                                            alt={hoveredTechData.name}
-                                            className="w-8 h-8 object-contain"
-                                        />
-                                    </div>
-                                    <h4 className="font-mono text-xs font-bold text-white uppercase tracking-wider">
-                                        {hoveredTechData.name}
-                                    </h4>
-                                </div>
+                            {duplicatedTechStack.map((tech, idx) => (
+                                <a
+                                    key={`${tech.name}-${idx}`}
+                                    href={tech.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex-shrink-0 relative group"
+                                    onMouseEnter={(event) => {
+                                        const rect = event.currentTarget.getBoundingClientRect();
+                                        const centerX = rect.left + rect.width / 2;
+                                        const centerY = rect.top + rect.height / 2;
+                                        const viewportWidth = window.innerWidth;
+                                        const viewportHeight = window.innerHeight;
+                                        const maxPopoverHalf = Math.min(192, viewportWidth / 2 - 16);
+                                        const clampedX = Math.max(16 + maxPopoverHalf, Math.min(centerX, viewportWidth - 16 - maxPopoverHalf));
+                                        const placement = centerY > viewportHeight * 0.6 ? 'top' : 'bottom';
 
-                                {/* Domain */}
-                                <div className="flex items-baseline gap-2 border-t border-slate-700 pt-2">
-                                    <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
-                                        DOMAIN:
-                                    </span>
-                                    <span className="font-mono text-xs text-white font-bold">
-                                        {hoveredTechData.domain ?? hoveredTechData.archLayer}
-                                    </span>
-                                </div>
-
-                                {/* Spec */}
-                                <div className="flex items-baseline gap-2">
-                                    <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
-                                        SPEC:
-                                    </span>
-                                    <span className="font-mono text-xs text-white font-bold">
-                                        {hoveredTechData.spec}
-                                    </span>
-                                </div>
-
-                                {/* Engineering Purpose */}
-                                <div className="flex items-baseline gap-2">
-                                    <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
-                                        USE:
-                                    </span>
-                                    <span className="font-mono text-xs text-white font-bold">
-                                        {hoveredTechData.use ?? hoveredTechData.dna}
-                                    </span>
-                                </div>
-
-                                {/* Documentation Link */}
-                                <div className="pt-2 border-t border-slate-700">
-                                    <a
-                                        href={hoveredTechData.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-1 text-[9px] font-mono text-blue-400 hover:text-white transition-colors pointer-events-auto"
+                                        setHoveredTech(tech.name);
+                                        setPopoverPosition({
+                                            x: clampedX,
+                                            y: centerY,
+                                            placement
+                                        });
+                                        setIsPaused(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                        setHoveredTech(null);
+                                        setPopoverPosition(null);
+                                        setIsPaused(false);
+                                    }}
+                                >
+                                    <motion.div
+                                        className="w-32 h-20 flex items-center justify-center p-4 rounded-lg cursor-pointer border border-transparent hover:border-slate-200 hover:shadow-md"
+                                        animate={{
+                                            scale: hoveredTech === tech.name ? 1.1 : 1,
+                                            backgroundColor: hoveredTech === tech.name
+                                                ? 'rgb(248 250 252)' // slate-50
+                                                : 'rgba(255, 255, 255, 0)' // transparent
+                                        }}
+                                        transition={{ duration: 0.3 }}
                                     >
-                                        VERIFY DOCUMENTATION
-                                        <ExternalLink className="w-2.5 h-2.5" />
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-                )}
-                </AnimatePresence>
+                                        <img
+                                            src={tech.logo}
+                                            alt={tech.name}
+                                            className="max-w-full max-h-full object-contain transition-opacity duration-300"
+                                            style={{
+                                                opacity: hoveredTech === tech.name ? 1 : 0.8
+                                            }}
+                                        />
+                                    </motion.div>
+                                </a>
+                            ))}
+                        </motion.div>
+
+                        {/* Gradient fade on edges */}
+                        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
+                        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
+
+                        {/* Technical DNA Popover - fixed position to hovered icon */}
+                        <AnimatePresence>
+                            {hoveredTechData && popoverPosition && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="fixed z-50 pointer-events-none w-full max-w-sm"
+                                    style={{
+                                        left: popoverPosition.x,
+                                        top: popoverPosition.y
+                                    }}
+                                >
+                                    <div
+                                        className="border-l border-blue-500 rounded-lg p-3 shadow-2xl relative"
+                                        style={{
+                                            backgroundColor: '#0F172A', // Solid fallback for Firefox
+                                            backdropFilter: 'blur(16px)',
+                                            WebkitBackdropFilter: 'blur(16px)',
+                                            transform: popoverPosition.placement === 'top'
+                                                ? 'translate(-50%, -16px)'
+                                                : 'translate(-50%, 16px)'
+                                        }}
+                                    >
+                                        <div className="space-y-3">
+                                            {/* Tool Name with Logo */}
+                                            <div className="flex items-center gap-3">
+                                                <div className="p-1.5 bg-white rounded-sm flex-shrink-0">
+                                                    <img
+                                                        src={hoveredTechData.logo}
+                                                        alt={hoveredTechData.name}
+                                                        className="w-8 h-8 object-contain"
+                                                    />
+                                                </div>
+                                                <h4 className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+                                                    {hoveredTechData.name}
+                                                </h4>
+                                            </div>
+
+                                            {/* Domain */}
+                                            <div className="flex items-baseline gap-2 border-t border-slate-700 pt-2">
+                                                <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                                                    DOMAIN:
+                                                </span>
+                                                <span className="font-mono text-xs text-white font-bold">
+                                                    {hoveredTechData.domain ?? hoveredTechData.archLayer}
+                                                </span>
+                                            </div>
+
+                                            {/* Spec */}
+                                            <div className="flex items-baseline gap-2">
+                                                <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                                                    SPEC:
+                                                </span>
+                                                <span className="font-mono text-xs text-white font-bold">
+                                                    {hoveredTechData.spec}
+                                                </span>
+                                            </div>
+
+                                            {/* Engineering Purpose */}
+                                            <div className="flex items-baseline gap-2">
+                                                <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                                                    USE:
+                                                </span>
+                                                <span className="font-mono text-xs text-white font-bold">
+                                                    {hoveredTechData.use ?? hoveredTechData.dna}
+                                                </span>
+                                            </div>
+
+                                            {/* Documentation Link */}
+                                            <div className="pt-2 border-t border-slate-700">
+                                                <a
+                                                    href={hoveredTechData.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-1 text-[9px] font-mono text-blue-400 hover:text-white transition-colors pointer-events-auto"
+                                                >
+                                                    VERIFY DOCUMENTATION
+                                                    <ExternalLink className="w-2.5 h-2.5" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+
+                    {/* Right Floating Arrow */}
+                    <button
+                        type="button"
+                        onClick={() => x.set(x.get() - 240)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-3 rounded-full shadow-lg border border-slate-200 hover:bg-white cursor-pointer z-10 opacity-0 group-hover/marquee:opacity-100 transition-opacity duration-300"
+                        aria-label="Next"
+                    >
+                        <ChevronRight className="w-6 h-6 text-slate-600" />
+                    </button>
+                </div>
             </div>
         </section>
     );

@@ -114,7 +114,7 @@ export default function ConsultPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-slate-900 mb-4">
                         Consult an <span className="text-precision-blue">Architect</span>
-                    </h1>
+                        </h1>
                     <p className="text-slate-600 max-w-2xl mx-auto">
                         Our senior architects (12+ years avg. experience) will design a sovereign, 
                         interoperable health system architecture tailored to your specifications.
@@ -198,7 +198,7 @@ export default function ConsultPage() {
                                                 ? 'border-precision-blue bg-blue-50'
                                                 : 'border-slate-200 hover:border-slate-300'
                                         }`}
-                                    >
+                            >
                                         <input
                                             type="radio"
                                             name="engineeringNeed"
@@ -215,7 +215,7 @@ export default function ConsultPage() {
                                 ))}
                             </div>
                         </div>
-                    </div>
+                                </div>
 
                     {/* Interoperability Standards */}
                     <div className="space-y-6">
@@ -223,7 +223,7 @@ export default function ConsultPage() {
                             03_REQUIRED_INTEROPERABILITY
                         </h2>
                         
-                        <div>
+                                <div>
                             <label className="block font-mono text-xs uppercase tracking-wider text-slate-600 mb-3">
                                 Standards & Protocols
                             </label>
@@ -288,8 +288,8 @@ export default function ConsultPage() {
                                     </label>
                                 );
                             })}
-                        </div>
                     </div>
+                </div>
 
                     {/* Additional Context */}
                     <div className="space-y-6">
@@ -397,6 +397,6 @@ export default function ConsultPage() {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </div>
+                </div>
     );
 }

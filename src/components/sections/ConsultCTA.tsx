@@ -55,9 +55,9 @@ export function ConsultCTA() {
     };
 
     return (
-        <section className="relative py-24 bg-white overflow-hidden">
+        <section id="consult-console" className="relative z-50 bg-white border-t border-slate-200 py-24 overflow-hidden scroll-mt-24">
             {/* Blueprint Grid Background */}
-            <div 
+            <div
                 className="absolute inset-0 opacity-20 pointer-events-none"
                 style={{
                     backgroundImage: `
@@ -112,11 +112,10 @@ export function ConsultCTA() {
                                                 key={option}
                                                 type="button"
                                                 onClick={() => setDomain(option)}
-                                                className={`px-3 py-2 rounded-md border text-xs font-mono uppercase tracking-wider transition-colors ${
-                                                    domain === option
+                                                className={`px-3 py-2 rounded-md border text-xs font-mono uppercase tracking-wider transition-colors ${domain === option
                                                         ? 'bg-precision-blue text-white border-precision-blue'
                                                         : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
-                                                }`}
+                                                    }`}
                                             >
                                                 {option}
                                             </button>
@@ -133,11 +132,10 @@ export function ConsultCTA() {
                                                 key={gap}
                                                 type="button"
                                                 onClick={() => toggleItem(gap, setSelectedGaps)}
-                                                className={`px-3 py-1.5 rounded-md border text-xs font-mono uppercase tracking-wider transition-colors ${
-                                                    selectedGaps.includes(gap)
+                                                className={`px-3 py-1.5 rounded-md border text-xs font-mono uppercase tracking-wider transition-colors ${selectedGaps.includes(gap)
                                                         ? 'bg-slate-900 text-slate-50 border-slate-900'
                                                         : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
-                                                }`}
+                                                    }`}
                                             >
                                                 {gap}
                                             </button>
@@ -154,11 +152,10 @@ export function ConsultCTA() {
                                                 key={standard}
                                                 type="button"
                                                 onClick={() => toggleItem(standard, setSelectedStandards)}
-                                                className={`px-3 py-1.5 rounded-md border text-xs font-mono uppercase tracking-wider transition-colors ${
-                                                    selectedStandards.includes(standard)
+                                                className={`px-3 py-1.5 rounded-md border text-xs font-mono uppercase tracking-wider transition-colors ${selectedStandards.includes(standard)
                                                         ? 'bg-precision-blue text-white border-precision-blue'
                                                         : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
-                                                }`}
+                                                    }`}
                                             >
                                                 {standard}
                                             </button>
@@ -175,11 +172,10 @@ export function ConsultCTA() {
                                                 key={scale}
                                                 type="button"
                                                 onClick={() => setProjectScale(scale)}
-                                                className={`px-3 py-1.5 rounded-md border text-xs font-mono uppercase tracking-wider transition-colors ${
-                                                    projectScale === scale
+                                                className={`px-3 py-1.5 rounded-md border text-xs font-mono uppercase tracking-wider transition-colors ${projectScale === scale
                                                         ? 'bg-slate-900 text-slate-50 border-slate-900'
                                                         : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
-                                                }`}
+                                                    }`}
                                             >
                                                 {scale}
                                             </button>
