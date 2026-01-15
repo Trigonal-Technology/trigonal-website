@@ -3,7 +3,8 @@ import { TechMarquee } from '@/components/sections/TechMarquee'
 import { SovereignTechStack } from '@/components/sections/SovereignTechStack'
 import { NidanEHRSection } from '@/components/sections/NidanEHRSection'
 import { ArchitectVision } from '@/components/sections/ArchitectVision'
-import { FireProtocol } from '@/components/sections/FireProtocol'
+import { FirePinnedScroll } from '@/components/sections/FirePinnedScroll'
+import { ConsultCTA } from '@/components/sections/ConsultCTA'
 
 export default function HomePage() {
   return (
@@ -13,7 +14,8 @@ export default function HomePage() {
       <SovereignTechStack />
       <NidanEHRSection />
       <ArchitectVision />
-      <FireProtocol />
+      <FirePinnedScroll />
+      <ConsultCTA />
     </>
   )
 }

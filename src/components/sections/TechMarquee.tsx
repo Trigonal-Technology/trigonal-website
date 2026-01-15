@@ -4,97 +4,174 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 
-// Tech stack with technical DNA
+// Tech stack with technical DNA, architectural layer, and specs
 const techStack = [
     {
         name: 'OpenMRS',
         logo: '/logos/openmrs.svg',
         dna: 'Medical record system with modular microservices for longitudinal patient tracking.',
+        archLayer: 'Clinical',
+        domain: 'CLINICAL_CORE',
+        spec: 'HL7_FHIR_R4',
+        use: 'LONGITUDINAL_PATIENT_TRACKING',
         link: 'https://openmrs.org/'
     },
     {
         name: 'Bahmni',
         logo: '/logos/bahmni.webp',
         dna: 'Integrated hospital system combining OpenMRS, OpenELIS, and Odoo for complete workflows.',
+        archLayer: 'Clinical',
+        domain: 'HOSPITAL_OS',
+        spec: 'FHIR_R4 + ODOO',
+        use: 'END_TO_END_WORKFLOW_AUTOMATION',
         link: 'https://bahmni.org/'
     },
     {
         name: 'OzoneHIS',
         logo: '/logos/ozone.svg',
         dna: 'Cloud-native OpenMRS distribution optimized for Docker and Kubernetes deployments.',
+        archLayer: 'Infrastructure',
+        domain: 'DEPLOYMENT_LAYER',
+        spec: 'DOCKER + K8S',
+        use: 'SCALABLE_EMR_DELIVERY',
         link: 'https://www.ozone-his.com'
     },
     {
         name: 'OpenELIS',
         logo: '/logos/openelis.png',
         dna: 'Laboratory Information System with FHIR DiagnosticReport mapping via LabBridge.',
+        archLayer: 'Clinical',
+        domain: 'LIS_CORE',
+        spec: 'FHIR + LOINC',
+        use: 'LAB_WORKFLOW_STANDARDIZATION',
         link: 'https://openelis-global.org/'
+    },
+    {
+        name: 'Lab-Bridge',
+        logo: '/logos/labbridge.svg',
+        dna: 'Analyzer-to-LIS middleware for real-time lab result synchronization.',
+        archLayer: 'Infrastructure',
+        domain: 'DIAGNOSTIC_MIDDLEWARE',
+        spec: 'ASTM + HL7',
+        use: 'ANALYZER_TO_EHR_SYNC',
+        link: 'https://trigonal.com.np'
     },
     {
         name: 'SENAITE',
         logo: '/logos/senaite.svg',
         dna: 'Open-source LIMS for sample management with automated instrument integration.',
+        archLayer: 'Clinical',
+        domain: 'LIMS',
+        spec: 'ISO_15189',
+        use: 'CLINICAL_LAB_AUTOMATION',
         link: 'https://www.senaite.com'
     },
     {
         name: 'WHONET',
         logo: '/logos/whonet.png',
         dna: 'WHO microbiology surveillance software for antimicrobial resistance monitoring.',
+        archLayer: 'Intelligence',
+        domain: 'MICROBIOLOGY',
+        spec: 'AMR_DATA',
+        use: 'DRUG_RESISTANCE_TRACKING',
         link: 'https://whonet.org/'
     },
     {
         name: 'Odoo',
         logo: '/logos/odoo.svg',
         dna: 'Enterprise ERP for hospital billing, inventory, and financial management.',
+        archLayer: 'Fiscal',
+        domain: 'FISCAL_ENGINE',
+        spec: 'ODOO_18',
+        use: 'REVENUE_LEAKAGE_PREVENTION',
         link: 'https://www.odoo.com/documentation/19.0/'
     },
     {
         name: 'ERPNext',
         logo: '/logos/erpnext.svg',
         dna: 'Open-source ERP alternative with healthcare-specific modules for resource planning.',
+        archLayer: 'Fiscal',
+        domain: 'RESOURCE_PLANNING',
+        spec: 'PYTHON + MARIADB',
+        use: 'HOSPITAL_RESOURCE_CONTROL',
         link: 'https://docs.frappe.io/erpnext/introduction'
     },
     {
         name: 'DHIS2',
         logo: '/logos/dhis2.svg',
         dna: 'Aggregate reporting platform for public health surveillance and analytics.',
+        archLayer: 'Intelligence',
+        domain: 'NATIONAL_REPORTING',
+        spec: 'ADX + DXF',
+        use: 'SOVEREIGN_ANALYTICS_PIPELINE',
         link: 'https://docs.dhis2.org'
     },
     {
         name: 'OpenIMIS',
         logo: '/logos/openimis.svg',
         dna: 'Open-source health insurance management system for claims and beneficiary registry.',
+        archLayer: 'Fiscal',
+        domain: 'INSURANCE_LAYER',
+        spec: 'FHIR + IHE_PIX',
+        use: 'CLAIMS_AND_BENEFICIARY_REGISTRY',
         link: 'https://openimis.org/'
     },
     {
         name: 'Orthanc',
         logo: '/logos/orthanc.png',
         dna: 'Lightweight DICOM server for medical imaging with HL7 FHIR ImagingStudy integration.',
+        archLayer: 'Clinical',
+        domain: 'IMAGING_PACS',
+        spec: 'DICOM + FHIR',
+        use: 'RADIOLOGY_INTEROPERABILITY',
         link: 'https://www.orthanc-server.com/'
     },
     {
         name: 'DCM4CHEE',
         logo: '/logos/dcm4chee.png',
         dna: 'DICOM server for medical imaging with HL7 FHIR ImagingStudy integration.',
+        archLayer: 'Clinical',
+        domain: 'IMAGING_ARCHIVE',
+        spec: 'DICOM + IHE',
+        use: 'CLINICAL_IMAGE_EXCHANGE',
         link: 'https://www.dcm4che.org/dcm4chee-arc'
     },
     {
         name: 'Muzima',
         logo: '/logos/muzima.png',
         dna: 'Offline-first mobile app for rural health data collection and synchronization.',
+        archLayer: 'Clinical',
+        domain: 'MHEALTH',
+        spec: 'OFFLINE_FIRST',
+        use: 'REMOTE_DATA_CAPTURE',
         link: 'https://muzima.org'
     },
     {
         name: 'Apache Superset',
         logo: '/logos/superset.svg',
         dna: 'Modern data exploration and visualization platform for business intelligence and healthcare analytics.',
+        archLayer: 'Intelligence',
+        domain: 'BI_LAYER',
+        spec: 'SQL + BI',
+        use: 'EXECUTIVE_ANALYTICS',
         link: 'https://superset.apache.org/'
+    },
+    {
+        name: 'SORMAS',
+        logo: '/logos/sormas.svg',
+        dna: 'Surveillance Outbreak Response Management & Analysis System for epidemic management.',
+        archLayer: 'Intelligence',
+        domain: 'EPIDEMIOLOGY',
+        spec: 'REAL_TIME_SURVEILLANCE',
+        use: 'OUTBREAK_MGMT',
+        link: 'https://sormas.org/'
     }
 ];
 
 export function TechMarquee() {
     const [hoveredTech, setHoveredTech] = useState<string | null>(null);
     const [isPaused, setIsPaused] = useState(false);
+    const [popoverPosition, setPopoverPosition] = useState<{ x: number; y: number; placement: 'top' | 'bottom' } | null>(null);
 
     const hoveredTechData = techStack.find(t => t.name === hoveredTech);
 
@@ -115,7 +192,7 @@ export function TechMarquee() {
                 <motion.div
                     className="flex gap-12 items-center whitespace-nowrap py-4"
                     animate={isPaused ? {} : {
-                        x: [0, -2464] // Total width to translate (14 items × 176px)
+                        x: [0, -2816] // Total width to translate (16 items × 176px)
                     }}
                     transition={isPaused ? {} : {
                         duration: 60,
@@ -131,12 +208,27 @@ export function TechMarquee() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex-shrink-0 relative group"
-                            onMouseEnter={() => {
+                            onMouseEnter={(event) => {
+                                const rect = event.currentTarget.getBoundingClientRect();
+                                const centerX = rect.left + rect.width / 2;
+                                const centerY = rect.top + rect.height / 2;
+                                const viewportWidth = window.innerWidth;
+                                const viewportHeight = window.innerHeight;
+                                const maxPopoverHalf = Math.min(192, viewportWidth / 2 - 16);
+                                const clampedX = Math.max(16 + maxPopoverHalf, Math.min(centerX, viewportWidth - 16 - maxPopoverHalf));
+                                const placement = centerY > viewportHeight * 0.6 ? 'top' : 'bottom';
+
                                 setHoveredTech(tech.name);
+                                setPopoverPosition({
+                                    x: clampedX,
+                                    y: centerY,
+                                    placement
+                                });
                                 setIsPaused(true);
                             }}
                             onMouseLeave={() => {
                                 setHoveredTech(null);
+                                setPopoverPosition(null);
                                 setIsPaused(false);
                             }}
                         >
@@ -167,45 +259,83 @@ export function TechMarquee() {
                 <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
                 <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
 
-                {/* Technical DNA Popover - positioned relative to marquee wrapper */}
+                {/* Technical DNA Popover - fixed position to hovered icon */}
                 <AnimatePresence>
-                    {hoveredTechData && (
+                    {hoveredTechData && popoverPosition && (
                         <motion.div
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.2 }}
-                            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-full max-w-sm z-50 pointer-events-none px-4"
+                            className="fixed z-50 pointer-events-none w-full max-w-sm"
+                            style={{
+                                left: popoverPosition.x,
+                                top: popoverPosition.y
+                            }}
                         >
-                        <div className="bg-slate-900/95 backdrop-blur-xl border border-precision-blue/50 rounded-lg p-3 shadow-2xl relative">
-                            {/* Decorative Corner */}
-                            <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-precision-blue/30 rounded-tr-lg" />
-
-                            <div className="flex items-start gap-3">
-                                <div className="p-1.5 bg-white rounded-sm flex-shrink-0">
-                                    <img
-                                        src={hoveredTechData.logo}
-                                        alt={hoveredTechData.name}
-                                        className="w-8 h-8 object-contain"
-                                    />
-                                </div>
-                                <div className="flex-1">
-                                    <div className="flex items-center justify-between mb-1">
-                                        <h4 className="font-mono text-xs font-bold text-white uppercase tracking-wider">
-                                            {hoveredTechData.name}
-                                        </h4>
-                                        <span className="text-[8px] font-mono text-precision-blue opacity-70">
-                                            [TECH DNA]
-                                        </span>
+                        <div 
+                            className="border-l border-blue-500 rounded-lg p-3 shadow-2xl relative"
+                            style={{
+                                backgroundColor: '#0F172A', // Solid fallback for Firefox
+                                backdropFilter: 'blur(16px)',
+                                WebkitBackdropFilter: 'blur(16px)',
+                                transform: popoverPosition.placement === 'top'
+                                    ? 'translate(-50%, -16px)'
+                                    : 'translate(-50%, 16px)'
+                            }}
+                        >
+                            <div className="space-y-3">
+                                {/* Tool Name with Logo */}
+                                <div className="flex items-center gap-3">
+                                    <div className="p-1.5 bg-white rounded-sm flex-shrink-0">
+                                        <img
+                                            src={hoveredTechData.logo}
+                                            alt={hoveredTechData.name}
+                                            className="w-8 h-8 object-contain"
+                                        />
                                     </div>
-                                    <p className="text-[10px] text-slate-300 mb-2 leading-relaxed font-inter">
-                                        {hoveredTechData.dna}
-                                    </p>
+                                    <h4 className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+                                        {hoveredTechData.name}
+                                    </h4>
+                                </div>
+
+                                {/* Domain */}
+                                <div className="flex items-baseline gap-2 border-t border-slate-700 pt-2">
+                                    <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                                        DOMAIN:
+                                    </span>
+                                    <span className="font-mono text-xs text-white font-bold">
+                                        {hoveredTechData.domain ?? hoveredTechData.archLayer}
+                                    </span>
+                                </div>
+
+                                {/* Spec */}
+                                <div className="flex items-baseline gap-2">
+                                    <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                                        SPEC:
+                                    </span>
+                                    <span className="font-mono text-xs text-white font-bold">
+                                        {hoveredTechData.spec}
+                                    </span>
+                                </div>
+
+                                {/* Engineering Purpose */}
+                                <div className="flex items-baseline gap-2">
+                                    <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                                        USE:
+                                    </span>
+                                    <span className="font-mono text-xs text-white font-bold">
+                                        {hoveredTechData.use ?? hoveredTechData.dna}
+                                    </span>
+                                </div>
+
+                                {/* Documentation Link */}
+                                <div className="pt-2 border-t border-slate-700">
                                     <a
                                         href={hoveredTechData.link}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-1 text-[9px] font-mono text-precision-blue hover:text-white transition-colors pointer-events-auto"
+                                        className="inline-flex items-center gap-1 text-[9px] font-mono text-blue-400 hover:text-white transition-colors pointer-events-auto"
                                     >
                                         VERIFY DOCUMENTATION
                                         <ExternalLink className="w-2.5 h-2.5" />

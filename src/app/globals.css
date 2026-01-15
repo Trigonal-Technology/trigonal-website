@@ -257,3 +257,39 @@ html {
 .animate-spin-slow {
   animation: spin-slow 20s linear infinite;
 }
+
+/* ===================================================
+   Firefox Compatibility: Backdrop Filter Fallbacks
+   =================================================== */
+
+/* For browsers that don't support backdrop-filter, ensure solid backgrounds */
+@supports not (backdrop-filter: blur(16px)) {
+  .backdrop-blur,
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl {
+    background-color: rgba(15, 23, 42, 1) !important; /* Solid slate-900 */
+  }
+  
+  /* Light mode backdrop fallback */
+  html.light .backdrop-blur,
+  html.light .backdrop-blur-sm,
+  html.light .backdrop-blur-md,
+  html.light .backdrop-blur-lg,
+  html.light .backdrop-blur-xl {
+    background-color: rgba(248, 250, 252, 1) !important; /* Solid slate-50 */
+  }
+}
+
+/* Ensure all SVG text has high visibility */
+svg text {
+  paint-order: stroke fill;
+  stroke-width: 0;
+}
+
+/* Optional: Add subtle stroke to SVG text for extra legibility */
+svg text.with-stroke {
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 0.5px;
+}

@@ -5,27 +5,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Smartphone, Activity, GitFork, Database, Building2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// Node definitions for Sovereign Data Flow
+// Node definitions for Sovereign Data Flow with Technical DNA
 const sovereignNodes = [
     {
         id: 'mhealth',
         x: 15,
         y: 50,
         icon: Smartphone,
-        label: 'mHealth',
+        label: 'Frontline',
         sublabel: 'Muzima/Intelehealth',
         color: '#10B981',
-        description: 'Offline-first mobile health for rural deployment'
+        description: 'Offline-first mobile health for rural deployment',
+        techStack: ['Java/Android', 'SQLite', 'OpenMRS Sync']
     },
     {
         id: 'emr',
         x: 35,
         y: 30,
         icon: Activity,
-        label: 'EMR',
+        label: 'Hospital (NidanEHR)',
         sublabel: 'OpenMRS/Bahmni',
         color: '#1E4E9B',
-        description: 'Clinical workflows and patient longitudinal tracking'
+        description: 'Clinical workflows and patient longitudinal tracking',
+        techStack: ['Java/Spring Boot', 'PostgreSQL', 'HL7 FHIR R4']
     },
     {
         id: 'spine',
@@ -36,27 +38,30 @@ const sovereignNodes = [
         sublabel: 'HL7 FHIR R4',
         color: '#8B5CF6',
         description: 'National interoperability layer',
-        isPrimary: true
+        isPrimary: true,
+        techStack: ['Python/FastAPI', 'OpenHIM', 'FHIR Validator']
     },
     {
         id: 'dhis2',
         x: 65,
         y: 30,
         icon: Database,
-        label: 'DHIS2',
+        label: 'Health Registry (DHIS2)',
         sublabel: 'Aggregate Reporting',
         color: '#D97706',
-        description: 'Public health surveillance and analytics'
+        description: 'Public health surveillance and analytics',
+        techStack: ['Java/Spring', 'PostgreSQL', 'ADX/DXF']
     },
     {
         id: 'openimis',
         x: 85,
         y: 50,
         icon: Building2,
-        label: 'OpenIMIS',
-        sublabel: 'Health Insurance',
+        label: 'Insurance (OpenIMIS)',
+        sublabel: 'Claims Management',
         color: '#EF4444',
-        description: 'Claims management and beneficiary registry'
+        description: 'Claims management and beneficiary registry',
+        techStack: ['Python/Django', 'PostgreSQL', 'HL7 FHIR']
     }
 ];
 
@@ -73,21 +78,75 @@ interface DataPacket {
     fromNode: string;
     toNode: string;
     progress: number;
+    protocol: string;
 }
 
 export function SovereignDataFlow() {
     const [dataPackets, setDataPackets] = useState<DataPacket[]>([]);
     const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
-    // Generate data packets
+    const getChipWidth = (text: string, fontSize: number, paddingX = 0.6) =>
+        text.length * fontSize * 0.55 + paddingX * 2;
+
+    const renderLabelChip = (text: string, x: number, y: number, fontSize: number) => {
+        const paddingX = 0.6;
+        const paddingY = 0.35;
+        const rawWidth = getChipWidth(text, fontSize, paddingX);
+        const maxWidth = 16;
+        const minWidth = 6;
+        const width = Math.min(maxWidth, Math.max(minWidth, rawWidth));
+        const scale = rawWidth > maxWidth ? maxWidth / rawWidth : 1;
+        const effectiveFont = fontSize * scale;
+        const height = effectiveFont + paddingY * 2;
+
+        return (
+            <g>
+                <rect
+                    x={x - width / 2}
+                    y={y - effectiveFont + paddingY}
+                    width={width}
+                    height={height}
+                    rx="0.3"
+                    fill="#0F172A"
+                    opacity="0.95"
+                />
+                <text
+                    x={x}
+                    y={y}
+                    textAnchor="middle"
+                    className="font-mono font-bold"
+                    style={{
+                        fill: '#F8FAFC',
+                        fontSize: `${effectiveFont}`
+                    }}
+                >
+                    {text}
+                </text>
+            </g>
+        );
+    };
+
+    // Generate data packets with protocol labels
     useEffect(() => {
         const interval = setInterval(() => {
             const randomPath = dataFlowPaths[Math.floor(Math.random() * dataFlowPaths.length)];
+            
+            // Assign protocol based on the data path
+            let protocol = '[FHIR_R4]';
+            if (randomPath.from === 'mhealth' || randomPath.to === 'mhealth') {
+                protocol = '[HL7_V2]';
+            } else if (randomPath.from === 'emr' || randomPath.to === 'emr') {
+                protocol = '[FHIR_R4]';
+            } else if (randomPath.to === 'dhis2') {
+                protocol = '[ADX]';
+            }
+            
             const newPacket: DataPacket = {
                 id: `packet-${Date.now()}-${Math.random()}`,
                 fromNode: randomPath.from,
                 toNode: randomPath.to,
-                progress: 0
+                progress: 0,
+                protocol: protocol
             };
             
             setDataPackets(prev => [...prev, newPacket]);
@@ -126,6 +185,14 @@ export function SovereignDataFlow() {
 
     return (
         <div className="relative w-full h-[500px] bg-white/50 backdrop-blur-sm rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
+            {/* High-Contrast Radial Gradient for Data Flow Visibility */}
+            <div 
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background: 'radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%)'
+                }}
+            />
+            
             {/* Blueprint Grid Overlay */}
             <div 
                 className="absolute inset-0 opacity-20 pointer-events-none"
@@ -162,7 +229,7 @@ export function SovereignDataFlow() {
                     </marker>
                 </defs>
 
-                {/* Connection Lines */}
+                {/* Connection Lines - Enhanced visibility */}
                 {dataFlowPaths.map((path, idx) => {
                     const from = getNodePosition(path.from);
                     const to = getNodePosition(path.to);
@@ -173,9 +240,10 @@ export function SovereignDataFlow() {
                             y1={from.y}
                             x2={to.x}
                             y2={to.y}
-                            className="stroke-slate-300"
-                            strokeWidth="0.15"
+                            className="stroke-slate-400"
+                            strokeWidth="0.2"
                             strokeDasharray="0.5,0.5"
+                            opacity="0.4"
                             markerEnd="url(#arrowhead-hero)"
                             initial={{ pathLength: 0 }}
                             animate={{ pathLength: 1 }}
@@ -210,22 +278,25 @@ export function SovereignDataFlow() {
                                 />
                                 {/* Protocol label with solid background chip */}
                                 <g>
-                                    <motion.rect
+                                <motion.rect
                                         x={pos.x - 2.8}
                                         y={pos.y - 2.3}
                                         width="5.6"
                                         height="1.4"
                                         rx="0.3"
-                                        className="fill-slate-900 "
+                                        fill="#D97706"
                                         initial={{ opacity: 0 }}
-                                        animate={{ opacity: 0.95 }}
+                                        animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
                                     />
                                     <motion.text
                                         x={pos.x}
                                         y={pos.y - 1.3}
-                                        className="fill-white  font-mono text-[1.4px] font-bold"
+                                        className="fill-slate-50 font-mono text-[1.4px] font-bold"
                                         textAnchor="middle"
+                                        style={{
+                                            filter: 'drop-shadow(0px 0px 2px rgba(255,255,255,0.8))'
+                                        }}
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
@@ -305,29 +376,19 @@ export function SovereignDataFlow() {
                                 />
                             )}
                             
-                            {/* Node label with text-shadow for legibility */}
-                            <text
-                                x={node.x}
-                                y={node.y + (node.isPrimary ? 4 : 3.2)}
-                                className="fill-slate-900  font-mono text-[1.8px] font-bold"
-                                textAnchor="middle"
-                                style={{
-                                    filter: 'drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 2px rgba(0,0,0,0.3))'
-                                }}
-                            >
-                                {node.label}
-                            </text>
-                            <text
-                                x={node.x}
-                                y={node.y + (node.isPrimary ? 5.2 : 4.4)}
-                                className="fill-slate-700  font-mono text-[1.2px]"
-                                textAnchor="middle"
-                                style={{
-                                    filter: 'drop-shadow(0 0 1px rgba(255,255,255,0.6)) drop-shadow(0 0 1px rgba(0,0,0,0.2))'
-                                }}
-                            >
-                                {node.sublabel}
-                            </text>
+                            {/* Node labels with solid chips for Firefox visibility */}
+                            {renderLabelChip(
+                                node.label,
+                                node.x,
+                                node.y + (node.isPrimary ? 4 : 3.2),
+                                1.8
+                            )}
+                            {renderLabelChip(
+                                node.sublabel,
+                                node.x,
+                                node.y + (node.isPrimary ? 5.2 : 4.4),
+                                1.2
+                            )}
                         </motion.g>
                     );
                 })}
@@ -341,30 +402,51 @@ export function SovereignDataFlow() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-slate-900/95  backdrop-blur-md border border-precision-blue/50 rounded-lg shadow-xl"
+                        className="absolute bottom-4 left-1/2 -translate-x-1/2 w-full max-w-md px-4"
                     >
-                        <div className="flex items-center gap-3">
-                            <div 
-                                className="w-8 h-8 rounded-md flex items-center justify-center"
-                                style={{ 
-                                    backgroundColor: `${hoveredNodeData.color}20`,
-                                    borderColor: hoveredNodeData.color,
-                                    borderWidth: '2px'
-                                }}
-                            >
-                                <hoveredNodeData.icon 
-                                    className="w-4 h-4" 
-                                    style={{ color: hoveredNodeData.color }}
-                                />
+                        <div className="bg-slate-900/95 backdrop-blur-md border-l-2 border-precision-blue rounded-r-lg shadow-xl p-4">
+                            <div className="flex items-start gap-3 mb-3">
+                                <div 
+                                    className="w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0"
+                                    style={{ 
+                                        backgroundColor: `${hoveredNodeData.color}20`,
+                                        borderColor: hoveredNodeData.color,
+                                        borderWidth: '2px'
+                                    }}
+                                >
+                                    <hoveredNodeData.icon 
+                                        className="w-5 h-5" 
+                                        style={{ color: hoveredNodeData.color }}
+                                    />
+                                </div>
+                                <div className="flex-1">
+                                    <p className="font-mono text-sm font-bold text-white mb-1">
+                                        {hoveredNodeData.label}
+                                    </p>
+                                    <p className="text-xs text-slate-400 leading-relaxed">
+                                        {hoveredNodeData.description}
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <p className="font-mono text-sm font-bold text-white">
-                                    {hoveredNodeData.label}
-                                </p>
-                                <p className="text-xs text-slate-400">
-                                    {hoveredNodeData.description}
-                                </p>
-                            </div>
+                            
+                            {/* Technical DNA */}
+                            {hoveredNodeData.techStack && (
+                                <div className="border-t border-slate-700 pt-3">
+                                    <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 mb-2">
+                                        TECHNICAL_DNA:
+                                    </p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {hoveredNodeData.techStack.map((tech: string, idx: number) => (
+                                            <span
+                                                key={idx}
+                                                className="px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] font-mono text-white"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </motion.div>
                 )}

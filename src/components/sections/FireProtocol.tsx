@@ -10,7 +10,9 @@ const values = [
         title: 'Focus',
         description: 'Single-minded pursuit of healthcare interoperability',
         metric: 'OpenHIE-First',
-        metricDetail: 'All architectures built on global standards'
+        metricDetail: 'All architectures built on global standards',
+        example: 'Architecture Decision',
+        exampleDetail: 'Every integration uses HL7 FHIR R4 resources, ensuring national health exchanges can consume our data without custom mappings.'
     },
     {
         icon: ShieldCheck,
@@ -18,7 +20,9 @@ const values = [
         title: 'Integrity',
         description: 'Transparent, honest, open-source aligned',
         metric: '100% FOSS',
-        metricDetail: 'Zero proprietary vendor lock-in'
+        metricDetail: 'Zero proprietary vendor lock-in',
+        example: 'Code Review Standard',
+        exampleDetail: 'All code is version-controlled in Git. No binary blobs, no obfuscation—clients can audit, fork, and self-host every component.'
     },
     {
         icon: Heart,
@@ -26,7 +30,9 @@ const values = [
         title: 'Respect',
         description: 'Inclusive design, accessibility-first',
         metric: 'WCAG 2.1 AA',
-        metricDetail: 'Accessible to all healthcare workers'
+        metricDetail: 'Accessible to all healthcare workers',
+        example: 'UI/UX Mandate',
+        exampleDetail: 'Offline-first design for rural clinics. Keyboard navigation, screen reader support, and multi-language interfaces for diverse healthcare workers.'
     },
     {
         icon: Zap,
@@ -34,7 +40,9 @@ const values = [
         title: 'Execution',
         description: 'Deployed. Running. Trusted.',
         metric: '99.97% Uptime',
-        metricDetail: 'Production-grade reliability'
+        metricDetail: 'Production-grade reliability',
+        example: 'Deployment Proof',
+        exampleDetail: 'LafiaHMS (Nigeria) and Venevital (Venezuela) run 24/7 with automated backups, monitoring, and zero-downtime updates via Docker orchestration.'
     },
 ];
 
@@ -137,8 +145,8 @@ export function FireProtocol() {
                                         <span className="text-4xl font-bold font-mono">{metric.value}</span>
                                         <span className="text-xl ml-1 text-white/70">{metric.unit}</span>
                                     </div>
-                                    <p className="font-semibold text-lg mb-1">{metric.label}</p>
-                                    <p className="text-sm text-white/60">{metric.description}</p>
+                                    <p className="font-bold text-lg mb-1 text-white">{metric.label}</p>
+                                    <p className="text-sm text-white/70 font-medium">{metric.description}</p>
                                 </motion.div>
                             );
                         })}
@@ -175,7 +183,7 @@ export function FireProtocol() {
                             </p>
 
                             {/* Metric Badge */}
-                            <div className="mt-4 pt-4 border-t border-white/10">
+                            <div className="mt-4 pt-4 border-t border-white/10 space-y-3">
                                 <div className="flex items-center justify-between">
                                     <div>
                                         <p className="font-mono text-sm font-bold text-execution-orange">
@@ -188,6 +196,16 @@ export function FireProtocol() {
                                     <span className="font-mono text-xs text-white/30">
                                         0{index + 1}
                                     </span>
+                                </div>
+                                
+                                {/* Practical Example */}
+                                <div className="pt-3 border-t border-white/5">
+                                    <p className="text-[10px] font-mono uppercase tracking-wider text-execution-orange/70 mb-1">
+                                        {value.example}
+                                    </p>
+                                    <p className="text-xs text-white/60 leading-relaxed">
+                                        {value.exampleDetail}
+                                    </p>
                                 </div>
                             </div>
                         </motion.div>

@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Server, Activity, DollarSign, Brain, Shield, CheckCircle2 } from 'lucide-react';
+import { Server, Activity, DollarSign, Smartphone, Shield, CheckCircle2 } from 'lucide-react';
 
-// Consolidated tech stack organized into functional buckets
+// Architectural Layers: Tools mapped to their architectural purposes
 const techBuckets = [
     {
         id: 'infrastructure',
@@ -12,10 +12,10 @@ const techBuckets = [
         icon: Server,
         color: '#64748B',
         technologies: [
-            { name: 'Docker & K8s', role: 'Container orchestration' },
-            { name: 'Git/GitHub', role: 'Version control & CI/CD' },
-            { name: 'Nginx/Caddy', role: 'Reverse proxy & TLS' },
-            { name: 'PostgreSQL 14', role: 'Clinical data persistence' }
+            { archRole: 'Orchestration', name: 'Docker & K8s', purpose: 'Container orchestration & scaling' },
+            { archRole: 'Version Control', name: 'Git/GitHub', purpose: 'Source integrity & CI/CD pipelines' },
+            { archRole: 'Gateway', name: 'Nginx/Caddy', purpose: 'Reverse proxy & TLS termination' },
+            { archRole: 'Persistence', name: 'PostgreSQL 14', purpose: 'Sovereign clinical data storage' }
         ],
         compliance: ['HIPAA', 'NEPAL_2081', 'ISO_27001']
     },
@@ -25,10 +25,10 @@ const techBuckets = [
         icon: Activity,
         color: '#1E4E9B',
         technologies: [
-            { name: 'NidanEHR', role: 'Electronic Medical Record' },
-            { name: 'OpenELIS', role: 'Laboratory Information System' },
-            { name: 'LabBridge', role: 'Analyzer → LIS middleware' },
-            { name: 'Orthanc', role: 'DICOM imaging server' }
+            { archRole: 'Clinical Core', name: 'NidanEHR', purpose: 'Patient longitudinal records & workflows' },
+            { archRole: 'Lab System', name: 'OpenELIS', purpose: 'Laboratory Information System & LIMS' },
+            { archRole: 'Middleware', name: 'LabBridge', purpose: 'Analyzer → LIS real-time bridge' },
+            { archRole: 'Imaging', name: 'Orthanc', purpose: 'DICOM-compliant PACS server' }
         ],
         compliance: ['HL7_FHIR_R4', 'DICOM', 'LOINC']
     },
@@ -38,12 +38,25 @@ const techBuckets = [
         icon: DollarSign,
         color: '#D97706',
         technologies: [
-            { name: 'Odoo 18', role: 'Hospital ERP & billing' },
-            { name: 'OpenIMIS', role: 'Health insurance management' },
-            { name: 'DHIS2', role: 'Aggregate surveillance analytics' },
-            { name: 'Radiology AI', role: 'Predictive diagnostics' }
+            { archRole: 'Fiscal Engine', name: 'Odoo 18', purpose: 'Hospital ERP & revenue management' },
+            { archRole: 'Insurance', name: 'OpenIMIS', purpose: 'Claims & beneficiary registry' },
+            { archRole: 'Surveillance', name: 'DHIS2', purpose: 'Public health aggregate analytics' },
+            { archRole: 'Intelligence', name: 'Radiology AI', purpose: 'Predictive diagnostic support' }
         ],
         compliance: ['HL7_FHIR', 'IHE_PIX', 'WHO_SMART']
+    },
+    {
+        id: 'frontline-outreach',
+        title: 'Frontline Outreach',
+        icon: Smartphone,
+        color: '#10B981',
+        technologies: [
+            { archRole: 'Mobile Health', name: 'Muzima', purpose: 'Offline-first Android data collection' },
+            { archRole: 'Community CHW', name: 'Intelehealth', purpose: 'Rural health worker mobile workflows' },
+            { archRole: 'Sync Engine', name: 'OpenMRS Sync', purpose: 'Bidirectional offline sync protocol' },
+            { archRole: 'Forms', name: 'ODK / KoboToolbox', purpose: 'Field data capture & surveys' }
+        ],
+        compliance: ['OpenMRS', 'HL7_V2', 'Offline_First']
     }
 ];
 
@@ -122,20 +135,23 @@ export function SovereignTechStack() {
                                     </h3>
                                 </div>
 
-                                {/* Technologies List */}
+                                {/* Architectural Mapping */}
                                 <div className="space-y-4 mb-6">
                                     {bucket.technologies.map((tech, techIdx) => (
-                                        <div key={techIdx} className="flex items-start gap-3">
+                                        <div key={techIdx} className="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
                                             <CheckCircle2 
                                                 className="w-4 h-4 flex-shrink-0 mt-0.5" 
                                                 style={{ color: bucket.color }}
                                             />
-                                            <div>
-                                                <p className="font-mono text-sm font-bold text-slate-900">
+                                            <div className="flex-1">
+                                                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500 mb-1">
+                                                    {tech.archRole}
+                                                </p>
+                                                <p className="font-mono text-sm font-bold text-slate-900 mb-0.5">
                                                     {tech.name}
                                                 </p>
-                                                <p className="text-xs text-slate-600 mt-0.5">
-                                                    {tech.role}
+                                                <p className="text-xs text-slate-600 leading-relaxed">
+                                                    {tech.purpose}
                                                 </p>
                                             </div>
                                         </div>

@@ -49,7 +49,7 @@ export function Hero() {
                         </p>
 
                         <p className="text-lg text-slate-600 max-w-xl mb-8">
-                            We architect sovereign digital health ecosystems for hospitals, national health programs, and global development organizations. From OpenHIE interoperability to offline-first mobile health—engineered for scale, compliance, and zero vendor lock-in.
+                            We architect sovereign digital health ecosystems for hospitals, national health programs, and global development organizations. From OpenHIE interoperability to offline-first mobile health engineered for scale, compliance, and zero vendor lock-in.
                         </p>
 
                         {/* Key Credentials */}
@@ -78,20 +78,6 @@ export function Hero() {
                             </Link>
                         </div>
 
-                        {/* Trust indicators */}
-                        <div className="mt-12 pt-8 border-t border-slate-200">
-                            <p className="text-xs text-slate-500 mb-3 uppercase tracking-wider font-mono">
-                                CORE_TECHNOLOGIES
-                            </p>
-                            <div className="flex flex-wrap items-center gap-4 text-slate-600 text-sm">
-                                <span className="font-mono">OpenMRS</span>
-                                <span className="font-mono">Bahmni</span>
-                                <span className="font-mono">Odoo</span>
-                                <span className="font-mono">LabBridge</span>
-                                <span className="font-mono">DHIS2</span>
-                                <span className="font-mono text-precision-blue">HL7_FHIR_R4</span>
-                            </div>
-                        </div>
                     </motion.div>
 
                     {/* Right Content - Live Sovereign Data Flow */}
