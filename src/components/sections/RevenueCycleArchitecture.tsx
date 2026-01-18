@@ -1,6 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
-import { CreditCard, Database, Eye, FileText, Scan, CheckCircle2 } from 'lucide-react';
+import { CreditCard, Database, Eye, FileText, Settings, CheckCircle2 } from 'lucide-react';
 
 export const RevenueCycleArchitecture = () => {
   return (
@@ -17,7 +17,7 @@ export const RevenueCycleArchitecture = () => {
 
         {/* THE PIPELINE CONTAINER */}
         <div className="relative flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-0">
-          
+
           {/* ------------------------------------------------------- */}
           {/* NODE 1: BAHMNI ORDERING (The Trigger)                   */}
           {/* ------------------------------------------------------- */}
@@ -43,15 +43,15 @@ export const RevenueCycleArchitecture = () => {
             </div>
             <div className="font-mono text-[10px] text-slate-400 mb-4 uppercase tracking-widest">Step 02: Payment</div>
             <div className="relative inline-block">
-                <CreditCard className="w-8 h-8 text-emerald-600 mx-auto mb-4" />
-                <motion.div 
-                    initial={{ scale: 0 }}
-                    animate={{ scale: [0, 1.2, 1] }}
-                    transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 3 }}
-                    className="absolute -top-1 -right-1 bg-green-500 rounded-full p-1 border-2 border-white"
-                >
-                    <CheckCircle2 className="w-3 h-3 text-white" />
-                </motion.div>
+              <CreditCard className="w-8 h-8 text-emerald-600 mx-auto mb-4" />
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: [0, 1.2, 1] }}
+                transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 3 }}
+                className="absolute -top-1 -right-1 bg-green-500 rounded-full p-1 border-2 border-white"
+              >
+                <CheckCircle2 className="w-3 h-3 text-white" />
+              </motion.div>
             </div>
             <h3 className="text-lg font-bold text-slate-900">Cashier / ERP</h3>
             <p className="text-xs text-slate-500 mt-2">Invoice Generated & Paid</p>
@@ -65,27 +65,27 @@ export const RevenueCycleArchitecture = () => {
           {/* ------------------------------------------------------- */}
           <div className="relative z-10 w-80 p-8 bg-slate-900 text-white rounded-xl shadow-2xl">
             <div className="absolute top-4 right-4 opacity-30">
-                <motion.div animate={{ rotate: 360 }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }}>
-                    <Scan className="w-10 h-10" />
-                </motion.div>
+              <motion.div animate={{ rotate: 360 }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }}>
+                <Settings className="w-10 h-10" />
+              </motion.div>
             </div>
             <div className="font-mono text-[10px] text-emerald-400 mb-4 uppercase tracking-widest">Step 03: Processing</div>
             <h3 className="text-2xl font-bold mb-2">Orthanc PACS</h3>
             <p className="text-xs text-slate-400 mb-4">Modality Worklist (MWL)</p>
-            
+
             <div className="space-y-2 font-mono text-[10px] text-slate-300">
-                <div className="flex justify-between border-b border-slate-700 pb-1">
-                    <span>&gt; RECEIVE_ORDER</span>
-                    <span className="text-emerald-400">OK</span>
-                </div>
-                <div className="flex justify-between border-b border-slate-700 pb-1">
-                    <span>&gt; CREATE_MWL_ENTRY</span>
-                    <span className="text-emerald-400">DONE</span>
-                </div>
-                <div className="flex justify-between">
-                    <span>&gt; STORE_DICOM</span>
-                    <span className="text-emerald-400">14MB</span>
-                </div>
+              <div className="flex justify-between border-b border-slate-700 pb-1">
+                <span>&gt; RECEIVE_ORDER</span>
+                <span className="text-emerald-400">OK</span>
+              </div>
+              <div className="flex justify-between border-b border-slate-700 pb-1">
+                <span>&gt; CREATE_MWL_ENTRY</span>
+                <span className="text-emerald-400">DONE</span>
+              </div>
+              <div className="flex justify-between">
+                <span>&gt; STORE_DICOM</span>
+                <span className="text-emerald-400">14MB</span>
+              </div>
             </div>
           </div>
 
@@ -100,11 +100,11 @@ export const RevenueCycleArchitecture = () => {
             <Eye className="w-8 h-8 text-blue-600 mx-auto mb-4" />
             <h3 className="text-lg font-bold text-slate-900">OHIF Viewer</h3>
             <p className="text-xs text-slate-500 mt-2">Embedded in Patient Dashboard</p>
-            <motion.button 
-                whileHover={{ scale: 1.05 }}
-                className="mt-4 px-4 py-2 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wider rounded border border-blue-200"
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              className="mt-4 px-4 py-2 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wider rounded border border-blue-200"
             >
-                Launch Study
+              Launch Study
             </motion.button>
           </div>
 
@@ -116,28 +116,28 @@ export const RevenueCycleArchitecture = () => {
 
 // SUB-COMPONENT: ANIMATED CONNECTION LINE
 const AnimatedConduit = ({ delay, color, particleColor = "bg-slate-800" }: { delay: number, color: string, particleColor?: string }) => {
-    return (
-        <div className="relative w-12 h-12 lg:w-24 lg:h-auto flex items-center justify-center rotate-90 lg:rotate-0 my-4 lg:my-0">
-            {/* The Track */}
-            <div className={`absolute lg:inset-x-0 h-1 ${color} rounded-full w-1 h-12 lg:w-full lg:h-1 opacity-20`} />
-            
-            {/* The Moving Packet */}
-            <motion.div
-                className={`absolute w-3 h-3 ${particleColor} rounded-full shadow-sm z-20`}
-                animate={{ 
-                    x: ['-40px', '40px'], // Move horizontally
-                    opacity: [0, 1, 0] 
-                }}
-                transition={{ 
-                    duration: 2, 
-                    repeat: Infinity, 
-                    ease: "easeInOut", 
-                    delay: delay 
-                }}
-            />
-             {/* Arrow Head */}
-             <div className="absolute right-0 text-slate-300 text-lg hidden lg:block">→</div>
-             <div className="absolute bottom-0 text-slate-300 text-lg block lg:hidden">↓</div>
-        </div>
-    );
+  return (
+    <div className="relative w-12 h-12 lg:w-24 lg:h-auto flex items-center justify-center rotate-90 lg:rotate-0 my-4 lg:my-0">
+      {/* The Track */}
+      <div className={`absolute lg:inset-x-0 h-1 ${color} rounded-full w-1 h-12 lg:w-full lg:h-1 opacity-20`} />
+
+      {/* The Moving Packet */}
+      <motion.div
+        className={`absolute w-3 h-3 ${particleColor} rounded-full shadow-sm z-20`}
+        animate={{
+          x: ['-40px', '40px'], // Move horizontally
+          opacity: [0, 1, 0]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: delay
+        }}
+      />
+      {/* Arrow Head */}
+      <div className="absolute right-0 text-slate-300 text-lg hidden lg:block">→</div>
+      <div className="absolute bottom-0 text-slate-300 text-lg block lg:hidden">↓</div>
+    </div>
+  );
 };

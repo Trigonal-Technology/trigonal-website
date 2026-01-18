@@ -144,10 +144,12 @@ export function TrigonalLoader({
     useEffect(() => {
         if (!forceShow && persistInSession) {
             // Check if loader has been shown in this session
-            const hasSeenLoader = sessionStorage.getItem('trigonal_loader_seen');
-            if (hasSeenLoader) {
-                setShow(false);
-                return;
+            if (typeof window !== 'undefined') {
+                const hasSeenLoader = sessionStorage.getItem('trigonal_loader_seen');
+                if (hasSeenLoader) {
+                    setShow(false);
+                    return;
+                }
             }
         }
 
@@ -164,7 +166,7 @@ export function TrigonalLoader({
         // Hide loader after duration
         const hideTimer = setTimeout(() => {
             setShow(false);
-            if (persistInSession) {
+            if (persistInSession && typeof window !== 'undefined') {
                 sessionStorage.setItem('trigonal_loader_seen', 'true');
             }
         }, durationMs);

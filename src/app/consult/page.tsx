@@ -4,11 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TrigonalLoader } from '@/components/layout/TrigonalLoader';
-import { 
-    Building2, 
-    Layers, 
-    Globe, 
-    CheckCircle2, 
+import {
+    Building2,
+    Layers,
+    Globe,
+    CheckCircle2,
     Terminal,
     ArrowRight
 } from 'lucide-react';
@@ -41,10 +41,22 @@ const scopeOptions = [
 ];
 
 export default function ConsultPage() {
+    return (
+        <React.Suspense fallback={
+            <div className="min-h-screen bg-white flex items-center justify-center">
+                <TrigonalLoader />
+            </div>
+        }>
+            <ConsultPageContent />
+        </React.Suspense>
+    );
+}
+
+function ConsultPageContent() {
     const searchParams = useSearchParams();
     const [isProcessing, setIsProcessing] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
-    
+
     // Form state
     const [formData, setFormData] = useState({
         organizationName: '',
@@ -59,7 +71,7 @@ export default function ConsultPage() {
     // EFFECT: Check for URL params on mount
     useEffect(() => {
         const domainParam = searchParams.get('domain');
-        
+
         if (domainParam === 'diagnostic_middleware') {
             // Auto-select the Diagnostic Middleware domain
             setFormData(prev => ({
@@ -76,7 +88,7 @@ export default function ConsultPage() {
 
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 4000));
-        
+
         setIsProcessing(false);
         setShowSuccess(true);
     };
@@ -104,7 +116,7 @@ export default function ConsultPage() {
     return (
         <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
             {/* Blueprint Grid Background */}
-            <div 
+            <div
                 className="fixed inset-0 opacity-20 pointer-events-none"
                 style={{
                     backgroundImage: `
@@ -130,9 +142,9 @@ export default function ConsultPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-slate-900 mb-4">
                         Consult an <span className="text-precision-blue">Architect</span>
-                        </h1>
+                    </h1>
                     <p className="text-slate-600 max-w-2xl mx-auto">
-                        Our senior architects (12+ years avg. experience) will design a sovereign, 
+                        Our senior architects (12+ years avg. experience) will design a sovereign,
                         interoperable health system architecture tailored to your specifications.
                     </p>
                 </motion.div>
@@ -150,7 +162,7 @@ export default function ConsultPage() {
                         <h2 className="font-mono text-sm uppercase tracking-wider text-slate-700 border-b border-slate-200 pb-2">
                             01_ORGANIZATION_PROFILE
                         </h2>
-                        
+
                         <div className="grid md:grid-cols-2 gap-6">
                             <div>
                                 <label className="block font-mono text-xs uppercase tracking-wider text-slate-600 mb-2">
@@ -200,7 +212,7 @@ export default function ConsultPage() {
                         <h2 className="font-mono text-sm uppercase tracking-wider text-slate-700 border-b border-slate-200 pb-2">
                             02_ENGINEERING_NEED
                         </h2>
-                        
+
                         <div>
                             <label className="block font-mono text-xs uppercase tracking-wider text-slate-600 mb-3">
                                 Primary Requirement *
@@ -209,12 +221,11 @@ export default function ConsultPage() {
                                 {engineeringNeeds.map((need) => (
                                     <label
                                         key={need.value}
-                                        className={`flex items-start p-4 border-2 rounded-md cursor-pointer transition-all ${
-                                            formData.engineeringNeed === need.value
+                                        className={`flex items-start p-4 border-2 rounded-md cursor-pointer transition-all ${formData.engineeringNeed === need.value
                                                 ? 'border-precision-blue bg-blue-50'
                                                 : 'border-slate-200 hover:border-slate-300'
-                                        }`}
-                            >
+                                            }`}
+                                    >
                                         <input
                                             type="radio"
                                             name="engineeringNeed"
@@ -231,15 +242,15 @@ export default function ConsultPage() {
                                 ))}
                             </div>
                         </div>
-                                </div>
+                    </div>
 
                     {/* Interoperability Standards */}
                     <div className="space-y-6">
                         <h2 className="font-mono text-sm uppercase tracking-wider text-slate-700 border-b border-slate-200 pb-2">
                             03_REQUIRED_INTEROPERABILITY
                         </h2>
-                        
-                                <div>
+
+                        <div>
                             <label className="block font-mono text-xs uppercase tracking-wider text-slate-600 mb-3">
                                 Standards & Protocols
                             </label>
@@ -249,14 +260,13 @@ export default function ConsultPage() {
                                         key={standard.id}
                                         type="button"
                                         onClick={() => toggleStandard(standard.id)}
-                                        className={`p-3 border-2 rounded-md font-mono text-xs font-bold transition-all ${
-                                            formData.interopStandards.includes(standard.id)
+                                        className={`p-3 border-2 rounded-md font-mono text-xs font-bold transition-all ${formData.interopStandards.includes(standard.id)
                                                 ? 'border-precision-blue bg-blue-50 text-precision-blue'
                                                 : 'border-slate-200 text-slate-600 hover:border-slate-300'
-                                        }`}
+                                            }`}
                                         style={{
-                                            borderColor: formData.interopStandards.includes(standard.id) 
-                                                ? standard.color 
+                                            borderColor: formData.interopStandards.includes(standard.id)
+                                                ? standard.color
                                                 : undefined
                                         }}
                                     >
@@ -275,18 +285,17 @@ export default function ConsultPage() {
                         <h2 className="font-mono text-sm uppercase tracking-wider text-slate-700 border-b border-slate-200 pb-2">
                             04_DEPLOYMENT_SCOPE
                         </h2>
-                        
+
                         <div className="grid md:grid-cols-3 gap-4">
                             {scopeOptions.map((option) => {
                                 const Icon = option.icon;
                                 return (
                                     <label
                                         key={option.value}
-                                        className={`flex flex-col items-center p-6 border-2 rounded-lg cursor-pointer transition-all ${
-                                            formData.scope === option.value
+                                        className={`flex flex-col items-center p-6 border-2 rounded-lg cursor-pointer transition-all ${formData.scope === option.value
                                                 ? 'border-precision-blue bg-blue-50'
                                                 : 'border-slate-200 hover:border-slate-300'
-                                        }`}
+                                            }`}
                                     >
                                         <input
                                             type="radio"
@@ -296,23 +305,22 @@ export default function ConsultPage() {
                                             onChange={(e) => setFormData(prev => ({ ...prev, scope: e.target.value }))}
                                             className="sr-only"
                                         />
-                                        <Icon className={`w-8 h-8 mb-3 ${
-                                            formData.scope === option.value ? 'text-precision-blue' : 'text-slate-400'
-                                        }`} />
+                                        <Icon className={`w-8 h-8 mb-3 ${formData.scope === option.value ? 'text-precision-blue' : 'text-slate-400'
+                                            }`} />
                                         <p className="font-mono text-sm font-bold text-slate-900">{option.label}</p>
                                         <p className="text-xs text-slate-600 mt-1 text-center">{option.description}</p>
                                     </label>
                                 );
                             })}
+                        </div>
                     </div>
-                </div>
 
                     {/* Additional Context */}
                     <div className="space-y-6">
                         <h2 className="font-mono text-sm uppercase tracking-wider text-slate-700 border-b border-slate-200 pb-2">
                             05_ADDITIONAL_CONTEXT
                         </h2>
-                        
+
                         <div>
                             <label className="block font-mono text-xs uppercase tracking-wider text-slate-600 mb-2">
                                 Technical Requirements / Constraints
@@ -392,7 +400,7 @@ export default function ConsultPage() {
                                 <p className="text-white">
                                     <span className="text-slate-400">Standards:</span> {formData.interopStandards.join(', ').toUpperCase() || 'TBD'}
                                 </p>
-                                
+
                                 <div className="mt-8 pt-6 border-t border-slate-700">
                                     <p className="text-slate-400 mb-2">Next Steps:</p>
                                     <p className="text-green-400">→ Check {formData.email} for architectural brief</p>
@@ -413,6 +421,6 @@ export default function ConsultPage() {
                     </motion.div>
                 )}
             </AnimatePresence>
-                </div>
+        </div>
     );
 }

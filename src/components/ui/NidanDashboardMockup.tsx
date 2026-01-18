@@ -10,7 +10,8 @@ import {
     Activity,
     Search,
     Bell,
-    ChevronRight
+    ChevronRight,
+    LucideIcon
 } from 'lucide-react'
 
 /**
@@ -117,7 +118,7 @@ export function NidanDashboardMockup() {
     )
 }
 
-function SidebarIcon({ icon: Icon, active = false }: { icon: React.ElementType; active?: boolean }) {
+function SidebarIcon({ icon: Icon, active = false }: { icon: LucideIcon; active?: boolean }) {
     return (
         <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${active ? 'bg-slate-700 text-white' : 'text-slate-500 hover:text-slate-300'
             }`}>
