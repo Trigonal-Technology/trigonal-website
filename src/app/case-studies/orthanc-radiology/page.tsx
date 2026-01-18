@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { RevenueCycleArchitecture } from '@/components/sections/RevenueCycleArchitecture';
 
 export default function OrthancCaseStudy() {
   return (
@@ -69,49 +70,7 @@ export default function OrthancCaseStudy() {
       </section>
 
       {/* 3. THE SOLUTION: Workflow Visualization */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6">
-           <div className="mb-16 text-center">
-              <span className="font-mono text-xs text-emerald-600 font-bold uppercase tracking-widest">Revenue Cycle Architecture</span>
-              <h2 className="text-4xl font-bold text-slate-900 mt-2">The "Order-to-Cash" Imaging Loop</h2>
-           </div>
-           
-           {/* DIAGRAM */}
-           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center text-center">
-              
-              {/* STEP 1: BILLING */}
-              <div className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-                 <div className="font-mono text-xs text-slate-400 mb-2">01. HIS / BILLING</div>
-                 <div className="font-bold text-slate-900">Patient Invoice</div>
-                 <p className="text-xs text-slate-500 mt-2">"Chest X-Ray PA"</p>
-                 <div className="mt-2 text-[10px] bg-green-100 text-green-700 px-2 py-1 rounded inline-block">Payment Verified</div>
-              </div>
-
-              {/* ARROW */}
-              <div className="text-slate-300 text-xl">→</div>
-
-              {/* STEP 2: ORTHANC */}
-              <div className="p-6 bg-slate-900 text-white rounded-xl shadow-xl">
-                 <div className="font-mono text-xs text-emerald-400 mb-2">02. ORTHANC CORE</div>
-                 <div className="font-bold">Modality Worklist</div>
-                 <p className="text-xs text-slate-400 mt-2">DICOM Study Created</p>
-                 <div className="mt-2 text-[10px] bg-slate-700 px-2 py-1 rounded inline-block">AE_TITLE: ORTHANC</div>
-              </div>
-
-              {/* ARROW */}
-              <div className="text-slate-300 text-xl">→</div>
-
-              {/* STEP 3: PATIENT RECORD */}
-              <div className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-                 <div className="font-mono text-xs text-slate-400 mb-2">03. CLINICAL DASHBOARD</div>
-                 <div className="font-bold text-slate-900">Study Linked</div>
-                 <p className="text-xs text-slate-500 mt-2">Embedded OHIF Viewer</p>
-                 <div className="mt-2 text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded inline-block">Bahmni PACS Integration</div>
-              </div>
-
-           </div>
-        </div>
-      </section>
+      <RevenueCycleArchitecture />
 
       {/* 4. ACCEPTANCE CRITERIA: The Proof */}
       <section className="py-24">
