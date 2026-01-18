@@ -8,7 +8,8 @@ const caseStudies = [
     title: 'Radiology Pipeline Replacement',
     stack: ['Orthanc', 'Bahmni', 'Docker'],
     desc: 'Replacing heavy Dcm4chee architecture with lightweight Orthanc instances to enable end-to-end DICOM flow on edge hardware.',
-    category: 'INFRASTRUCTURE'
+    category: 'INFRASTRUCTURE',
+    link: '/case-studies/orthanc-radiology'
   },
   {
     id: 'lafia-hms',

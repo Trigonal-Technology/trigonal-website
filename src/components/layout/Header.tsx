@@ -19,15 +19,15 @@ const resourcesPillars = [
         label: 'The Manifesto',
         dnaTag: '[CULTURAL_CODE]',
         icon: FileText,
-        description: 'The engineering culture and principles we live by.',
+        description: 'Our engineering constitution.',
         color: 'text-blue-400'
     },
     {
-        href: '/case-studies/lab-bridge',
-        label: 'Case Studies',
+        href: '/case-studies',
+        label: 'Engineering Logs',
         dnaTag: '[ANALYSIS | DEPLOYMENT]',
         icon: Wrench,
-        description: 'Technical deep-dives: Lab-Bridge, NidanEHR, OpenHIE Spine.',
+        description: 'Chronological record of deployed systems.',
         color: 'text-orange-400'
     },
     {
@@ -35,7 +35,7 @@ const resourcesPillars = [
         label: 'Documentation',
         dnaTag: '[ARCH | SCHEMATICS]',
         icon: Shield,
-        description: 'FHIR R4 mapping, Odoo 18 ERP, OpenHIE architecture.',
+        description: 'System architecture and guides.',
         color: 'text-green-400'
     }
 ]
