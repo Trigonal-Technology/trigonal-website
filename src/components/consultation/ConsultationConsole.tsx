@@ -151,6 +151,26 @@ export const ConsultationConsole = () => {
     } else if (source === 'telehealth') {
       setSelectedDomains(['TELEHEALTH']);
       setSelectedFeatures(['webrtc']);
+    } else if (source === 'nidan_full_stack') {
+      // SELECT THE ENTIRE ECOSYSTEM
+      setSelectedDomains([
+        'EMR_CORE', 
+        'RIS_PACS', 
+        'LIS_MIDDLEWARE', 
+        'ODOO_ERP', 
+        'DATA_AI'
+      ]);
+      // PRE-SELECT KEY FEATURES
+      setSelectedFeatures([
+        'bahmni', 'openmrs',          // EMR
+        'orthanc', 'viewer',          // PACS
+        'lab_bridge', 'openelis',     // LIS
+        'billing', 'inventory',       // Odoo
+        'superset', 'dhis2'           // Data
+      ]);
+      // SET SCALE & TIMELINE
+      setProjectScale('MULTI_HOSPITAL');
+      setTimeline('Q1_2026');
     }
     // If source=homepage or no source, no pre-selection (user chooses)
   }, [searchParams]);

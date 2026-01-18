@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { 
   Database, Layers, Globe, WifiOff, CheckCircle2, ArrowRight, 
   Server, Code2, Activity, CreditCard, GitMerge, Terminal,
-  Zap, Eye, BarChart3, FileText, Smartphone, Shield, GitFork
+  Zap, Eye, BarChart3, FileText, Smartphone, Shield, GitFork, Scan, Plug
 } from 'lucide-react';
 
 export default function NidanEHRPage() {
@@ -41,25 +41,19 @@ export default function NidanEHRPage() {
             Synchronizing Clinical Care, Finance, and Labs via a sovereign <strong>Event Bus</strong>.
           </p>
 
-          {/* System Status Badges */}
-          <div className="flex flex-wrap gap-4 mb-12">
-            <div className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg flex items-center gap-3">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-              <span className="font-mono text-sm">
-                <span className="text-slate-400">KERNEL:</span> OPENMRS 3.x
-              </span>
+          {/* System Status Badges - Live Kernel Status Ticker */}
+          <div className="mb-8">
+            <div className="inline-block px-3 py-1 mb-4 bg-slate-800/50 border border-slate-700 rounded-full">
+              <span className="font-mono text-xs text-slate-400 uppercase tracking-widest">Live Kernel Status</span>
             </div>
-            <div className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg flex items-center gap-3">
-              <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-              <span className="font-mono text-sm">
-                <span className="text-slate-400">ERP:</span> ODOO 19
-              </span>
-            </div>
-            <div className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg flex items-center gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-              <span className="font-mono text-sm">
-                <span className="text-slate-400">BUS:</span> APACHE KAFKA
-              </span>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <StatusBadge label="KERNEL: OPENMRS 3.x" color="bg-blue-500" />
+              <StatusBadge label="ERP: ODOO 19" color="bg-orange-500" />
+              <StatusBadge label="BUS: KAFKA" color="bg-emerald-500" />
+              <StatusBadge label="LIS: OPENELIS" color="bg-purple-500" />
+              <StatusBadge label="PACS: ORTHANC" color="bg-pink-500" />
+              <StatusBadge label="HIE: MEDIATOR" color="bg-indigo-500" />
+              <StatusBadge label="IMIS: OPENIMIS" color="bg-teal-500" />
             </div>
           </div>
 
@@ -75,51 +69,59 @@ export default function NidanEHRPage() {
         </div>
       </section>
 
-      {/* 2. MIDDLEWARE NERVOUS SYSTEM: Star Topology */}
-      <section className="py-24 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16 text-center">
-            <span className="font-mono text-xs text-emerald-600 font-bold uppercase tracking-widest">Middleware Architecture</span>
-            <h2 className="text-4xl font-bold text-slate-900 mt-2">The Central Nervous System</h2>
+      {/* 2. MIDDLEWARE NERVOUS SYSTEM: 3-Column Grid */}
+      <section className="py-20 bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-16">
+            <span className="font-mono text-xs text-blue-600 font-bold uppercase tracking-widest">
+              Full Topology
+            </span>
+            <h2 className="text-3xl font-bold text-slate-900 mt-2">The 7-Node Nervous System</h2>
             <p className="text-slate-600 mt-4 max-w-2xl mx-auto">
-              Event-driven synchronization replacing brittle point-to-point APIs. Circuit board topology where Kafka is the CPU.
+              Event-driven synchronization mapping every kernel to the central bus. Circuit board topology where Kafka is the CPU.
             </p>
           </div>
 
-          {/* Star Topology Grid - Mobile: Vertical Stack, Desktop: 3x3 Grid */}
-          <div className="relative max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center justify-items-center">
-              
-              {/* Top Center: OpenHIE Mediator (The Bridge) */}
-              <div className="md:col-start-2 md:col-span-1 w-full max-w-xs">
-                <StarTopologyNode
-                  icon={GitFork}
-                  label="OPENHIE"
-                  title="OpenHIE Mediator"
-                  desc="Gateway to National Grid"
-                  port="8080"
-                  color="purple"
-                  position="top"
+          {/* 3-COLUMN LAYOUT: CARE | HUB | ADMIN */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+             
+             {/* COLUMN 1: CARE DELIVERY (Left) */}
+             <div className="space-y-4">
+                <ServiceCard 
+                    title="Clinical Core" 
+                    subtitle="OpenMRS 3.x" 
+                    icon={<Activity className="w-5 h-5 text-blue-600" />} 
+                    port="8081" 
+                    tech="FHIR R4"
                 />
-              </div>
-
-              {/* Top Left: Clinical Core */}
-              <div className="md:col-start-1 md:row-start-2 w-full max-w-xs">
-                <StarTopologyNode
-                  icon={Activity}
-                  label="CIS"
-                  title="OpenMRS 3.x"
-                  desc="Clinical Kernel"
-                  port="8081"
-                  color="blue"
-                  position="left"
+                <ServiceCard 
+                    title="Diagnostic Core" 
+                    subtitle="OpenELIS 2.0" 
+                    icon={<Database className="w-5 h-5 text-purple-600" />} 
+                    port="8083" 
+                    tech="ASTM / HL7"
                 />
-              </div>
+                <ServiceCard 
+                    title="Imaging Core" 
+                    subtitle="Orthanc PACS" 
+                    icon={<Scan className="w-5 h-5 text-pink-600" />} 
+                    port="8042" 
+                    tech="DICOM Web"
+                />
+             </div>
 
-              {/* Center: Kafka (The CPU) */}
-              <div className="md:col-start-2 md:row-start-2 w-full max-w-sm relative z-20">
+             {/* COLUMN 2: THE HUB (Center) */}
+             <div className="space-y-4 relative z-10">
+                {/* GATEWAY (Top) */}
+                <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-xl text-center mx-auto w-full md:w-11/12">
+                    <div className="flex justify-center mb-1"><Globe className="w-5 h-5 text-indigo-600" /></div>
+                    <div className="font-bold text-indigo-900 text-sm">OpenHIE Mediator</div>
+                    <div className="text-[10px] text-indigo-600 font-mono">PORT: 5000 (NATIONAL GATEWAY)</div>
+                </div>
+
+                {/* KAFKA (Middle - The Heart) */}
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
+                  initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   animate={{ 
@@ -130,85 +132,68 @@ export default function NidanEHRPage() {
                     ]
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="p-8 bg-slate-900 text-white rounded-xl shadow-2xl border-4 border-emerald-500"
+                  className="p-8 bg-slate-900 text-white rounded-2xl shadow-2xl overflow-hidden text-center relative border-b-4 border-emerald-500 py-12"
                 >
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-4 py-1 rounded-full text-xs font-mono font-bold">
-                    CPU: EVENT BUS
-                  </div>
-                  <GitMerge className="w-16 h-16 text-emerald-400 mx-auto mb-4" />
-                  <div className="font-mono text-xs text-emerald-400 mb-4 uppercase tracking-widest text-center">Apache Kafka</div>
-                  <h3 className="text-2xl font-bold text-center mb-6">Central Nervous System</h3>
-                  
-                  {/* Active Topics List */}
-                  <div className="space-y-2 mb-6">
-                    {kafkaTopics.map((topic, idx) => (
-                      <motion.div
-                        key={topic}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.5 + idx * 0.1 }}
-                        onMouseEnter={() => setSelectedTopic(topic)}
-                        onMouseLeave={() => setSelectedTopic(null)}
-                        className={`p-3 rounded-lg border transition-all cursor-pointer ${
-                          selectedTopic === topic
-                            ? 'bg-emerald-500/20 border-emerald-400'
-                            : 'bg-slate-800 border-slate-700'
-                        }`}
-                      >
-                        <div className="font-mono text-xs text-emerald-300 flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                          {topic}
+                    <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+                    <div className="relative">
+                        <div className="inline-flex items-center gap-2 mb-4 text-emerald-400">
+                            <GitMerge className="w-10 h-10" />
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
+                        <h3 className="font-bold tracking-wider text-xl mb-1">APACHE KAFKA</h3>
+                        <p className="text-xs text-slate-400 mb-6">Central Nervous System</p>
+                        <div className="text-left bg-slate-950 p-3 rounded border border-slate-800 font-mono text-[10px] space-y-2">
+                            <div className="flex justify-between"><span className="text-blue-400">IN:</span> <span>nidan.patient.*</span></div>
+                            <div className="flex justify-between"><span className="text-orange-400">IN:</span> <span>nidan.invoice.*</span></div>
+                            <div className="flex justify-between"><span className="text-purple-400">IN:</span> <span>nidan.lab.final</span></div>
+                        </div>
+                    </div>
                 </motion.div>
-              </div>
 
-              {/* Top Right: Fiscal Core */}
-              <div className="md:col-start-3 md:row-start-2 w-full max-w-xs">
-                <StarTopologyNode
-                  icon={CreditCard}
-                  label="OIS"
-                  title="Odoo 19 + OpenIMIS"
-                  desc="Fiscal Kernel"
-                  port="8082"
-                  color="orange"
-                  position="right"
-                  tag="OpenIMIS"
+                {/* INTELLIGENCE (Bottom) */}
+                <div className="p-4 bg-slate-100 border border-slate-200 rounded-xl text-center mx-auto w-full md:w-11/12">
+                    <div className="flex justify-center mb-1"><BarChart3 className="w-5 h-5 text-slate-600" /></div>
+                    <div className="font-bold text-slate-900 text-sm">Superset Intelligence</div>
+                    <div className="text-[10px] text-slate-500 font-mono">PORT: 8088 (ANALYTICS)</div>
+                </div>
+             </div>
+
+             {/* COLUMN 3: OPERATIONS (Right) */}
+             <div className="space-y-4">
+                <ServiceCard 
+                    title="Fiscal Core" 
+                    subtitle="Odoo 19 ERP" 
+                    icon={<CreditCard className="w-5 h-5 text-orange-600" />} 
+                    port="8082" 
+                    tech="JSON-RPC"
                 />
-              </div>
-
-              {/* Bottom Left: Diagnostic Core */}
-              <div className="md:col-start-1 md:row-start-3 w-full max-w-xs">
-                <StarTopologyNode
-                  icon={FileText}
-                  label="LIS"
-                  title="OpenELIS + Orthanc"
-                  desc="Diagnostic Kernel"
-                  port="8083"
-                  color="green"
-                  position="bottom-left"
+                <ServiceCard 
+                    title="Insurance Core" 
+                    subtitle="OpenIMIS" 
+                    icon={<Shield className="w-5 h-5 text-emerald-600" />} 
+                    port="8000" 
+                    tech="Claims API"
                 />
-              </div>
+                <div className="group relative p-5 border border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-400 text-xs font-mono bg-slate-50/50 hover:bg-slate-50 transition-all cursor-pointer overflow-hidden">
+                    
+                    {/* HOVER GLOW - Make it Green/Emerald to signal "Ready" instead of generic Blue */}
+                    <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    
+                    {/* STATIC CONTENT */}
+                    <div className="z-10 flex flex-col items-center gap-2 group-hover:translate-y-[-4px] transition-transform">
+                        {/* SWAP "+" FOR PLUG ICON */}
+                        <div className="p-2 rounded-full bg-slate-100 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-colors">
+                            <Plug className="w-4 h-4" /> 
+                        </div>
+                        <span className="group-hover:text-emerald-700 transition-colors">[ EXPANSION_NODE ]</span>
+                    </div>
 
-              {/* Bottom Right: Intelligence Core */}
-              <div className="md:col-start-3 md:row-start-3 w-full max-w-xs">
-                <StarTopologyNode
-                  icon={BarChart3}
-                  label="INTEL"
-                  title="Superset + DHIS2"
-                  desc="Intelligence Kernel"
-                  port="8084"
-                  color="indigo"
-                  position="bottom-right"
-                />
-              </div>
+                    {/* TOOLTIP - Make it clearer */}
+                    <div className="absolute bottom-3 text-[10px] text-emerald-600 font-bold opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                        INITIALIZE_CUSTOM_MODULE
+                    </div>
+                </div>
+             </div>
 
-            </div>
-
-            {/* Animated Connection Lines */}
-            <StarTopologyConnections />
           </div>
         </div>
       </section>
@@ -537,6 +522,54 @@ export default function NidanEHRPage() {
     </main>
   );
 }
+
+// Service Card Component (3-Column Grid)
+const ServiceCard = ({ title, subtitle, icon, port, tech }: { 
+  title: string, 
+  subtitle: string, 
+  icon: React.ReactNode, 
+  port: string, 
+  tech: string 
+}) => (
+  <div className="p-5 bg-white border border-slate-200 rounded-xl shadow-sm flex items-start gap-4 hover:border-blue-500 transition-all">
+    <div className="p-2 bg-slate-50 rounded-lg shrink-0">{icon}</div>
+    <div className="w-full">
+        <div className="flex justify-between items-center mb-1">
+            <h3 className="font-bold text-slate-900 text-sm">{title}</h3>
+            <span className="font-mono text-[10px] text-slate-400">:{port}</span>
+        </div>
+        <p className="text-xs text-slate-500 mb-2">{subtitle}</p>
+        <span className="inline-block px-2 py-0.5 bg-slate-100 text-[10px] font-mono rounded text-slate-600">
+            {tech}
+        </span>
+    </div>
+  </div>
+);
+
+// Status Badge Component (Hero Ticker)
+const StatusBadge = ({ label, color }: { label: string, color: string }) => {
+  // Map background colors to corresponding text colors
+  const colorMap: Record<string, string> = {
+    'bg-blue-500': 'text-blue-400',
+    'bg-orange-500': 'text-orange-400',
+    'bg-emerald-500': 'text-emerald-400',
+    'bg-purple-500': 'text-purple-400',
+    'bg-pink-500': 'text-pink-400',
+    'bg-indigo-500': 'text-indigo-400',
+    'bg-teal-500': 'text-teal-400'
+  };
+  
+  const textColor = colorMap[color] || 'text-slate-400';
+  
+  return (
+    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/50 border border-slate-700 backdrop-blur-sm">
+      <div className={`w-2 h-2 rounded-full ${color} animate-pulse`} />
+      <span className={`font-mono text-xs font-bold ${textColor} tracking-wider`}>
+        {label}
+      </span>
+    </div>
+  );
+};
 
 // Star Topology Node Component
 const StarTopologyNode = ({ 

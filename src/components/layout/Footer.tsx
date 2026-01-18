@@ -38,10 +38,11 @@ const footerLinks = [
 export function Footer() {
     const pathname = usePathname();
 
-    // SMART LOGIC: Define which pages should HIDE the generic FIRE banner
-    // 1. '/' -> Homepage already has the "ProjectLaunchBand"
-    // 2. '/consult' -> User is already on the conversion page
-    const hideBanner = pathname === '/' || pathname === '/consult';
+    // HIDE BANNER LOGIC:
+    // 1. Homepage (Has ProjectLaunchBand)
+    // 2. Consult (Is the form)
+    // 3. NidanEHR (Has CLI Terminal)
+    const hideBanner = pathname === '/' || pathname === '/consult' || pathname === '/nidanehr';
 
     return (
         <footer className="relative z-50 bg-white border-t border-slate-200 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
