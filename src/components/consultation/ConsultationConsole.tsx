@@ -5,53 +5,112 @@ import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Terminal, Loader2 } from 'lucide-react';
 
-// DOMAIN MATRIX: Maps high-level domains to specific technical deliverables
+// DOMAIN MATRIX: Maps every service to specific clickable tags
 const DOMAIN_MATRIX = {
-  EMR_IMPLEMENTATION: {
-    label: "EMR / EHR CORE",
-    sub_options: ["Bahmni Standard", "OpenMRS 3.x", "NidanEHR (Sovereign)", "Data Migration", "Custom Module Dev"]
+  EMR_CORE: {
+    id: 'EMR_CORE',
+    label: 'EMR / EHR CORE',
+    description: 'Clinical Records & Workflows',
+    sub_options: [
+      { id: 'bahmni', label: 'Bahmni Standard' },
+      { id: 'openmrs', label: 'OpenMRS 3.x' },
+      { id: 'nidan', label: 'NidanEHR (Sovereign)' },
+      { id: 'migration', label: 'Data Migration' }
+    ]
   },
   RIS_PACS: {
-    label: "RADIOLOGY (RIS/PACS)",
-    sub_options: ["Orthanc Setup", "Dcm4chee Replacement", "Modality Integration", "OHIF Viewer", "Billing Linkage"]
+    id: 'RIS_PACS',
+    label: 'RADIOLOGY (RIS/PACS)',
+    description: 'Imaging & DICOM Infrastructure',
+    sub_options: [
+      { id: 'orthanc', label: 'Orthanc Setup' },
+      { id: 'dcm4chee', label: 'Dcm4chee Replacement' },
+      { id: 'viewer', label: 'OHIF Viewer Integration' },
+      { id: 'billing_link', label: 'Billing Linkage' }
+    ]
   },
   LIS_MIDDLEWARE: {
-    label: "LABORATORY (LIS)",
-    sub_options: ["Lab-Bridge Middleware", "OpenELIS Setup", "Analyzer Interfacing (ASTM)", "Bi-Directional Flow"]
+    id: 'LIS_MIDDLEWARE',
+    label: 'LABORATORY (LIS)',
+    description: 'Analyzer Automation & Middleware',
+    sub_options: [
+      { id: 'lab_bridge', label: 'Lab-Bridge Middleware' },
+      { id: 'astm', label: 'Analyzer Interfacing (ASTM)' },
+      { id: 'openelis', label: 'OpenELIS Setup' }
+    ]
+  },
+  ODOO_ERP: {
+    id: 'ODOO_ERP',
+    label: 'ODOO ERP / BILLING',
+    description: 'Hospital Finance & Operations',
+    sub_options: [
+      { id: 'billing', label: 'Revenue Cycle Mgmt' },
+      { id: 'inventory', label: 'Inventory & Stock' },
+      { id: 'crm', label: 'CRM & Patient Outreach' }
+    ]
   },
   DATA_AI: {
-    label: "DATA & INTELLIGENCE",
-    sub_options: ["DHIS2 Integration", "Predictive Analytics", "Superset Dashboards", "ETL Pipelines"]
+    id: 'DATA_AI',
+    label: 'DATA & INTELLIGENCE',
+    description: 'Analytics, Warehousing & AI',
+    sub_options: [
+      { id: 'dhis2', label: 'DHIS2 Integration' },
+      { id: 'superset', label: 'Superset Dashboards' },
+      { id: 'predictive', label: 'Predictive Models' }
+    ]
   },
-  ERP_BILLING: {
-    label: "ODOO ERP / BILLING",
-    sub_options: ["Revenue Cycle Mgmt", "Inventory & Stock", "Pharmacy Billing", "Insurance Claims"]
+  COMMUNITY: {
+    id: 'COMMUNITY',
+    label: 'COMMUNITY HEALTH',
+    description: 'Offline-First Field Tools',
+    sub_options: [
+      { id: 'cht', label: 'Medic Mobile (CHT)' },
+      { id: 'kobo', label: 'KoboToolbox Surveys' },
+      { id: 'geotag', label: 'Geo-Tagging & Mapping' }
+    ]
   },
-  COMMUNITY_HEALTH: {
-    label: "COMMUNITY (CHT)",
-    sub_options: ["Offline-First Apps", "Medic Mobile (CHT)", "Geo-Tagging", "Household Registration"]
+  TELEHEALTH: {
+    id: 'TELEHEALTH',
+    label: 'TELEMEDICINE',
+    description: 'Remote Care Systems',
+    sub_options: [
+      { id: 'webrtc', label: 'WebRTC Video Core' },
+      { id: 'portal', label: 'Patient Portals' }
+    ]
   },
-  TELEMEDICINE: {
-    label: "TELEHEALTH",
-    sub_options: ["WebRTC Video", "Remote Consultation", "Patient Portal", "SMS Notifications"]
+  PHARMACY: {
+    id: 'PHARMACY',
+    label: 'PHARMACY SYSTEMS',
+    description: 'Dispensing & Supply Chain',
+    sub_options: [
+      { id: 'dispensing', label: 'Dispensing Modules' },
+      { id: 'supply_chain', label: 'Supply Chain Integration' }
+    ]
   },
   INFRASTRUCTURE: {
-    label: "DEVOPS & INFRA",
-    sub_options: ["Docker/K8s", "On-Premise Server", "Cloud Migration", "Security Audit"]
+    id: 'INFRASTRUCTURE',
+    label: 'DEVOPS & INFRASTRUCTURE',
+    description: 'Deployment & Security',
+    sub_options: [
+      { id: 'docker_k8s', label: 'Docker/K8s' },
+      { id: 'cloud_migration', label: 'Cloud Migration' },
+      { id: 'security_audit', label: 'Security Audit' },
+      { id: 'on_premise', label: 'On-Premise Server' }
+    ]
   }
 } as const;
 
 type DomainKey = keyof typeof DOMAIN_MATRIX;
 
 const PROJECT_SCALES = [
-  { value: 'SINGLE_FACILITY', label: 'Single Facility', desc: 'One hospital/clinic' },
-  { value: 'MULTI_HOSPITAL', label: 'Multi-Hospital', desc: 'Regional network' },
-  { value: 'NATIONAL_SCALE', label: 'National Scale', desc: 'Country-wide deployment' }
+  { value: 'SINGLE_FACILITY', label: 'SINGLE_FACILITY' },
+  { value: 'MULTI_HOSPITAL', label: 'MULTI_HOSPITAL' },
+  { value: 'NATIONAL_GOVT', label: 'NATIONAL_GOVT' }
 ] as const;
 
 const TIMELINES = [
-  { value: 'IMMEDIATE', label: 'IMMEDIATE', desc: 'Urgent - This month' },
-  { value: 'THIS_QUARTER', label: 'THIS_QUARTER', desc: 'Next 3 months' },
+  { value: 'ASAP', label: 'ASAP (CRITICAL)', desc: 'Urgent - This month' },
+  { value: 'Q1_2026', label: 'Q1_2026', desc: 'Next 3 months' },
   { value: 'PLANNING_PHASE', label: 'PLANNING_PHASE', desc: 'Research/Planning stage' }
 ] as const;
 
@@ -73,40 +132,36 @@ export const ConsultationConsole = () => {
     email: ''
   });
 
-  // URL Parameter Logic: Auto-select based on source
+  // Auto-Magic Logic: URL Parameter Parsing
   useEffect(() => {
     const source = searchParams.get('source');
     
-    if (source === 'lab_bridge') {
-      setSelectedDomains(['LIS_MIDDLEWARE']);
-      setSelectedFeatures(['Lab-Bridge Middleware']);
-    } else if (source === 'orthanc') {
+    if (source === 'orthanc') {
       setSelectedDomains(['RIS_PACS']);
-      setSelectedFeatures(['Orthanc Setup']);
-    } else if (source === 'nidan') {
-      setSelectedDomains(['EMR_IMPLEMENTATION']);
-      setSelectedFeatures(['NidanEHR (Sovereign)']);
-    } else if (searchParams.get('domain') === 'diagnostic_middleware') {
+      setSelectedFeatures(['orthanc', 'billing_link']);
+    } else if (source === 'lab_bridge') {
       setSelectedDomains(['LIS_MIDDLEWARE']);
-      setSelectedFeatures(['Lab-Bridge Middleware', 'Analyzer Interfacing (ASTM)']);
-    } else if (searchParams.get('domain') === 'infrastructure_gap') {
-      setSelectedDomains(['RIS_PACS', 'INFRASTRUCTURE']);
-      setSelectedFeatures(['Orthanc Setup', 'Docker/K8s']);
+      setSelectedFeatures(['lab_bridge', 'astm']);
+    } else if (source === 'nidan') {
+      setSelectedDomains(['EMR_CORE']);
+      setSelectedFeatures(['nidan']);
+    } else if (source === 'manifesto') {
+      setSelectedDomains(['INFRASTRUCTURE']);
+      setSelectedFeatures(['security_audit']);
+    } else if (source === 'telehealth') {
+      setSelectedDomains(['TELEHEALTH']);
+      setSelectedFeatures(['webrtc']);
     }
+    // If source=homepage or no source, no pre-selection (user chooses)
   }, [searchParams]);
-
-  // Derived: Get all available features from selected domains
-  const availableFeatures = selectedDomains.flatMap(domain => 
-    DOMAIN_MATRIX[domain].sub_options
-  );
 
   // Toggle domain selection
   const toggleDomain = (domain: DomainKey) => {
     setSelectedDomains(prev => {
       if (prev.includes(domain)) {
         // Remove domain and its features
-        const domainFeatures = DOMAIN_MATRIX[domain].sub_options;
-        setSelectedFeatures(feats => feats.filter(f => !domainFeatures.includes(f)));
+        const domainFeatures = DOMAIN_MATRIX[domain].sub_options.map(opt => opt.id);
+        setSelectedFeatures(feats => feats.filter(f => !domainFeatures.includes(f as any)));
         return prev.filter(d => d !== domain);
       } else {
         return [...prev, domain];
@@ -115,11 +170,11 @@ export const ConsultationConsole = () => {
   };
 
   // Toggle feature selection
-  const toggleFeature = (feature: string) => {
+  const toggleFeature = (featureId: string) => {
     setSelectedFeatures(prev => 
-      prev.includes(feature) 
-        ? prev.filter(f => f !== feature)
-        : [...prev, feature]
+      prev.includes(featureId) 
+        ? prev.filter(f => f !== featureId)
+        : [...prev, featureId]
     );
   };
 
@@ -164,25 +219,25 @@ export const ConsultationConsole = () => {
           <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto mb-6" />
         </motion.div>
         <h3 className="text-2xl font-bold text-white mb-4 font-mono uppercase tracking-widest">
-          BRIEF TRANSMITTED
+          PROTOCOL INITIALIZED
         </h3>
         <p className="text-slate-400 mb-6 font-mono text-sm">
           An architect with 12+ years seniority has been assigned.
         </p>
         <p className="text-emerald-400 text-sm font-mono">
-          Response SLA: 24-48 hours
+          Response Time: 24-48 hours
         </p>
       </motion.div>
     );
   }
 
   return (
-    <div className="bg-slate-900 border-2 border-slate-700 rounded-xl p-8 md:p-12 text-white overflow-hidden relative">
+    <div className="bg-slate-950 border-2 border-slate-800 rounded-xl p-8 md:p-12 text-white overflow-hidden relative">
       {/* CLI Header with Blinking Cursor */}
-      <div className="flex items-center gap-3 mb-8 pb-6 border-b border-slate-700">
+      <div className="flex items-center gap-3 mb-8 pb-6 border-b border-slate-800">
         <Terminal className="w-6 h-6 text-emerald-500" />
         <div className="flex items-center gap-2 font-mono text-sm uppercase tracking-widest">
-          <span>INITIALIZE PROJECT PARAMETERS</span>
+          <span>PROJECT CONFIGURATOR</span>
           <motion.span
             animate={{ opacity: [1, 0] }}
             transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
@@ -195,11 +250,11 @@ export const ConsultationConsole = () => {
 
       <form onSubmit={handleSubmit} className="space-y-12">
         
-        {/* SECTION 1: Target Systems (Domain Matrix) */}
+        {/* STEP 1: Domain Selection (Grid) */}
         <section>
           <h2 className="font-mono text-xs uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
-            <span className="text-emerald-500">[01]</span>
-            TARGET SYSTEMS
+            <span className="text-blue-500">[01]</span>
+            SELECT TARGET DOMAINS
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {Object.entries(DOMAIN_MATRIX).map(([key, domain]) => {
@@ -209,37 +264,39 @@ export const ConsultationConsole = () => {
                   key={key}
                   type="button"
                   onClick={() => toggleDomain(key as DomainKey)}
-                  className={`relative p-4 border-2 rounded-lg text-left transition-all ${
+                  className={`relative p-6 border-2 rounded-lg text-left transition-all ${
                     isSelected
-                      ? 'border-emerald-500 bg-emerald-500/10 shadow-lg shadow-emerald-500/20'
-                      : 'border-slate-700 hover:border-slate-600'
+                      ? 'border-blue-500 bg-blue-900/50 shadow-lg shadow-blue-500/20'
+                      : 'border-slate-800 hover:border-blue-500/50 bg-slate-900'
                   }`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-[10px] text-slate-400 uppercase">
-                      {domain.label.split(' ')[0]}
-                    </span>
-                    {isSelected && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                      >
-                        <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      </motion.div>
-                    )}
+                  {isSelected && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute top-3 right-3"
+                    >
+                      <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                    </motion.div>
+                  )}
+                  <div className="font-mono text-[10px] text-slate-400 uppercase mb-2">
+                    {domain.id}
                   </div>
-                  <h3 className="text-sm font-bold text-white font-mono uppercase">
-                    {domain.label.split('(')[0].trim()}
+                  <h3 className="text-base font-bold text-white font-mono uppercase mb-2">
+                    {domain.label}
                   </h3>
+                  <p className="text-xs text-slate-400 font-sans">
+                    {domain.description}
+                  </p>
                 </motion.button>
               );
             })}
           </div>
         </section>
 
-        {/* SECTION 2: Technical Specifics (Dynamic Render) */}
+        {/* STEP 2: Scope Refinement (Dynamic Chips) */}
         <AnimatePresence>
           {selectedDomains.length > 0 && (
             <motion.section
@@ -249,39 +306,42 @@ export const ConsultationConsole = () => {
               transition={{ duration: 0.3 }}
             >
               <h2 className="font-mono text-xs uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
-                <span className="text-emerald-500">[02]</span>
-                TECHNICAL SPECIFICS
+                <span className="text-blue-500">[02]</span>
+                REFINE SCOPE
               </h2>
               <div className="flex flex-wrap gap-3">
-                {availableFeatures.map((feature) => {
-                  const isSelected = selectedFeatures.includes(feature);
-                  return (
-                    <motion.button
-                      key={feature}
-                      type="button"
-                      onClick={() => toggleFeature(feature)}
-                      className={`px-4 py-2 rounded-full border-2 text-xs font-mono uppercase transition-all ${
-                        isSelected
-                          ? 'border-emerald-500 bg-emerald-500/20 text-emerald-300'
-                          : 'border-slate-700 text-slate-400 hover:border-slate-600 hover:text-slate-300'
-                      }`}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {feature}
-                    </motion.button>
-                  );
+                {selectedDomains.map(domainKey => {
+                  const domain = DOMAIN_MATRIX[domainKey];
+                  return domain.sub_options.map((feature) => {
+                    const isSelected = selectedFeatures.includes(feature.id);
+                    return (
+                      <motion.button
+                        key={feature.id}
+                        type="button"
+                        onClick={() => toggleFeature(feature.id)}
+                        className={`px-4 py-2 rounded-full border-2 text-xs font-mono uppercase transition-all ${
+                          isSelected
+                            ? 'border-emerald-500 bg-emerald-500/20 text-emerald-300'
+                            : 'border-slate-700 text-slate-400 hover:border-slate-600 hover:text-slate-300 bg-slate-900'
+                        }`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {feature.label}
+                      </motion.button>
+                    );
+                  });
                 })}
               </div>
             </motion.section>
           )}
         </AnimatePresence>
 
-        {/* SECTION 3: Operational Context */}
+        {/* STEP 3: Logistics (Toggles) */}
         <section>
           <h2 className="font-mono text-xs uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
-            <span className="text-emerald-500">[03]</span>
-            OPERATIONAL CONTEXT
+            <span className="text-blue-500">[03]</span>
+            OPERATIONAL LOGISTICS
           </h2>
           
           {/* Scale Selection */}
@@ -289,24 +349,21 @@ export const ConsultationConsole = () => {
             <label className="block font-mono text-[10px] uppercase text-slate-400 mb-4">
               PROJECT SCALE
             </label>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex gap-4">
               {PROJECT_SCALES.map((scale) => (
                 <motion.button
                   key={scale.value}
                   type="button"
                   onClick={() => setProjectScale(scale.value)}
-                  className={`p-4 border-2 rounded-lg text-left transition-all ${
+                  className={`px-6 py-3 border-2 rounded-lg font-mono text-xs font-bold transition-all ${
                     projectScale === scale.value
-                      ? 'border-blue-500 bg-blue-500/10'
-                      : 'border-slate-700 hover:border-slate-600'
+                      ? 'border-blue-500 bg-blue-500/20 text-blue-300'
+                      : 'border-slate-800 text-slate-400 hover:border-slate-700 bg-slate-900'
                   }`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="font-mono text-xs font-bold text-white mb-1">
-                    {scale.label.replace('_', ' ')}
-                  </div>
-                  <div className="text-xs text-slate-400">{scale.desc}</div>
+                  [{scale.label}]
                 </motion.button>
               ))}
             </div>
@@ -325,27 +382,27 @@ export const ConsultationConsole = () => {
                   onClick={() => setTimeline(tl.value)}
                   className={`p-4 border-2 rounded-lg text-left transition-all ${
                     timeline === tl.value
-                      ? 'border-blue-500 bg-blue-500/10'
-                      : 'border-slate-700 hover:border-slate-600'
+                      ? 'border-blue-500 bg-blue-500/20'
+                      : 'border-slate-800 hover:border-slate-700 bg-slate-900'
                   }`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <div className="font-mono text-xs font-bold text-white mb-1">
-                    {tl.label.replace('_', ' ')}
+                    [{tl.label}]
                   </div>
-                  <div className="text-xs text-slate-400">{tl.desc}</div>
+                  <div className="text-xs text-slate-400 font-sans">{tl.desc}</div>
                 </motion.button>
               ))}
             </div>
           </div>
         </section>
 
-        {/* SECTION 4: Identity Handshake */}
+        {/* STEP 4: Identification (The Handshake) */}
         <section>
           <h2 className="font-mono text-xs uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
-            <span className="text-emerald-500">[04]</span>
-            IDENTITY HANDSHAKE
+            <span className="text-blue-500">[04]</span>
+            IDENTIFICATION HANDSHAKE
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
@@ -357,7 +414,7 @@ export const ConsultationConsole = () => {
                 required
                 value={identity.name}
                 onChange={(e) => setIdentity(prev => ({ ...prev, name: e.target.value }))}
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-lg text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="Dr. Jane Doe"
               />
             </div>
@@ -370,7 +427,7 @@ export const ConsultationConsole = () => {
                 required
                 value={identity.organization}
                 onChange={(e) => setIdentity(prev => ({ ...prev, organization: e.target.value }))}
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-lg text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="Ministry of Health / Hospital"
               />
             </div>
@@ -384,29 +441,29 @@ export const ConsultationConsole = () => {
               required
               value={identity.email}
               onChange={(e) => setIdentity(prev => ({ ...prev, email: e.target.value }))}
-              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-lg text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               placeholder="architect@organization.org"
             />
           </div>
         </section>
 
         {/* Submit Button */}
-        <div className="pt-6 border-t border-slate-700">
+        <div className="pt-6 border-t border-slate-800">
           <motion.button
             type="submit"
             disabled={isSubmitting || !identity.name || !identity.organization || !identity.email}
-            className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 disabled:cursor-not-allowed text-white font-mono text-sm font-bold uppercase tracking-widest rounded-lg transition-colors flex items-center justify-center gap-3 group"
+            className="w-full py-4 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-800 disabled:cursor-not-allowed text-white font-mono text-sm font-bold uppercase tracking-widest rounded-lg transition-colors flex items-center justify-center gap-3 group"
             whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
             whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
           >
             {isSubmitting ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                <span>TRANSMITTING...</span>
+                <span>INITIALIZING...</span>
               </>
             ) : (
               <>
-                <span>TRANSMIT BRIEF</span>
+                <span>INITIALIZE_PROTOCOL</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </>
             )}

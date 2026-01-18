@@ -1,4 +1,6 @@
-import Link from 'next/link'
+'use client'; // Required for usePathname
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const footerLinks = [
     {
@@ -31,49 +33,59 @@ const footerLinks = [
             { href: 'https://www.linkedin.com/company/trigonal-technology', label: 'Trigonal Engineering Log', external: true },
         ],
     },
-]
+];
 
 export function Footer() {
+    const pathname = usePathname();
+
+    // SMART LOGIC: Define which pages should HIDE the generic FIRE banner
+    // 1. '/' -> Homepage already has the "ProjectLaunchBand"
+    // 2. '/consult' -> User is already on the conversion page
+    const hideBanner = pathname === '/' || pathname === '/consult';
+
     return (
         <footer className="relative z-50 bg-white border-t border-slate-200 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
-            {/* FIRE Banner - Solid precision-blue background */}
-            <div className="bg-[#1E4E9B] text-white">
-                <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-16">
-                    <div className="py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-                        <div className="flex items-center gap-3 flex-none">
-                            <div className="w-8 h-8 relative">
-                                <img
-                                    src="/logos/trigonal.webp"
-                                    alt="FIRE"
-                                    className="w-full h-full object-contain brightness-0 invert"
-                                />
+            
+            {/* CONDITIONAL RENDER: Only show this band if we are NOT on Home or Consult */}
+            {!hideBanner && (
+                <div className="bg-[#1E4E9B] text-white">
+                    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-16">
+                        <div className="py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div className="flex items-center gap-3 flex-none">
+                                <div className="w-8 h-8 relative">
+                                    <img
+                                        src="/logos/trigonal.webp"
+                                        alt="FIRE"
+                                        className="w-full h-full object-contain brightness-0 invert"
+                                    />
+                                </div>
+                                <span className="text-xl font-bold tracking-wide">
+                                    TRIGONAL: We BUILD with FIRE.
+                                </span>
                             </div>
-                            <span className="text-xl font-bold tracking-wide">
-                                TRIGONAL: We BUILD with FIRE.
-                            </span>
-                        </div>
-                        <div className="text-lg font-semibold flex-1 text-center">
-                            AI-Powered. Precision-Built. Health-Engineered.
-                        </div>
-                        <div className="flex items-center gap-4 flex-none">
-                            <Link
-                                href="/nidanehr"
-                                className="px-6 py-3 bg-execution-orange text-white font-semibold rounded-md hover:bg-execution-orange/90 transition-colors shadow-lg"
-                            >
-                                Explore NidanEHR
-                            </Link>
-                            <Link
-                                href="/#consult-console"
-                                className="px-6 py-3 border-2 border-white/40 text-white font-semibold rounded-md hover:bg-white/10 transition-colors"
-                            >
-                                Consult an Architect
-                            </Link>
+                            <div className="text-lg font-semibold flex-1 text-center hidden md:block">
+                                AI-Powered. Precision-Built. Health-Engineered.
+                            </div>
+                            <div className="flex items-center gap-4 flex-none">
+                                <Link
+                                    href="/nidanehr"
+                                    className="px-6 py-3 bg-orange-600 text-white font-semibold rounded-md hover:bg-orange-500 transition-colors shadow-lg"
+                                >
+                                    Explore NidanEHR
+                                </Link>
+                                <Link
+                                    href="/consult?source=footer_global"
+                                    className="px-6 py-3 border-2 border-white/40 text-white font-semibold rounded-md hover:bg-white/10 transition-colors"
+                                >
+                                    Consult an Architect
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
 
-            {/* Main Footer */}
+            {/* Main Footer Content */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
                     {/* Company Info */}
@@ -88,13 +100,13 @@ export function Footer() {
                             </div>
                             <span className="font-bold text-xl text-precision-blue">TRIGONAL</span>
                         </div>
-                        <p className="text-sm text-foreground/70 mb-2">
+                        <p className="text-sm text-slate-600 mb-2">
                             Trigonal Technology Pvt. Ltd.
                         </p>
-                        <p className="text-sm text-foreground/60">
+                        <p className="text-sm text-slate-500">
                             Pioneering interoperable digital health systems across Nepal, India, Middle East, and Africa since 2022.
                         </p>
-                        <div className="flex gap-4 mt-6 text-xs text-foreground/60">
+                        <div className="flex gap-4 mt-6 text-xs text-slate-500">
                             <Link href="/privacy" className="hover:underline decoration-precision-blue decoration-1 underline-offset-4">
                                 Privacy
                             </Link>
@@ -121,18 +133,13 @@ export function Footer() {
                                                 href={link.href}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-sm text-foreground/70 hover:underline decoration-precision-blue decoration-1 underline-offset-4 inline-flex items-center gap-1"
+                                                className="text-sm text-slate-500 hover:text-blue-600 transition-colors inline-flex items-center gap-1"
                                             >
                                                 {link.label}
-                                                <svg className="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                                </svg>
+                                                <span className="text-[10px] opacity-50">↗</span>
                                             </a>
                                         ) : (
-                                            <Link
-                                                href={link.href}
-                                                className="text-sm text-foreground/70 hover:underline decoration-precision-blue decoration-1 underline-offset-4"
-                                            >
+                                            <Link href={link.href} className="text-sm text-slate-500 hover:text-blue-600 transition-colors">
                                                 {link.label}
                                             </Link>
                                         )}
@@ -147,14 +154,14 @@ export function Footer() {
             {/* Copyright */}
             <div className="border-t border-slate-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    <p className="text-center text-xs text-foreground/50 font-mono mb-2">
+                    <p className="text-center text-xs text-slate-400 font-mono mb-2">
                         [STATUS: DEPLOYED. RUNNING. TRUSTED.]
                     </p>
-                    <p className="text-center text-sm text-foreground/50">
+                    <p className="text-center text-sm text-slate-400">
                         © {new Date().getFullYear()} Trigonal Technology Pvt. Ltd. All rights reserved.
                     </p>
                 </div>
             </div>
         </footer>
-    )
+    );
 }

@@ -1,21 +1,17 @@
 import { Hero } from '@/components/sections/Hero'
 import { TechMarquee } from '@/components/sections/TechMarquee'
-import { SovereignTechStack } from '@/components/sections/SovereignTechStack'
-import { NidanEHRSection } from '@/components/sections/NidanEHRSection'
-import { ArchitectVision } from '@/components/sections/ArchitectVision'
 import { FirePinnedScroll } from '@/components/sections/FirePinnedScroll'
-import { ConsultCTA } from '@/components/sections/ConsultCTA'
+import { EngineeringProof } from '@/components/sections/EngineeringProof'
+import { ProjectLaunchBand } from '@/components/sections/ProjectLaunchBand'
 
 export default function HomePage() {
   return (
-    <>
+    <main>
       <Hero />
       <TechMarquee />
-      <SovereignTechStack />
-      <NidanEHRSection />
-      <ArchitectVision />
       <FirePinnedScroll />
-      <ConsultCTA />
-    </>
+      <EngineeringProof />
+      <ProjectLaunchBand />
+    </main>
   )
 }

@@ -125,9 +125,9 @@ export default function OrthancCaseStudy() {
       <section className="py-20 bg-slate-900 text-center">
         <h2 className="text-3xl font-bold text-white mb-6">Need to Fix Your Imaging Workflow?</h2>
         <p className="text-slate-400 mb-8">We deploy lightweight, integrated PACS that keep finance and clinical teams in sync.</p>
-        <Link href="/consult?domain=infrastructure_gap&source=orthanc">
+        <Link href="/consult?source=orthanc">
           <button className="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition-colors">
-            Consult on Radiology Infrastructure
+            Consult on Radiology
           </button>
         </Link>
       </section>
