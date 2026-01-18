@@ -20,9 +20,15 @@ const footerLinks = [
     {
         title: '[03_RESOURCES]',
         links: [
-            { href: '/resources/manifesto', label: 'The Manifesto' },
+            { href: '/manifesto', label: 'The Manifesto' },
             { href: '/resources/case-studies', label: 'Case Studies' },
             { href: '/resources/blueprints', label: 'Documentation' },
+        ],
+    },
+    {
+        title: '[04_NETWORK]',
+        links: [
+            { href: 'https://www.linkedin.com/company/trigonal-technology', label: 'Trigonal Engineering Log', external: true },
         ],
     },
 ]
@@ -69,7 +75,7 @@ export function Footer() {
 
             {/* Main Footer */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
                     {/* Company Info */}
                     <div className="col-span-2 md:col-span-2">
                         <div className="flex items-center gap-2 mb-4">
@@ -110,12 +116,26 @@ export function Footer() {
                             <ul className="space-y-3">
                                 {column.links.map((link) => (
                                     <li key={link.label}>
-                                        <Link
-                                            href={link.href}
-                                            className="text-sm text-foreground/70 hover:underline decoration-precision-blue decoration-1 underline-offset-4"
-                                        >
-                                            {link.label}
-                                        </Link>
+                                        {'external' in link && link.external ? (
+                                            <a
+                                                href={link.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-sm text-foreground/70 hover:underline decoration-precision-blue decoration-1 underline-offset-4 inline-flex items-center gap-1"
+                                            >
+                                                {link.label}
+                                                <svg className="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                                </svg>
+                                            </a>
+                                        ) : (
+                                            <Link
+                                                href={link.href}
+                                                className="text-sm text-foreground/70 hover:underline decoration-precision-blue decoration-1 underline-offset-4"
+                                            >
+                                                {link.label}
+                                            </Link>
+                                        )}
                                     </li>
                                 ))}
                             </ul>

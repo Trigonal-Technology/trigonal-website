@@ -41,7 +41,7 @@ export function ArchitectVision() {
 
                         {/* CTA */}
                         <Link
-                            href="/about"
+                            href="/manifesto"
                             className="inline-flex items-center gap-2 px-6 py-3 bg-precision-blue text-white font-semibold rounded-lg hover:bg-precision-blue/90 transition-colors shadow-lg"
                         >
                             Read the Manifesto

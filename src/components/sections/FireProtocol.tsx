@@ -22,7 +22,7 @@ const values = [
         metric: '100% FOSS',
         metricDetail: 'Zero proprietary vendor lock-in',
         example: 'Code Review Standard',
-        exampleDetail: 'All code is version-controlled in Git. No binary blobs, no obfuscation—clients can audit, fork, and self-host every component.'
+        exampleDetail: 'All code is version-controlled in Git. No binary blobs, no obfuscation-clients can audit, fork, and self-host every component.'
     },
     {
         icon: Heart,

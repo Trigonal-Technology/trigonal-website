@@ -15,36 +15,28 @@ const navLinks = [
 
 const resourcesPillars = [
     {
-        href: '/resources/case-studies',
-        label: 'Case Studies',
-        dnaTag: '[ANALYSIS | DEPLOYMENT]',
+        href: '/manifesto',
+        label: 'The Manifesto',
+        dnaTag: '[CULTURAL_CODE]',
         icon: FileText,
-        description: 'Architectural post-mortems from LafiaHMS, Venevital, and more.',
+        description: 'The engineering culture and principles we live by.',
         color: 'text-blue-400'
     },
     {
-        href: '/resources/blueprints',
-        label: 'Technical Blueprints',
-        dnaTag: '[ARCH | SCHEMATICS]',
+        href: '/case-studies/lab-bridge',
+        label: 'Case Studies',
+        dnaTag: '[ANALYSIS | DEPLOYMENT]',
         icon: Wrench,
-        description: 'FHIR R4 mapping, Odoo 18 ERP, OpenHIE architecture.',
+        description: 'Technical deep-dives: Lab-Bridge, NidanEHR, OpenHIE Spine.',
         color: 'text-orange-400'
     },
     {
-        href: '/resources/compliance',
-        label: 'Compliance Guides',
-        dnaTag: '[REGULATORY | SECURITY]',
+        href: '/resources/blueprints',
+        label: 'Documentation',
+        dnaTag: '[ARCH | SCHEMATICS]',
         icon: Shield,
-        description: 'Data sovereignty, Nepal 2081, HIPAA frameworks.',
+        description: 'FHIR R4 mapping, Odoo 18 ERP, OpenHIE architecture.',
         color: 'text-green-400'
-    },
-    {
-        href: '/resources/field-reports',
-        label: 'Field Reports',
-        dnaTag: '[FIELD | LOGS]',
-        icon: MapPin,
-        description: 'Frontline deployment logs from rural implementations.',
-        color: 'text-purple-400'
     }
 ]
 

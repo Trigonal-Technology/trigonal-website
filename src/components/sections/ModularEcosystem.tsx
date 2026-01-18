@@ -40,7 +40,7 @@ const functionalDomains = [
         title: 'Fiscal Engine',
         icon: DollarSign,
         color: '#D97706',
-        description: 'Odoo ERP integration for hospital billing, inventory management, and financial reconciliation—preventing revenue leakage.',
+        description: 'Odoo ERP integration for hospital billing, inventory management, and financial reconciliation-preventing revenue leakage.',
         technologies: [
             { name: 'Odoo 18', purpose: 'Hospital ERP & billing' },
             { name: 'NidanBridge', purpose: 'Real-time EMR-ERP sync' },
@@ -100,7 +100,7 @@ export function ModularEcosystem() {
                         Functional Domains
                     </h2>
                     <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-                        Our tech stack organized into four architectural layers—each engineered for interoperability, sovereignty, and real-world clinical deployment.
+                        Our tech stack organized into four architectural layers-each engineered for interoperability, sovereignty, and real-world clinical deployment.
                     </p>
                 </motion.div>
 
@@ -264,7 +264,7 @@ export function ModularEcosystem() {
                             International Project Experience
                         </h3>
                         <p className="text-slate-600 max-w-3xl mx-auto mb-6">
-                            From architecting multi-tenant SaaS ecosystems for West Africa (LafiaHMS) to customizing Bahmni for sustainable clinical management in South America (Venevital)—we engineer for sovereignty, scale, and real-world deployment.
+                            From architecting multi-tenant SaaS ecosystems for West Africa (LafiaHMS) to customizing Bahmni for sustainable clinical management in South America (Venevital)-we engineer for sovereignty, scale, and real-world deployment.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
                             <div className="px-6 py-3 bg-white rounded-lg border border-slate-200">

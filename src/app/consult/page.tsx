@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TrigonalLoader } from '@/components/layout/TrigonalLoader';
 import { 
@@ -40,6 +41,7 @@ const scopeOptions = [
 ];
 
 export default function ConsultPage() {
+    const searchParams = useSearchParams();
     const [isProcessing, setIsProcessing] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     
@@ -53,6 +55,20 @@ export default function ConsultPage() {
         scope: 'facility',
         additionalContext: ''
     });
+
+    // EFFECT: Check for URL params on mount
+    useEffect(() => {
+        const domainParam = searchParams.get('domain');
+        
+        if (domainParam === 'diagnostic_middleware') {
+            // Auto-select the Diagnostic Middleware domain
+            setFormData(prev => ({
+                ...prev,
+                engineeringNeed: 'diagnostic-middleware',
+                interopStandards: ['fhir', 'labbridge'] // Auto-select ASTM and HL7 standards
+            }));
+        }
+    }, [searchParams]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

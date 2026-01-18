@@ -35,7 +35,7 @@ export default function ManifestoPage() {
                         <p className="text-slate-700 leading-relaxed">
                             Patient data is not a commodity. Every architecture we deliver enforces
                             national data residency, RBAC access controls, and auditable trails.
-                            Trigonal never owns clinical data—we design systems where ministries,
+                            Trigonal never owns clinical data-we design systems where ministries,
                             hospitals, and communities retain full sovereignty.
                         </p>
                     </section>
@@ -69,7 +69,7 @@ export default function ManifestoPage() {
                         <p className="text-slate-700 leading-relaxed">
                             Architecture is meaningless without execution. Our senior engineers
                             deliver Dockerized deployments, Git-audited codebases, and scalable
-                            infrastructure across Nepal, Africa, and the Middle East—built to run,
+                            infrastructure across Nepal, Africa, and the Middle East-built to run,
                             built to last.
                         </p>
                     </section>
