@@ -34,7 +34,7 @@ export default function LabBridgeCaseStudy() {
               <div className="font-mono text-xs text-slate-500 uppercase">Automation</div>
             </div>
             <div>
-              <div className="text-4xl font-black text-white mb-1">6 WKS</div>
+              <div className="text-4xl font-black text-white mb-1">4 WKS</div>
               <div className="font-mono text-xs text-slate-500 uppercase">Deployment Time</div>
             </div>
             <div>

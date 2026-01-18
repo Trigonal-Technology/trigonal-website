@@ -19,7 +19,10 @@ export const LabBridgeArchitecture = () => {
             <Activity className="w-8 h-8 text-blue-600 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-slate-900 mb-2">Diagnostic Analyzers</h3>
             <p className="text-sm text-slate-500">Hematology, Biochem</p>
-            <div className="mt-4 inline-block px-2 py-1 bg-slate-100 text-xs font-mono rounded">ASTM / RS232</div>
+            <div className="mt-4 flex flex-col gap-2 items-center">
+              <span className="inline-block px-2 py-1 bg-slate-100 text-xs font-mono rounded">ASTM / RS232</span>
+              <span className="inline-block px-2 py-1 bg-slate-100 text-xs font-mono rounded">HL7v2 / TCP</span>
+            </div>
           </div>
 
           {/* 2. ANIMATED CONDUIT (Left) */}
@@ -27,13 +30,22 @@ export const LabBridgeArchitecture = () => {
              {/* The Track */}
              <div className="absolute inset-x-0 h-1 bg-slate-200 rounded-full" />
              
-             {/* The Moving Packet (ASTM) */}
+             {/* The Moving Packet (ASTM) - Alternates with HL7v2: 0-3, 6-9, 12-15... */}
              <motion.div
                className="absolute top-1/2 -translate-y-1/2 bg-slate-900 text-white text-[10px] font-mono font-bold px-2 py-1 rounded shadow-lg z-20"
                animate={{ x: [-80, 80], opacity: [0, 1, 0] }} // Move from Left to Right
-               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+               transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: 0, repeatDelay: 6 }}
              >
                [RAW_ASTM]
+             </motion.div>
+
+             {/* The Moving Packet (HL7v2) - Starts when ASTM reaches Lab-Bridge: 3-6, 9-12, 15-18... */}
+             <motion.div
+               className="absolute top-1/2 -translate-y-1/2 bg-slate-800 text-white text-[10px] font-mono font-bold px-2 py-1 rounded shadow-lg z-20"
+               animate={{ x: [-80, 80], opacity: [0, 1, 0] }} 
+               transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: 3, repeatDelay: 6}}
+             >
+               [RAW_HL7v2]
              </motion.div>
              
              {/* Directional Arrow Head */}
@@ -59,7 +71,7 @@ export const LabBridgeArchitecture = () => {
             {/* Processing Steps */}
             <ul className="space-y-2 font-mono text-xs text-slate-300">
                <li className="flex items-center gap-2">
-                 <span className="text-green-400">✓</span> DECODE ASTM
+                 <span className="text-green-400">✓</span> DECODE ASTM / HL7v2
                </li>
                <li className="flex items-center gap-2">
                  <span className="text-green-400">✓</span> MAP TO LOINC
