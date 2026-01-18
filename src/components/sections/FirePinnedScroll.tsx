@@ -1,128 +1,139 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import React, { useRef } from 'react';
+import { useScroll, useTransform, motion } from 'framer-motion';
+// Import your 3D component (ensure path is correct)
 import { RotatingTetrahedron } from './RotatingTetrahedron';
 
 const firePrinciples = [
     {
         id: 'focus',
+        letter: 'F',
         title: 'Focus',
-        subtitle: 'PRECISION_FIRST',
-        description: 'We prioritize technical excellence over feature bloat. Our architecture is designed for the high-stakes reality of critical infrastructure.',
-        metrics: ['Zero Technical Debt', '99.9% Uptime', 'Optimized Core']
+        subtitle: 'PRECISION_OVER_NOISE',
+        description: 'We reject feature bloat to solve the irreducible problems of digital health. Our engineering focus is singular: building optimized, low-latency, and high-reliability infrastructure that performs when lives are on the line.',
+        tags: ['Zero Technical Debt', 'Optimized Core', 'Clinical Logic']
     },
     {
         id: 'integrity',
+        letter: 'I',
         title: 'Integrity',
-        subtitle: 'DATA_SOVEREIGNTY',
-        description: 'Systems built on unshakeable standards. We ensure data remains accurate, accessible, and owned by the communities they serve.',
-        metrics: ['FHIR R4 Native', 'Encrypted at Rest', 'Audit-Ready']
+        subtitle: 'CODE_WITHOUT_COMPROMISE',
+        description: 'Trust is built on transparency, not contracts. We maintain a strict Open Source policy to ensure zero vendor lock-in. We speak difficult truths about security and compliance because in healthcare, "cutting corners" is not an option.',
+        tags: ['100% Open Source', 'Audit-Ready', 'No Lock-In']
     },
     {
         id: 'respect',
+        letter: 'R',
         title: 'Respect',
-        subtitle: 'LOCAL_EMPOWERMENT',
-        description: 'Technology that honors local expertise. Our tools are designed to amplify frontline capacity, not replace it with rigid workflows.',
-        metrics: ['Offline-First', 'Localized UI', 'Community-Led']
+        subtitle: 'SOVEREIGNTY_BY_DESIGN',
+        description: 'True respect means handing over the keys. We architect systems that strictly adhere to national data residency laws and empower local engineering teams. We build technology that belongs to the people it serves, not the vendor.',
+        tags: ['Data Residency', 'Local Ownership', 'Patient Dignity']
     },
     {
         id: 'execution',
+        letter: 'E',
         title: 'Execution',
-        subtitle: 'MISSION_CRITICAL',
-        description: 'Proven deployment at scale. We translate complex architectural requirements into functional, field-hardened health systems.',
-        metrics: ['10M+ Events/Year', '50+ Deployments', 'Global Support']
+        subtitle: 'MISSION_CRITICAL_DELIVERY',
+        description: 'In critical infrastructure, ideas are cheap. We measure success by uptime, not PowerPoint slides. We move beyond "Proof of Concept" to deliver hardened, national-scale platforms that run reliably in the harshest real-world conditions.',
+        tags: ['99.99% Uptime', 'National Scale', 'Production Grade']
     }
 ];
 
-const statusLabels = [
-    '[01_FOCUS: CORE_PILLARS]',
-    '[02_INTEGRITY: STANDARDS_SYNC]',
-    '[03_RESPECT: GLOBAL_SOVEREIGNTY]',
-    '[04_EXECUTION: DEPLOY_SYSTEM]'
-];
+export const FireCultureSection = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
 
-export function FirePinnedScroll() {
-    const containerRef = useRef<HTMLDivElement>(null);
+  return (
+    <div ref={containerRef} className="relative bg-slate-50">
+      
+      {/* THE PINNED FRAME 
+         - Height is strictly controlled to contain the scroll.
+      */}
+      <div className="sticky top-0 h-screen flex flex-row overflow-hidden">
+        
+        {/* LEFT COLUMN: 3D PYRAMID (Fixed) */}
+        <div className="w-1/2 h-full flex items-center justify-center bg-white/50 backdrop-blur-sm border-r border-slate-200">
+          <div className="relative w-[300px] h-[300px]">
+            {/* Pass raw scroll progress to rotate the pyramid */}
+            <RotatingTetrahedron scrollProgress={scrollYProgress} />
+          </div>
+        </div>
 
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ['start start', 'end end']
-    });
+        {/* RIGHT COLUMN: SCROLLING CONTENT (Fluid) */}
+        <div className="w-1/2 h-full relative">
+          {firePrinciples.map((card, index) => {
+            // Logic to fade cards in/out based on scroll position
+            // Each card owns a 25% slice of the total scroll container
+            const start = index * 0.25;
+            const end = start + 0.25;
+            
+            return (
+              <PrincipleCard 
+                key={card.id} 
+                card={card} 
+                range={[start, end]} 
+                progress={scrollYProgress} 
+              />
+            );
+          })}
+        </div>
+      </div>
+      
+      {/* SCROLL TRACK
+         - 400vh ensures we have enough room to scroll through 4 cards comfortably.
+      */}
+      <div className="h-[400vh]" />
+    </div>
+  );
+};
 
-    const textY = useTransform(scrollYProgress, [0, 1], ['0vh', '-240vh']);
-    const statusIndex = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, 1, 2, 3, 3]);
+// Export alias for backward compatibility
+export const FirePinnedScroll = FireCultureSection;
 
-    return (
-        <section ref={containerRef} className="relative bg-slate-50 z-10" style={{ height: '300vh' }}>
-            <div className="sticky top-0 h-screen flex flex-col md:flex-row overflow-hidden">
-                <div className="w-full md:w-1/2 h-full flex items-center justify-center bg-slate-50/50">
-                    <div className="relative flex items-center justify-center w-full max-w-[500px] aspect-square">
-                        <ScrollBoundTetrahedron progress={scrollYProgress} />
+// SUB-COMPONENT: Individual Card rendering with 'Clean' transitions
+const PrincipleCard = ({ card, range, progress }: { card: any, range: number[], progress: any }) => {
+  const opacity = useTransform(progress, [range[0], range[0] + 0.1, range[1] - 0.1, range[1]], [0, 1, 1, 0]);
+  const y = useTransform(progress, [range[0], range[0] + 0.1, range[1] - 0.1, range[1]], [50, 0, 0, -50]);
 
-                        <div className="absolute top-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 w-full">
-                            <motion.div
-                                className="px-4 py-2 bg-white border border-slate-200 rounded-full shadow-sm z-20"
-                                initial={{ opacity: 0, y: -10 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                            >
-                                <p className="font-mono text-xs uppercase tracking-wider text-precision-blue font-bold">
-                                    BUILD_WITH_FIRE
-                                </p>
-                            </motion.div>
-
-                            <StatusLine labels={statusLabels} index={statusIndex} />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="w-full md:w-1/2 h-full relative z-10">
-                    <motion.div style={{ y: textY }} className="flex flex-col">
-                        {firePrinciples.map((principle, index) => (
-                            <div key={principle.id} className="h-[80vh] flex flex-col justify-center px-8 sm:px-12 lg:px-20 shrink-0">
-                                <div className="text-6xl font-black text-slate-200 mb-4 font-mono">
-                                    {String(index + 1).padStart(2, '0')}
-                                </div>
-                                <h3 className="text-3xl font-bold text-slate-900 mb-4 tracking-tight">{principle.title}</h3>
-                                <div className="font-mono text-xs uppercase tracking-wider text-precision-blue font-bold mb-6">{principle.subtitle}</div>
-                                <p className="text-lg text-slate-600 leading-relaxed mb-8 max-w-md">{principle.description}</p>
-                                <div className="flex flex-wrap gap-2">
-                                    {principle.metrics.map((metric, i) => (
-                                        <span key={i} className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg font-mono text-xs text-slate-700 font-bold shadow-sm">{metric}</span>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </motion.div>
-                </div>
+  return (
+    <motion.div 
+      style={{ opacity, y }}
+      className="absolute inset-0 flex items-center justify-center p-16"
+    >
+      <div className="max-w-xl">
+        {/* LETTER HEADER */}
+        <div className="flex items-baseline gap-4 mb-6 border-b-2 border-slate-900 pb-4">
+            <span className="text-8xl font-black text-slate-900 tracking-tighter">
+                {card.letter}
+            </span>
+            <div className="flex flex-col">
+                <h3 className="text-3xl font-bold text-slate-800 tracking-tight">
+                    {card.title}
+                </h3>
+                <span className="font-mono text-sm text-blue-600 font-bold tracking-wider uppercase">
+                    {card.subtitle}
+                </span>
             </div>
-        </section>
-    );
-}
+        </div>
 
-function StatusLine({ labels, index }: { labels: string[], index: any }) {
-    const [currentIndex, setCurrentIndex] = useState(0);
+        {/* DESCRIPTION */}
+        <p className="text-lg text-slate-600 leading-relaxed mb-8 font-medium">
+            {card.description}
+        </p>
 
-    useEffect(() => {
-        return index.onChange((v: number) => setCurrentIndex(Math.floor(v)));
-    }, [index]);
-
-    return (
-        <motion.div
-            className="font-mono text-[10px] text-slate-400 uppercase tracking-widest animate-pulse"
-            key={currentIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-        >
-            {labels[currentIndex]}
-        </motion.div>
-    );
-}
-
-function ScrollBoundTetrahedron({ progress }: { progress: any }) {
-    const [val, setVal] = React.useState(0);
-    useEffect(() => {
-        return progress.onChange((v: number) => setVal(v));
-    }, [progress]);
-    return <RotatingTetrahedron scrollProgress={val} />;
-}
+        {/* TAGS (Clean Engineering Chips) */}
+        <div className="flex flex-wrap gap-3">
+            {card.tags.map((tag: string) => (
+                <span key={tag} className="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-mono font-bold uppercase tracking-wide border border-slate-200 rounded">
+                    {tag}
+                </span>
+            ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
