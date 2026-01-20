@@ -15,7 +15,7 @@ const footerLinks = [
         title: '[02_EXPERTISE]',
         links: [
             { href: '/architecture', label: 'System Architecture' },
-            { href: '/solutions', label: 'Fiscal Integrity' },
+            { href: '/solutions/fiscal-integrity', label: 'Fiscal Integrity' },
             { href: '/solutions', label: 'Health Intelligence' },
         ],
     },
@@ -42,7 +42,8 @@ export function Footer() {
     // 1. Homepage (Has ProjectLaunchBand)
     // 2. Consult (Is the form)
     // 3. NidanEHR (Has CLI Terminal)
-    const hideBanner = pathname === '/' || pathname === '/consult' || pathname === '/nidanehr';
+    // 4. Fiscal Integrity (Has custom footer CTA)
+    const hideBanner = pathname === '/' || pathname === '/consult' || pathname === '/nidanehr' || pathname === '/solutions/fiscal-integrity';
 
     return (
         <footer className="relative z-50 bg-white border-t border-slate-200 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">

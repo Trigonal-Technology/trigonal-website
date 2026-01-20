@@ -159,13 +159,15 @@ export default function NidanEHRPage() {
 
              {/* COLUMN 3: OPERATIONS (Right) */}
              <div className="space-y-4">
-                <ServiceCard 
-                    title="Fiscal Core" 
-                    subtitle="Odoo 19 ERP" 
-                    icon={<CreditCard className="w-5 h-5 text-orange-600" />} 
-                    port="8082" 
-                    tech="JSON-RPC"
-                />
+                <Link href="/solutions/fiscal-integrity">
+                    <ServiceCard 
+                        title="Fiscal Core" 
+                        subtitle="Odoo 19 ERP" 
+                        icon={<CreditCard className="w-5 h-5 text-orange-600" />} 
+                        port="8082" 
+                        tech="JSON-RPC"
+                    />
+                </Link>
                 <ServiceCard 
                     title="Insurance Core" 
                     subtitle="OpenIMIS" 

@@ -171,6 +171,22 @@ export const ConsultationConsole = () => {
       // SET SCALE & TIMELINE
       setProjectScale('MULTI_HOSPITAL');
       setTimeline('Q1_2026');
+    } else if (source === 'fiscal_core') {
+      // 1. Select the relevant Domains
+      setSelectedDomains(['ODOO_ERP', 'PHARMACY']);
+      
+      // 2. Select the specific Features the user wants
+      setSelectedFeatures([
+        'billing',      // Covers Accounts/Revenue Cycle
+        'inventory',    // Covers Stock
+        'crm',          // Customer/Patient Relationship
+        'dispensing',   // Pharmacy POS
+        'supply_chain'  // Procurement
+      ]);
+
+      // 3. Set Context
+      setProjectScale('MULTI_HOSPITAL'); // Usually implies high volume
+      setTimeline('Q1_2026');
     }
     // If source=homepage or no source, no pre-selection (user chooses)
   }, [searchParams]);

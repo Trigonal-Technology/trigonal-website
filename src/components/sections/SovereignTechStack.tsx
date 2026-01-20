@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Server, Activity, DollarSign, Smartphone, Shield, CheckCircle2 } from 'lucide-react';
 
@@ -106,14 +107,14 @@ export function SovereignTechStack() {
                 <div className="grid md:grid-cols-3 gap-8 mb-16">
                     {techBuckets.map((bucket, idx) => {
                         const Icon = bucket.icon;
-                        return (
+                        const cardContent = (
                             <motion.div
                                 key={bucket.id}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                                className="group relative bg-white rounded-2xl border border-slate-200 p-8 hover:border-precision-blue transition-all duration-300 hover:shadow-xl"
+                                className="group relative bg-white rounded-2xl border border-slate-200 p-8 hover:border-precision-blue transition-all duration-300 hover:shadow-xl h-full"
                             >
                                 {/* Icon Header */}
                                 <div className="flex items-center gap-4 mb-6">
@@ -179,6 +180,17 @@ export function SovereignTechStack() {
                                 </div>
                             </motion.div>
                         );
+
+                        // Make Fiscal & Intelligence card clickable
+                        if (bucket.id === 'fiscal-intelligence') {
+                            return (
+                                <Link key={bucket.id} href="/solutions/fiscal-integrity" className="block h-full">
+                                    {cardContent}
+                                </Link>
+                            );
+                        }
+
+                        return cardContent;
                     })}
                 </div>
 
