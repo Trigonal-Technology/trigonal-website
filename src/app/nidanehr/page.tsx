@@ -9,6 +9,9 @@ import {
   Zap, Eye, BarChart3, FileText, Smartphone, Shield, GitFork, Scan, Plug
 } from 'lucide-react';
 
+// Import UI Kit Components
+import { Hero, Section, StatusBadge, ServiceCard } from '@/components/ui/trigonal';
+
 export default function NidanEHRPage() {
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
 
@@ -24,63 +27,50 @@ export default function NidanEHRPage() {
     <main className="bg-white min-h-screen">
       
       {/* 1. HERO: The Event-Driven OS Promise */}
-      <section className="relative pt-32 pb-20 bg-gradient-to-b from-slate-900 to-slate-800 text-white overflow-hidden border-b border-slate-700">
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="inline-block px-3 py-1 mb-6 border border-emerald-500 rounded-full bg-emerald-500/10">
-            <span className="font-mono text-xs text-emerald-400 font-bold tracking-widest uppercase">
-              PRODUCT: CLINICAL_OS
-            </span>
+      <Hero
+        badge="PRODUCT: CLINICAL_OS"
+        badgeColor="emerald"
+        title={<span>The Event-Driven OS<br/><span className="text-emerald-400">for Sovereign Hospitals.</span></span>}
+        subtitle="Synchronizing Clinical Care, Finance, and Labs via a sovereign Event Bus."
+      >
+        {/* System Status Badges - Live Kernel Status Ticker */}
+        <div className="mb-8">
+          <div className="inline-block px-3 py-1 mb-4 bg-slate-800/50 border border-slate-700 rounded-full">
+            <span className="font-mono text-xs text-slate-400 uppercase tracking-widest">Live Kernel Status</span>
           </div>
-          
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6">
-            The Event-Driven OS<br/>
-            <span className="text-emerald-400">for Sovereign Hospitals.</span>
-          </h1>
-          
-          <p className="text-xl text-slate-300 max-w-3xl leading-relaxed mb-12">
-            Synchronizing Clinical Care, Finance, and Labs via a sovereign <strong>Event Bus</strong>.
-          </p>
-
-          {/* System Status Badges - Live Kernel Status Ticker */}
-          <div className="mb-8">
-            <div className="inline-block px-3 py-1 mb-4 bg-slate-800/50 border border-slate-700 rounded-full">
-              <span className="font-mono text-xs text-slate-400 uppercase tracking-widest">Live Kernel Status</span>
-            </div>
-            <div className="flex flex-wrap gap-3 justify-center">
-              <StatusBadge label="KERNEL: OPENMRS 3.x" color="bg-blue-500" />
-              <StatusBadge label="ERP: ODOO 19" color="bg-orange-500" />
-              <StatusBadge label="BUS: KAFKA" color="bg-emerald-500" />
-              <StatusBadge label="LIS: OPENELIS" color="bg-purple-500" />
-              <StatusBadge label="PACS: ORTHANC" color="bg-pink-500" />
-              <StatusBadge label="HIE: MEDIATOR" color="bg-indigo-500" />
-              <StatusBadge label="IMIS: OPENIMIS" color="bg-teal-500" />
-            </div>
-          </div>
-
-          {/* CTA Button */}
-          <div className="mt-12">
-            <Link href="/consult?source=nidan_core">
-              <button className="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition-colors flex items-center gap-3 shadow-lg shadow-emerald-500/20 group">
-                <span className="font-mono uppercase tracking-wider">Get Started</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </Link>
+          <div className="flex flex-wrap gap-3 justify-center">
+            <StatusBadge label="KERNEL: OPENMRS 3.x" color="blue" />
+            <StatusBadge label="ERP: ODOO 19" color="orange" />
+            <StatusBadge label="BUS: KAFKA" color="emerald" />
+            <StatusBadge label="LIS: OPENELIS" color="purple" />
+            <StatusBadge label="PACS: ORTHANC" color="pink" />
+            <StatusBadge label="HIE: MEDIATOR" color="indigo" />
+            <StatusBadge label="IMIS: OPENIMIS" color="teal" />
           </div>
         </div>
-      </section>
+
+        {/* CTA Button */}
+        <div className="mt-12">
+          <Link href="/consult?source=nidan_core">
+            <button className="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition-colors flex items-center gap-3 shadow-lg shadow-emerald-500/20 group">
+              <span className="font-mono uppercase tracking-wider">Get Started</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </Link>
+        </div>
+      </Hero>
 
       {/* 2. MIDDLEWARE NERVOUS SYSTEM: 3-Column Grid */}
-      <section className="py-20 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-16">
-            <span className="font-mono text-xs text-blue-600 font-bold uppercase tracking-widest">
-              Full Topology
-            </span>
-            <h2 className="text-3xl font-bold text-slate-900 mt-2">The 7-Node Nervous System</h2>
-            <p className="text-slate-600 mt-4 max-w-2xl mx-auto">
-              Event-driven synchronization mapping every kernel to the central bus. Circuit board topology where Kafka is the CPU.
-            </p>
-          </div>
+      <Section variant="slate">
+        <div className="text-center mb-16">
+          <span className="font-mono text-xs text-blue-600 font-bold uppercase tracking-widest">
+            Full Topology
+          </span>
+          <h2 className="text-3xl font-bold text-slate-900 mt-2">The 7-Node Nervous System</h2>
+          <p className="text-slate-600 mt-4 max-w-2xl mx-auto">
+            Event-driven synchronization mapping every kernel to the central bus. Circuit board topology where Kafka is the CPU.
+          </p>
+        </div>
 
           {/* 3-COLUMN LAYOUT: CARE | HUB | ADMIN */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
@@ -90,21 +80,24 @@ export default function NidanEHRPage() {
                 <ServiceCard 
                     title="Clinical Core" 
                     subtitle="OpenMRS 3.x" 
-                    icon={<Activity className="w-5 h-5 text-blue-600" />} 
+                    icon={Activity}
+                    color="blue"
                     port="8081" 
                     tech="FHIR R4"
                 />
                 <ServiceCard 
                     title="Diagnostic Core" 
                     subtitle="OpenELIS 2.0" 
-                    icon={<Database className="w-5 h-5 text-purple-600" />} 
+                    icon={Database}
+                    color="purple"
                     port="8083" 
                     tech="ASTM / HL7"
                 />
                 <ServiceCard 
                     title="Imaging Core" 
                     subtitle="Orthanc PACS" 
-                    icon={<Scan className="w-5 h-5 text-pink-600" />} 
+                    icon={Scan}
+                    color="pink"
                     port="8042" 
                     tech="DICOM Web"
                 />
@@ -159,19 +152,20 @@ export default function NidanEHRPage() {
 
              {/* COLUMN 3: OPERATIONS (Right) */}
              <div className="space-y-4">
-                <Link href="/solutions/fiscal-integrity">
-                    <ServiceCard 
-                        title="Fiscal Core" 
-                        subtitle="Odoo 19 ERP" 
-                        icon={<CreditCard className="w-5 h-5 text-orange-600" />} 
-                        port="8082" 
-                        tech="JSON-RPC"
-                    />
-                </Link>
+                <ServiceCard 
+                    title="Fiscal Core" 
+                    subtitle="Odoo 19 ERP" 
+                    icon={CreditCard}
+                    color="orange"
+                    port="8082" 
+                    tech="JSON-RPC"
+                    href="/solutions/fiscal-integrity"
+                />
                 <ServiceCard 
                     title="Insurance Core" 
                     subtitle="OpenIMIS" 
-                    icon={<Shield className="w-5 h-5 text-emerald-600" />} 
+                    icon={Shield}
+                    color="emerald"
                     port="8000" 
                     tech="Claims API"
                 />
@@ -197,19 +191,17 @@ export default function NidanEHRPage() {
              </div>
 
           </div>
-        </div>
-      </section>
+      </Section>
 
       {/* 3. THE MODULES GRID: The Ecosystem */}
-      <section className="py-24 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16 text-center">
-            <span className="font-mono text-xs text-slate-400 uppercase tracking-widest">The Ecosystem</span>
-            <h2 className="text-4xl font-bold text-slate-900 mt-2">Seven Integrated Kernels</h2>
-            <p className="text-slate-600 mt-4 max-w-2xl mx-auto">
-              Each kernel delivers specific business capabilities, synchronized via the event-driven architecture above.
-            </p>
-          </div>
+      <Section variant="white">
+        <div className="mb-16 text-center">
+          <span className="font-mono text-xs text-slate-400 uppercase tracking-widest">The Ecosystem</span>
+          <h2 className="text-4xl font-bold text-slate-900 mt-2">Seven Integrated Kernels</h2>
+          <p className="text-slate-600 mt-4 max-w-2xl mx-auto">
+            Each kernel delivers specific business capabilities, synchronized via the event-driven architecture above.
+          </p>
+        </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
@@ -277,12 +269,10 @@ export default function NidanEHRPage() {
             />
 
           </div>
-        </div>
-      </section>
+      </Section>
 
       {/* 4. THE PATIENT LOOP: PHR Section */}
-      <section className="py-24 bg-gradient-to-b from-white to-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6">
+      <Section variant="white" className="bg-gradient-to-b from-white to-slate-50">
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
             
             {/* Left: Content */}
@@ -374,12 +364,10 @@ export default function NidanEHRPage() {
             </div>
 
           </div>
-        </div>
-      </section>
+      </Section>
 
       {/* 5. OFFLINE-FIRST PROMISE: Edge Architecture */}
-      <section className="py-24 bg-slate-900 text-white border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-6">
+      <Section variant="dark">
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
             
             {/* Left: Content */}
@@ -462,12 +450,11 @@ export default function NidanEHRPage() {
             </div>
 
           </div>
-        </div>
-      </section>
+      </Section>
 
       {/* 6. CTA FOOTER: Terminal-Style */}
-      <section className="py-20 bg-slate-900 text-white border-b border-slate-800">
-        <div className="max-w-4xl mx-auto px-6">
+      <Section variant="dark" className="py-20">
+        <div className="max-w-4xl mx-auto">
           <div className="mb-8 text-center">
             <span className="font-mono text-xs text-emerald-400 uppercase tracking-widest">Initialize Nidan Stack</span>
             <h2 className="text-3xl font-black mb-6 mt-2 font-mono">Ready to Deploy?</h2>
@@ -519,59 +506,11 @@ export default function NidanEHRPage() {
             </Link>
           </div>
         </div>
-      </section>
+      </Section>
 
     </main>
   );
 }
-
-// Service Card Component (3-Column Grid)
-const ServiceCard = ({ title, subtitle, icon, port, tech }: { 
-  title: string, 
-  subtitle: string, 
-  icon: React.ReactNode, 
-  port: string, 
-  tech: string 
-}) => (
-  <div className="p-5 bg-white border border-slate-200 rounded-xl shadow-sm flex items-start gap-4 hover:border-blue-500 transition-all">
-    <div className="p-2 bg-slate-50 rounded-lg shrink-0">{icon}</div>
-    <div className="w-full">
-        <div className="flex justify-between items-center mb-1">
-            <h3 className="font-bold text-slate-900 text-sm">{title}</h3>
-            <span className="font-mono text-[10px] text-slate-400">:{port}</span>
-        </div>
-        <p className="text-xs text-slate-500 mb-2">{subtitle}</p>
-        <span className="inline-block px-2 py-0.5 bg-slate-100 text-[10px] font-mono rounded text-slate-600">
-            {tech}
-        </span>
-    </div>
-  </div>
-);
-
-// Status Badge Component (Hero Ticker)
-const StatusBadge = ({ label, color }: { label: string, color: string }) => {
-  // Map background colors to corresponding text colors
-  const colorMap: Record<string, string> = {
-    'bg-blue-500': 'text-blue-400',
-    'bg-orange-500': 'text-orange-400',
-    'bg-emerald-500': 'text-emerald-400',
-    'bg-purple-500': 'text-purple-400',
-    'bg-pink-500': 'text-pink-400',
-    'bg-indigo-500': 'text-indigo-400',
-    'bg-teal-500': 'text-teal-400'
-  };
-  
-  const textColor = colorMap[color] || 'text-slate-400';
-  
-  return (
-    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/50 border border-slate-700 backdrop-blur-sm">
-      <div className={`w-2 h-2 rounded-full ${color} animate-pulse`} />
-      <span className={`font-mono text-xs font-bold ${textColor} tracking-wider`}>
-        {label}
-      </span>
-    </div>
-  );
-};
 
 // Star Topology Node Component
 const StarTopologyNode = ({ 

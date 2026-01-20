@@ -7,47 +7,33 @@ import {
   Building2, Utensils
 } from 'lucide-react';
 
+// Import UI Kit Components
+import { Hero, Section } from '@/components/ui/trigonal';
+
 export default function FiscalIntegrityPage() {
   return (
     <main className="bg-white min-h-screen">
       
       {/* 1. HERO: THE FINANCIAL OS */}
-      <section className="relative pt-32 pb-24 bg-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[url('/grid-pattern.svg')]"></div>
-        
-        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 mb-8 border border-orange-500/30 rounded-full bg-orange-500/10 backdrop-blur-sm">
-            <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
-            <span className="font-mono text-xs text-orange-400 font-bold tracking-widest uppercase">
-              OFFICIAL ODOO LEARNING PARTNER
-            </span>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6">
-            Zero Revenue <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">
-              Leakage.
-            </span>
-          </h1>
-          
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10">
-            We engineer financial integrity. From <strong>IRD-Compliant Hospital Billing</strong> to 
-            high-frequency <strong>Retail POS</strong>, our systems ensure every transaction hits the ledger.
-          </p>
-
-          <div className="flex justify-center">
-            <Link href="/consult?source=fiscal_core">
-                <button className="px-8 py-4 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-lg transition-all shadow-lg shadow-orange-600/25 flex items-center gap-2">
-                  <CreditCard className="w-4 h-4" /> Initialize Revenue Cycle
-                </button>
-            </Link>
-          </div>
+      <Hero
+        badge="OFFICIAL ODOO LEARNING PARTNER"
+        badgeColor="orange"
+        title={<span>Zero Revenue <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">Leakage.</span></span>}
+        subtitle="We engineer financial integrity. From IRD-Compliant Hospital Billing to high-frequency Retail POS, our systems ensure every transaction hits the ledger."
+        className="text-center"
+      >
+        <div className="flex justify-center">
+          <Link href="/consult?source=fiscal_core">
+              <button className="px-8 py-4 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-lg transition-all shadow-lg shadow-orange-600/25 flex items-center gap-2">
+                <CreditCard className="w-4 h-4" /> Initialize Revenue Cycle
+              </button>
+          </Link>
         </div>
-      </section>
+      </Hero>
 
       {/* 2. THE ENGINE: ODOO 19 */}
-      <section className="py-24 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-6xl mx-auto px-6">
+      <Section variant="slate">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <span className="font-mono text-xs text-orange-600 font-bold uppercase tracking-widest">
               The Kernel
@@ -106,11 +92,10 @@ export default function FiscalIntegrityPage() {
              </div>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* 3. CROSS-INDUSTRY PROOF (THE FLEX) */}
-      <section className="py-24 bg-white">
-         <div className="max-w-7xl mx-auto px-6">
+      <Section variant="white">
             <div className="flex flex-col md:flex-row items-center gap-12">
                <div className="md:w-1/2">
                   <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold mb-6">
@@ -178,12 +163,11 @@ export default function FiscalIntegrityPage() {
                   </div>
                </div>
             </div>
-         </div>
-      </section>
+      </Section>
 
       {/* 4. CUSTOM FOOTER (REPLACES GLOBAL BAND) */}
-      <section className="py-20 bg-slate-900 border-t border-slate-800">
-         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+      <Section variant="dark" className="py-20">
+         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="text-left">
                <span className="font-mono text-xs text-orange-500 font-bold uppercase tracking-widest">
                   Ready to Audit?
@@ -201,7 +185,7 @@ export default function FiscalIntegrityPage() {
                </button>
             </Link>
          </div>
-      </section>
+      </Section>
 
     </main>
   );

@@ -1,6 +1,7 @@
 'use client'; // Required for usePathname
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { shouldHideFooterBanner } from '@/config/page-config';
 
 const footerLinks = [
     {
@@ -38,12 +39,8 @@ const footerLinks = [
 export function Footer() {
     const pathname = usePathname();
 
-    // HIDE BANNER LOGIC:
-    // 1. Homepage (Has ProjectLaunchBand)
-    // 2. Consult (Is the form)
-    // 3. NidanEHR (Has CLI Terminal)
-    // 4. Fiscal Integrity (Has custom footer CTA)
-    const hideBanner = pathname === '/' || pathname === '/consult' || pathname === '/nidanehr' || pathname === '/solutions/fiscal-integrity';
+    // HIDE BANNER LOGIC: Check centralized config
+    const hideBanner = shouldHideFooterBanner(pathname);
 
     return (
         <footer className="relative z-50 bg-white border-t border-slate-200 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
