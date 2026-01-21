@@ -1,8 +1,9 @@
 'use server'
 
 import { z } from 'zod'
+import { headers } from 'next/headers'
 
-// Validation schema
+// 1. ADD HONEYPOT & SECURITY FIELDS TO SCHEMA
 const consultFormSchema = z.object({
     fullName: z.string().min(2, 'Full name is required'),
     organization: z.string().min(2, 'Organization name is required'),
@@ -16,7 +17,10 @@ const consultFormSchema = z.object({
     existingSystems: z.array(z.string()).optional(),
     nepalDirective2081: z.boolean().optional(),
     hl7Fhir: z.boolean().optional(),
-    technicalBrief: z.string().max(1000, 'Technical brief must be 1000 characters or less').optional(),
+    technicalBrief: z.string().max(1000).optional(),
+    
+    // SECURITY: This field must be empty. If a bot fills it, we reject.
+    website: z.string().max(0).optional(), 
 })
 
 export type ConsultFormData = z.infer<typeof consultFormSchema>
@@ -29,11 +33,40 @@ export type ConsultFormState = {
     }
 }
 
+// SIMPLE IN-MEMORY RATE LIMIT (Resets on server restart, but good enough for now)
+const rateLimitMap = new Map<string, { count: number, lastReset: number }>();
+
+function checkRateLimit(ip: string) {
+    const now = Date.now();
+    const window = 60 * 1000; // 1 minute
+    const limit = 5; // Max 5 requests per minute
+
+    const record = rateLimitMap.get(ip) || { count: 0, lastReset: now };
+
+    if (now - record.lastReset > window) {
+        record.count = 0;
+        record.lastReset = now;
+    }
+
+    if (record.count >= limit) return false;
+
+    record.count++;
+    rateLimitMap.set(ip, record);
+    return true;
+}
+
 export async function submitConsultForm(
     prevState: ConsultFormState,
     formData: FormData
 ): Promise<ConsultFormState> {
-    // Parse form data
+    
+    // 1. SECURITY: RATE LIMIT
+    const ip = (await headers()).get('x-forwarded-for') || 'unknown';
+    if (!checkRateLimit(ip)) {
+        return { success: false, message: 'Too many requests. Please try again later.' };
+    }
+
+    // 2. PARSE DATA
     const rawData = {
         fullName: formData.get('fullName') as string,
         organization: formData.get('organization') as string,
@@ -44,9 +77,17 @@ export async function submitConsultForm(
         nepalDirective2081: formData.get('nepalDirective2081') === 'on',
         hl7Fhir: formData.get('hl7Fhir') === 'on',
         technicalBrief: formData.get('technicalBrief') as string,
+        website: formData.get('website') as string, // Honeypot field
     }
 
-    // Validate
+    // 3. SECURITY: HONEYPOT CHECK
+    // If 'website' has a value, it's a bot. We fail silently or return success to trick them.
+    if (rawData.website && rawData.website.length > 0) {
+        // Return fake success so the bot thinks it worked and leaves
+        return { success: true, message: 'Request received.' };
+    }
+
+    // 4. VALIDATE
     const validationResult = consultFormSchema.safeParse(rawData)
 
     if (!validationResult.success) {
@@ -66,23 +107,10 @@ export async function submitConsultForm(
         }
     }
 
-    // Simulate processing delay
+    // Simulate processing
     await new Promise((resolve) => setTimeout(resolve, 1500))
 
-    // Log the data (placeholder for email service integration)
-    console.log('=== CONSULT FORM SUBMISSION ===')
-    console.log('Timestamp:', new Date().toISOString())
-    console.log('Data:', JSON.stringify(validationResult.data, null, 2))
-    console.log('================================')
-
-    // TODO: Integrate with email service (Resend, SendGrid, etc.)
-    // Example with Resend:
-    // await resend.emails.send({
-    //     from: 'consult@trigonal.tech',
-    //     to: 'architects@trigonal.tech',
-    //     subject: `New Consultation Request: ${validationResult.data.organization}`,
-    //     html: generateEmailTemplate(validationResult.data),
-    // })
+    console.log(`[${ip}] Valid Submission from ${validationResult.data.email}`);
 
     return {
         success: true,

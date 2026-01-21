@@ -29,6 +29,44 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Security Features
+
+The consultation form includes multiple layers of protection:
+
+### 1. Rate Limiting
+- **Limit**: 3 requests per minute per IP address
+- **Implementation**: In-memory rate limiter (for production, use Redis/Upstash)
+
+### 2. Honeypot Protection
+- Hidden form field that bots fill but humans don't
+- Silent rejection of bot submissions
+
+### 3. Cloudflare Turnstile CAPTCHA
+- Invisible CAPTCHA verification
+- Requires environment variables:
+  - `NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY` - Public site key (frontend)
+  - `CLOUDFLARE_TURNSTILE_SECRET` - Secret key (server-side verification)
+
+### Setup Instructions
+
+1. **Get Cloudflare Turnstile Keys**:
+   - Go to [Cloudflare Dashboard](https://dash.cloudflare.com/)
+   - Navigate to Turnstile
+   - Create a new site
+   - Copy the Site Key and Secret Key
+
+2. **Add to Environment Variables**:
+   ```bash
+   # .env.local (for development)
+   NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY=your_site_key_here
+   CLOUDFLARE_TURNSTILE_SECRET=your_secret_key_here
+   ```
+
+3. **For Production** (Vercel):
+   - Add these variables in Vercel Dashboard → Settings → Environment Variables
+
+**Note**: If Turnstile keys are not configured, the form will still work but CAPTCHA verification will be skipped (for development).
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

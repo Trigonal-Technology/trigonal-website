@@ -4,10 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { 
   Terminal, Shield, Users, Globe, 
-  ArrowRight, HeartPulse, CheckCircle2 
+  HeartPulse, CheckCircle2, Linkedin 
 } from 'lucide-react';
 import { Hero, Section } from '@/components/ui/trigonal';
 import { teamMembers } from '@/config/team';
+import { CareerApplicationForm } from '@/components/forms/CareerApplicationForm';
 
 function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
   const [imageError, setImageError] = useState(false);
@@ -41,9 +42,26 @@ function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
          
          {/* Floating Role Badge */}
          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900 to-transparent p-4 pt-12">
-            <div className="text-white font-bold text-lg">{member.name}</div>
-            <div className="text-orange-400 text-xs font-mono font-bold uppercase tracking-wide">
-               {member.role}
+            <div className="flex justify-between items-end">
+               <div>
+                  <div className="text-white font-bold text-lg">{member.name}</div>
+                  <div className="text-orange-400 text-xs font-mono font-bold uppercase tracking-wide">
+                     {member.role}
+                  </div>
+               </div>
+               
+               {/* LINKEDIN BUTTON */}
+               {member.linkedin && (
+                  <a 
+                     href={member.linkedin} 
+                     target="_blank" 
+                     rel="noopener noreferrer"
+                     className="p-2 bg-white/10 hover:bg-blue-600 text-white rounded-lg backdrop-blur-sm transition-colors"
+                     aria-label={`LinkedIn profile of ${member.name}`}
+                  >
+                     <Linkedin className="w-4 h-4" />
+                  </a>
+               )}
             </div>
          </div>
       </div>
@@ -102,6 +120,8 @@ function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
 }
 
 export default function AboutPage() {
+  const [isCareerOpen, setIsCareerOpen] = useState(false);
+
   return (
     <main className="bg-white min-h-screen">
       
@@ -240,13 +260,25 @@ export default function AboutPage() {
                   Partner with Us
                </button>
             </Link>
-            <Link href="mailto:careers@trigonal.com">
-               <button className="px-8 py-4 bg-transparent border border-slate-600 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors">
-                  Join the Team
-               </button>
-            </Link>
+            <button 
+               onClick={() => setIsCareerOpen(true)}
+               className="px-8 py-4 bg-transparent border border-slate-600 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors"
+            >
+               Join the Team
+            </button>
          </div>
       </Section>
+
+      {/* THE MODAL OVERLAY */}
+      {isCareerOpen && (
+         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-in fade-in duration-200">
+            {/* Click outside to close */}
+            <div className="absolute inset-0" onClick={() => setIsCareerOpen(false)}></div>
+            <div className="relative z-10 w-full max-w-lg animate-in zoom-in-95 duration-200">
+               <CareerApplicationForm onClose={() => setIsCareerOpen(false)} />
+            </div>
+         </div>
+      )}
 
     </main>
   );

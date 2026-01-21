@@ -240,6 +240,20 @@ export const ConsultationConsole = () => {
       // 3. Set Context
       setProjectScale('SINGLE_HOSPITAL'); 
       setTimeline('Q1_2026');
+    } else if (source === 'codebase_review') {
+      // 1. Select Technical Domains
+      setSelectedDomains(['INFRASTRUCTURE']); 
+      
+      // 2. Pre-select "Architecture Review" features
+      setSelectedFeatures([
+        'security_audit',      // Security Audit
+        'docker_k8s',          // Infrastructure Setup
+        'on_premise'           // Deployment Architecture
+      ]);
+
+      // 3. Set the Tone (Technical buyer context)
+      setProjectScale('MULTI_HOSPITAL'); // Usually implies complex architecture
+      setTimeline('PLANNING_PHASE'); // Code reviews are typically planning phase
     }
     // If source=homepage or no source, no pre-selection (user chooses)
   }, [searchParams]);

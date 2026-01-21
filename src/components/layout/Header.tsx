@@ -84,11 +84,11 @@ export function Header() {
             <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2">
+                    <Link href="/" className="flex items-center gap-2 group">
                         <div className="w-10 h-10 relative">
                             <img src="/logos/trigonal.webp" alt="Trigonal" className="w-full h-full object-contain" />
                         </div>
-                        <span className="font-bold text-lg text-slate-900 tracking-tight">
+                        <span className="font-bold text-lg tracking-tight transition-colors" style={{ color: '#1e4e9b' }}>
                             TRIGONAL<span className="text-slate-600 font-normal"> TECHNOLOGY</span>
                         </span>
                     </Link>

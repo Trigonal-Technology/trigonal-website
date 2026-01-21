@@ -2,6 +2,7 @@
 
 import { useActionState } from 'react'
 import { ArrowRight, Loader2, CheckCircle } from 'lucide-react'
+import { Turnstile } from 'react-turnstile'
 import { submitConsultForm, type ConsultFormState } from '@/app/actions/consult'
 
 const projectLocations = ['Nepal', 'India', 'Middle East', 'Africa', 'Other'] as const
@@ -213,6 +214,28 @@ export function ConsultForm() {
                     <p className="mt-1 text-sm text-red-600">{state.errors.technicalBrief[0]}</p>
                 )}
             </div>
+
+            {/* HONEYPOT FIELD (Hidden from humans, visible to bots) */}
+            <div className="absolute opacity-0 -z-10 w-0 h-0 overflow-hidden">
+                <label htmlFor="website">Website</label>
+                <input
+                    type="text"
+                    id="website"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                />
+            </div>
+
+            {/* Cloudflare Turnstile CAPTCHA */}
+            {process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY && (
+                <div className="flex justify-center">
+                    <Turnstile
+                        sitekey={process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY}
+                        theme="light"
+                    />
+                </div>
+            )}
 
             {/* Submit Button */}
             <div className="pt-4">

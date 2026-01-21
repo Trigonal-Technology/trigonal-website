@@ -13,6 +13,7 @@ export const teamMembers = [
         ],
         initials: 'DT',
         highlight: true,
+        linkedin: 'https://www.linkedin.com/in/dipak-thapa',
     },
     {
         name: 'Utsav Deshar',
@@ -27,6 +28,7 @@ export const teamMembers = [
             'Metabase & Analytics',
         ],
         initials: 'UD',
+        linkedin: 'https://www.linkedin.com/in/utsavdeshar',
     },
     {
         name: 'Madhukar Subedi',
@@ -41,6 +43,7 @@ export const teamMembers = [
             'Design System Architecture',
         ],
         initials: 'MS',
+        linkedin: 'https://www.linkedin.com/in/subedimadhukar',
     },
     {
         name: 'Alok Subedi',
@@ -55,6 +58,7 @@ export const teamMembers = [
             'Rural Health Delivery Systems',
         ],
         initials: 'AS',
+        linkedin: 'https://www.linkedin.com/in/alok-subedi-5143a9b2',
     },
     {
         name: 'Sudeep Balchhaudi',
@@ -69,6 +73,7 @@ export const teamMembers = [
             'Quality Assurance & Compliance',
         ],
         initials: 'SB',
+        linkedin: 'https://www.linkedin.com/in/sudeep-balchhaudi-54a893b3',
     },
     {
         name: 'Anish Kumar Yadav',
@@ -84,5 +89,6 @@ export const teamMembers = [
         ],
         initials: 'AY',
         certifications: ['HL7 FHIR', 'HIPAA', 'DHIS2'],
+        linkedin: 'https://www.linkedin.com/in/anish-kumar-yadav-95199a160/',
     },
 ];
