@@ -8,9 +8,11 @@ const footerLinks = [
         title: '[01_PLATFORMS]',
         links: [
             { href: '/nidanehr', label: 'NidanEHR' },
-            { href: '/architecture', label: 'Interoperability Spine' },
+            { href: '/solutions/fiscal-integrity', label: 'Fiscal Integrity' },
             { href: '/solutions/lab-bridge', label: 'Lab-Bridge' },
             { href: '/solutions/imaging', label: 'Imaging Core' },
+            { href: '/solutions/intelligence', label: 'Health Intelligence' },
+            { href: '/solutions/mobile', label: 'NidanPHR' },
         ],
     },
     {
