@@ -24,8 +24,8 @@ const footerLinks = [
     {
         title: '[03_RESOURCES]',
         links: [
+            { href: '/resources/case-studies', label: 'Mission Logs (Case Studies)' },
             { href: '/manifesto', label: 'The Manifesto' },
-            { href: '/resources/case-studies', label: 'Case Studies' },
             { href: '/resources/blueprints', label: 'Documentation' },
         ],
     },
@@ -40,7 +40,8 @@ const footerLinks = [
 export function Footer() {
     const pathname = usePathname();
 
-    // HIDE BANNER LOGIC: Check centralized config
+    // HIDE BANNER LOGIC: Use centralized config from page-config.ts
+    // This prevents double footers on pages with custom CTAs (e.g., Imaging, Intelligence, Mobile)
     const hideBanner = shouldHideFooterBanner(pathname);
 
     return (

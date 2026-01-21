@@ -1,82 +1,74 @@
-{
-    "data": {
-        "caseStudies": {
-            "nodes": [
-                {
-                    "id": "cs-001",
-                    "title": "Provincial Hospital EMR Rollout",
-                    "slug": "provincial-hospital-emr",
-                    "excerpt": "End-to-end digital transformation of a 500-bed provincial hospital in Nepal.",
-                    "impactMetrics": {
-                        "patientsServed": "120,000+",
-                        "timeToDeployment": "6 weeks",
-                        "uptimePercentage": "99.7%",
-                        "dataPointsDaily": "45,000+"
-                    },
-                    "techStack": [
-                        "OpenMRS",
-                        "Bahmni",
-                        "Docker",
-                        "PostgreSQL",
-                        "Redis"
-                    ],
-                    "compliance": [
-                        "Nepal MoHP Directive 2081",
-                        "HL7 FHIR R4"
-                    ],
-                    "featuredImage": null,
-                    "date": "2024-03-15"
-                },
-                {
-                    "id": "cs-002",
-                    "title": "National DHIS2 Integration",
-                    "slug": "national-dhis2-integration",
-                    "excerpt": "Connecting 45 district health offices to a centralized reporting system.",
-                    "impactMetrics": {
-                        "facilitiesConnected": "45",
-                        "reportingAccuracy": "98.5%",
-                        "timeToDeployment": "12 weeks",
-                        "monthlyReports": "2,500+"
-                    },
-                    "techStack": [
-                        "DHIS2",
-                        "OpenHIE",
-                        "Apache Kafka",
-                        "PostgreSQL"
-                    ],
-                    "compliance": [
-                        "WHO Digital Health Guidelines",
-                        "OpenHIE Architecture"
-                    ],
-                    "featuredImage": null,
-                    "date": "2024-01-20"
-                },
-                {
-                    "id": "cs-003",
-                    "title": "Laboratory Information System Modernization",
-                    "slug": "lis-modernization",
-                    "excerpt": "Upgrading legacy LIS to OpenELIS with FHIR-compliant interoperability.",
-                    "impactMetrics": {
-                        "testsProcessedDaily": "1,200+",
-                        "resultTurnaround": "-40%",
-                        "errorReduction": "85%",
-                        "integrationPoints": "12"
-                    },
-                    "techStack": [
-                        "OpenELIS",
-                        "LabBridge",
-                        "HL7 FHIR",
-                        "Docker"
-                    ],
-                    "compliance": [
-                        "ISO 15189",
-                        "HL7 FHIR R4",
-                        "Nepal MoHP Directive 2081"
-                    ],
-                    "featuredImage": null,
-                    "date": "2023-11-10"
-                }
-            ]
-        }
-    }
-}
+[
+  {
+    "id": "parbat-lab-bridge",
+    "slug": "lab-bridge",
+    "status": "MISSION_SUCCESS",
+    "client": "Parbat District Hospital",
+    "location": "Gandaki, Nepal",
+    "product": "Lab-Bridge Middleware",
+    "product_color": "purple",
+    "title": "Closing the Diagnostic Loop in Rural Government Healthcare.",
+    "summary": "Connected 5+ analyzers (Mindray, Sysmex, Nitin) to OpenELIS, eliminating manual entry errors and achieving 100% billing capture.",
+    "stats": [
+      { "label": "Analyzers", "value": "5 Units" },
+      { "label": "Data Loss", "value": "0%" },
+      { "label": "Uptime", "value": "99.9%" }
+    ],
+    "tags": ["MIDDLEWARE", "OPENELIS", "GOV_TECH"],
+    "image": "/case-studies/parbat.jpg"
+  },
+  {
+    "id": "lafia-hms-saas",
+    "slug": "lafia-hms",
+    "status": "MISSION_SUCCESS",
+    "client": "Lafia HMS (SaaS Platform)",
+    "location": "West Africa / Remote",
+    "product": "OpenMRS 3 + Odoo 16",
+    "product_color": "orange",
+    "title": "Architecting a Multi-Tenant SaaS Hospital System.",
+    "summary": "We engineered the backend core. A unified Atomfeed middleware synchronizing clinical data (OpenMRS) with financial ledgers (Odoo) for scalable multi-site operations.",
+    "stats": [
+      { "label": "Architecture", "value": "Multi-Tenant" },
+      { "label": "Middleware", "value": "Atomfeed" },
+      { "label": "Scale", "value": "SaaS" }
+    ],
+    "tags": ["SAAS_DEV", "ODOO_16", "OPENMRS_3"],
+    "image": "/case-studies/lafia.jpg"
+  },
+  {
+    "id": "bijaynagar-municipal",
+    "slug": "bijaynagar",
+    "status": "DEPLOYMENT_PHASE",
+    "client": "Bijaynagar Hospital",
+    "location": "Kapilvastu, Nepal",
+    "product": "NidanEHR Full Stack",
+    "product_color": "blue",
+    "title": "Municipal-Scale Digital Transformation.",
+    "summary": "Currently deploying the full digital backbone (Clinical + Lab + Fiscal) for the municipality. Establishing a paperless workflow from registration to discharge.",
+    "stats": [
+      { "label": "Scale", "value": "Municipal" },
+      { "label": "Phase", "value": "Rollout" },
+      { "label": "Target", "value": "Q1 2026" }
+    ],
+    "tags": ["DEPLOYMENT", "MUNICIPAL", "INFRASTRUCTURE"],
+    "image": "/case-studies/bijaynagar.jpg"
+  },
+  {
+    "id": "bhaluwang-trauma",
+    "slug": "bhaluwang",
+    "status": "INCEPTION_PHASE",
+    "client": "Bhaluwang Hospital",
+    "location": "Dang, Nepal",
+    "product": "Trauma & Emergency Core",
+    "product_color": "emerald",
+    "title": "Next-Gen Emergency Response System.",
+    "summary": "Inception phase for a strategic highway hospital. Architecting rapid-triage workflows and emergency data pipelines for high-volume trauma care.",
+    "stats": [
+      { "label": "Focus", "value": "Trauma/ER" },
+      { "label": "Phase", "value": "Design" },
+      { "label": "Status", "value": "Initiated" }
+    ],
+    "tags": ["INCEPTION", "EMERGENCY_TECH", "DESIGN"],
+    "image": "/case-studies/bhaluwang.jpg"
+  }
+]

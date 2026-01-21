@@ -149,7 +149,7 @@ export const ConsultationConsole = () => {
     if (source === 'orthanc') {
       setSelectedDomains(['RIS_PACS']);
       setSelectedFeatures(['orthanc', 'billing_link']);
-    } else if (source === 'lab_bridge') {
+    } else if (source === 'lab_bridge' || source === 'case_study_parbat') {
       setSelectedDomains(['LIS_MIDDLEWARE']);
       setSelectedFeatures(['lab_bridge', 'astm']);
     } else if (source === 'nidan') {

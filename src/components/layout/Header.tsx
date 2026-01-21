@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, FileText, Wrench, Shield, MapPin, ChevronDown, Server, CreditCard, Activity, Globe, Eye, BrainCircuit, Smartphone, Scan } from 'lucide-react'
+import { Menu, X, FileText, Wrench, Shield, MapPin, ChevronDown, Server, CreditCard, Activity, Globe, Eye, BrainCircuit, Smartphone, Scan, BookOpen, ScrollText } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 // ThemeSwitcher removed - forced to Light Blueprint mode
@@ -65,32 +65,30 @@ const navLinks = [
     { href: '/about', label: 'About Us' },
 ]
 
-const resourcesPillars = [
+// Resource Links for Dropdown
+const resourceLinks = [
     {
-        href: '/manifesto',
-        label: 'The Manifesto',
-        dnaTag: '[CULTURAL_CODE]',
+        href: '/resources/case-studies',
+        title: 'Mission Logs',
+        desc: 'Engineering Case Studies & Field Reports',
         icon: FileText,
-        description: 'Our engineering constitution.',
-        color: 'text-blue-400'
+        color: 'text-emerald-600'
     },
     {
-        href: '/case-studies',
-        label: 'Engineering Logs',
-        dnaTag: '[ANALYSIS | DEPLOYMENT]',
-        icon: Wrench,
-        description: 'Chronological record of deployed systems.',
-        color: 'text-orange-400'
+        href: '/manifesto',
+        title: 'The Manifesto',
+        desc: 'Our Core Philosophy: Build with Fire',
+        icon: ScrollText,
+        color: 'text-orange-600'
     },
     {
         href: '/resources/blueprints',
-        label: 'Documentation',
-        dnaTag: '[ARCH | SCHEMATICS]',
-        icon: Shield,
-        description: 'System architecture and guides.',
-        color: 'text-green-400'
+        title: 'System Blueprints',
+        desc: 'Technical Architecture References',
+        icon: BookOpen,
+        color: 'text-blue-600'
     }
-]
+];
 
 export function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -181,34 +179,21 @@ export function Header() {
                             </Link>
                         ))}
 
-                        {/* Resources Mega Menu */}
+                        {/* Resources Dropdown */}
                         <div
                             className="relative"
                             onMouseEnter={() => setIsResourcesOpen(true)}
                             onMouseLeave={() => setIsResourcesOpen(false)}
                         >
                             <button
-                                className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 rounded-md transition-colors hover:bg-slate-100 flex items-center gap-1"
+                                className="px-4 py-2 text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors flex items-center gap-1 rounded-md hover:bg-slate-100"
                                 aria-expanded={isResourcesOpen}
                             >
-                                Resources
+                                RESOURCES
                                 <ChevronDown className={cn("w-4 h-4 transition-transform", isResourcesOpen && "rotate-180")} />
                             </button>
 
-                            {/* The Connecting Spine */}
-                            <AnimatePresence>
-                                {isResourcesOpen && (
-                                    <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: '16px', opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.15, ease: "easeInOut" }}
-                                        className="absolute left-1/2 -translate-x-1/2 top-full w-px bg-precision-blue"
-                                        style={{ transformOrigin: 'top' }}
-                                    />
-                                )}
-                            </AnimatePresence>
-
+                            {/* The Dropdown Panel */}
                             <AnimatePresence>
                                 {isResourcesOpen && (
                                     <motion.div
@@ -216,57 +201,31 @@ export function Header() {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -10 }}
                                         transition={{ duration: 0.2 }}
-                                        className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-screen max-w-4xl"
+                                        className="absolute top-full right-0 w-[380px] bg-white border border-slate-200 shadow-xl rounded-xl p-3 grid gap-1 mt-2"
                                     >
-                                        <div className="bg-white border border-slate-200 rounded-lg shadow-xl p-6"
-                                            style={{
-                                                backgroundImage: `
-                                                    linear-gradient(rgba(30, 78, 155, 0.03) 1px, transparent 1px),
-                                                    linear-gradient(90deg, rgba(30, 78, 155, 0.03) 1px, transparent 1px)
-                                                `,
-                                                backgroundSize: '20px 20px'
-                                            }}
-                                        >
-                                            <div className="grid grid-cols-2 gap-4">
-                                                {resourcesPillars.map((pillar) => {
-                                                    const Icon = pillar.icon;
-                                                    return (
-                                                        <Link
-                                                            key={pillar.href}
-                                                            href={pillar.href}
-                                                            className="group p-4 rounded-lg border border-slate-200 bg-white/50 hover:bg-white hover:border-slate-300 transition-all duration-200"
-                                                            onClick={() => setIsResourcesOpen(false)}
-                                                        >
-                                                            <div className="flex items-start gap-3">
-                                                                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center group-hover:animate-pulse transition-all">
-                                                                    <Icon className={cn("w-5 h-5 transition-colors", pillar.color, "group-hover:text-precision-blue")} />
-                                                                </div>
-                                                                <div className="flex-1">
-                                                                    <span className="font-mono text-[10px] text-slate-500 group-hover:text-precision-blue transition-colors block mb-0.5">
-                                                                        {pillar.dnaTag}
-                                                                    </span>
-                                                                    <h3 className="text-sm font-semibold text-slate-900 mb-1 transition-colors">
-                                                                        {pillar.label}
-                                                                    </h3>
-                                                                    <p className="text-xs text-slate-600 leading-relaxed font-mono">
-                                                                        {pillar.description}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </Link>
-                                                    );
-                                                })}
-                                            </div>
-                                            <div className="mt-4 pt-4 border-t border-slate-200">
+                                        {resourceLinks.map((item) => {
+                                            const Icon = item.icon;
+                                            return (
                                                 <Link
-                                                    href="/resources"
-                                                    className="text-xs font-mono text-precision-blue hover:text-precision-blue/80 transition-colors flex items-center gap-2"
+                                                    key={item.href}
+                                                    href={item.href}
+                                                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group/item"
                                                     onClick={() => setIsResourcesOpen(false)}
                                                 >
-                                                    View All Resources →
+                                                    <div className="mt-1 p-1.5 bg-slate-100 rounded group-hover/item:bg-white group-hover/item:shadow-sm transition-all">
+                                                        <Icon className={cn("w-5 h-5", item.color)} />
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-bold text-slate-900 text-sm group-hover/item:text-blue-600 transition-colors">
+                                                            {item.title}
+                                                        </div>
+                                                        <div className="text-xs text-slate-500 font-medium">
+                                                            {item.desc}
+                                                        </div>
+                                                    </div>
                                                 </Link>
-                                            </div>
-                                        </div>
+                                            );
+                                        })}
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -386,38 +345,26 @@ export function Header() {
                                         className="overflow-hidden"
                                     >
                                         <div className="pl-4 py-2 space-y-1">
-                                            {resourcesPillars.map((pillar) => {
-                                                const Icon = pillar.icon;
+                                            {resourceLinks.map((resource) => {
+                                                const Icon = resource.icon;
                                                 return (
                                                     <Link
-                                                        key={pillar.href}
-                                                        href={pillar.href}
+                                                        key={resource.href}
+                                                        href={resource.href}
                                                         className="flex items-center gap-3 px-4 py-2 text-sm text-foreground/70 hover:text-foreground hover:bg-blueprint-line/30 rounded-md transition-colors group"
                                                         onClick={() => {
                                                             setIsMobileMenuOpen(false);
                                                             setIsMobileResourcesOpen(false);
                                                         }}
                                                     >
-                                                        <Icon className={cn("w-4 h-4", pillar.color)} />
+                                                        <Icon className={cn("w-4 h-4", resource.color)} />
                                                         <div className="flex flex-col">
-                                                            <span className="font-mono text-[9px] text-slate-500 group-hover:text-precision-blue">
-                                                                {pillar.dnaTag}
-                                                            </span>
-                                                            {pillar.label}
+                                                            <span className="font-bold">{resource.title}</span>
+                                                            <span className="text-xs text-slate-500">{resource.desc}</span>
                                                         </div>
                                                     </Link>
                                                 );
                                             })}
-                                            <Link
-                                                href="/resources"
-                                                className="flex items-center gap-3 px-4 py-2 text-sm text-execution-orange hover:text-execution-orange/80 rounded-md transition-colors font-mono"
-                                                onClick={() => {
-                                                    setIsMobileMenuOpen(false);
-                                                    setIsMobileResourcesOpen(false);
-                                                }}
-                                            >
-                                                View All →
-                                            </Link>
                                         </div>
                                     </motion.div>
                                 )}
