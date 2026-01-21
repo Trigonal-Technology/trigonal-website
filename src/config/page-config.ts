@@ -19,6 +19,10 @@ const FOOTER_BANNER_EXCLUSIONS = [
   // Product pages with custom CTAs
   '/nidanehr',
   '/solutions/fiscal-integrity',
+  '/solutions/lab-bridge',
+  '/solutions/imaging',
+  '/solutions/intelligence',
+  '/solutions/mobile',
   // Pattern-based (for future pages)
   // '/case-studies/', // Uncomment when case study pages have custom CTAs
 ] as const;

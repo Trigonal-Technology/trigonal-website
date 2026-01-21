@@ -8,7 +8,7 @@ import { LabBridgeArchitecture } from '@/components/sections/LabBridgeArchitectu
 export default function LabBridgeCaseStudy() {
   return (
     <main className="bg-white min-h-screen">
-      
+
       {/* 1. HERO: The Metric of Success */}
       <section className="relative pt-32 pb-20 bg-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[url('/grid-pattern.svg')]"></div>
@@ -19,14 +19,14 @@ export default function LabBridgeCaseStudy() {
             </span>
           </div>
           <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-8">
-            Closing the <span className="text-blue-500">Last Mile</span> of <br/> Diagnostic Data.
+            Closing the <span className="text-blue-500">Last Mile</span> of <br /> Diagnostic Data.
           </h1>
           <p className="text-xl text-slate-400 max-w-2xl leading-relaxed mb-12">
-            Manual transcription errors are a patient safety hazard. We deployed 
-            <strong> Lab-Bridge</strong>-an edge-native middleware-to connect 5 analyzers directly to 
+            Manual transcription errors are a patient safety hazard. We deployed
+            <strong> Lab-Bridge</strong>-an edge-native middleware-to connect 5 analyzers directly to
             <strong> OpenELIS</strong>, creating a real-time, error-free diagnostic loop.
           </p>
-          
+
           {/* STATS GRID */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-slate-800 pt-8">
             <div>
@@ -54,7 +54,7 @@ export default function LabBridgeCaseStudy() {
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">The Problem: Data Latency kills efficiency.</h2>
           <p className="text-lg text-slate-600 leading-relaxed mb-8">
-            Before Lab-Bridge, Parbat District Hospital relied on a manual transcription loop. 
+            Before Lab-Bridge, Parbat District Hospital relied on a manual transcription loop.
             Lab technicians read results from analyzer screens and hand-typed them into the EMR.
             This introduced <strong>transcription errors</strong>, delayed critical reporting, and trapped valuable data in offline silos.
           </p>
@@ -70,13 +70,17 @@ export default function LabBridgeCaseStudy() {
       </section>
 
       {/* 3. THE SOLUTION: Architecture Visualization */}
-      <LabBridgeArchitecture />
+      <LabBridgeArchitecture
+        destinationTitle="OpenELIS EMR"
+        destinationSubtitle="Hospital LIS"
+        destinationTech="FHIR Store"
+      />
 
       {/* 4. TECHNICAL SPECS: The "How" */}
       <section className="py-24">
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-slate-900 mb-8">Technical Implementation Details</h2>
-          
+
           <div className="space-y-12">
             {/* Spec 1: Protocols */}
             <div className="flex gap-6">
@@ -99,7 +103,7 @@ export default function LabBridgeCaseStudy() {
                 </p>
                 {/* CODE BLOCK */}
                 <div className="bg-slate-900 p-4 rounded-lg font-mono text-xs text-slate-300 overflow-x-auto">
-<pre>{`analyzers:
+                  <pre>{`analyzers:
   - id: "mindray_bc30"
     protocol: "ASTM"
     connection: "/dev/ttyUSB0"
@@ -132,7 +136,7 @@ export default function LabBridgeCaseStudy() {
       <section className="py-20 bg-slate-900 text-center">
         <h2 className="text-3xl font-bold text-white mb-6">Need Interoperability?</h2>
         <p className="text-slate-400 mb-8">We architect sovereign middleware for hospitals that refuse to be locked in.</p>
-        <Link 
+        <Link
           href="/consult?source=lab_bridge"
           className="inline-block px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors"
         >

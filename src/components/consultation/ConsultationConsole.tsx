@@ -24,8 +24,12 @@ const DOMAIN_MATRIX = {
     description: 'Imaging & DICOM Infrastructure',
     sub_options: [
       { id: 'orthanc', label: 'Orthanc Setup' },
+      { id: 'orthanc_setup', label: 'Orthanc VNA Archive' },
       { id: 'dcm4chee', label: 'Dcm4chee Replacement' },
       { id: 'viewer', label: 'OHIF Viewer Integration' },
+      { id: 'ohif_viewer', label: 'OHIF Zero-Footprint Viewer' },
+      { id: 'dicom_routing', label: 'DICOM Auto-Forwarding' },
+      { id: 'teleradiology', label: 'Teleradiology / Remote Access' },
       { id: 'billing_link', label: 'Billing Linkage' }
     ]
   },
@@ -55,8 +59,11 @@ const DOMAIN_MATRIX = {
     description: 'Analytics, Warehousing & AI',
     sub_options: [
       { id: 'dhis2', label: 'DHIS2 Integration' },
+      { id: 'dhis2_reporting', label: 'DHIS2 National Reporting' },
       { id: 'superset', label: 'Superset Dashboards' },
-      { id: 'predictive', label: 'Predictive Models' }
+      { id: 'superset_bi', label: 'Superset Operational BI' },
+      { id: 'predictive', label: 'Predictive Models' },
+      { id: 'ai_forecasting', label: 'AI Forecasting Models' }
     ]
   },
   COMMUNITY: {
@@ -75,7 +82,10 @@ const DOMAIN_MATRIX = {
     description: 'Remote Care Systems',
     sub_options: [
       { id: 'webrtc', label: 'WebRTC Video Core' },
-      { id: 'portal', label: 'Patient Portals' }
+      { id: 'portal', label: 'Patient Portals' },
+      { id: 'patient_app', label: 'Patient Mobile App' },
+      { id: 'appointment_booking', label: 'Appointment Booking' },
+      { id: 'teleconsultation', label: 'Teleconsultation' }
     ]
   },
   PHARMACY: {
@@ -186,6 +196,49 @@ export const ConsultationConsole = () => {
 
       // 3. Set Context
       setProjectScale('MULTI_HOSPITAL'); // Usually implies high volume
+      setTimeline('Q1_2026');
+    } else if (source === 'imaging_core') {
+      // 1. Select the Radiology Domain
+      setSelectedDomains(['RIS_PACS']); 
+
+      // 2. Auto-select relevant features
+      setSelectedFeatures([
+        'orthanc_setup', // VNA Archive
+        'ohif_viewer',   // Zero Footprint Viewer
+        'dicom_routing', // Auto-forwarding
+        'teleradiology'  // Remote Access
+      ]);
+
+      // 3. Set Context
+      setProjectScale('SINGLE_HOSPITAL'); // Default starting point
+      setTimeline('Q1_2026');
+    } else if (source === 'intelligence_core') {
+      // 1. Select the Analytics Domain
+      setSelectedDomains(['DATA_AI']); 
+      
+      // 2. Auto-select relevant features
+      setSelectedFeatures([
+        'dhis2_reporting',  // National Reporting
+        'superset_bi',      // Operational BI
+        'ai_forecasting'    // AI Forecasting
+      ]);
+      
+      // 3. Set Context
+      setProjectScale('MULTI_HOSPITAL'); // Usually regional/network level
+      setTimeline('Q1_2026');
+    } else if (source === 'nidan_phr') {
+      // 1. Select the Telemedicine Domain
+      setSelectedDomains(['TELEHEALTH']); 
+      
+      // 2. Auto-select relevant features
+      setSelectedFeatures([
+        'patient_app',        // Patient Mobile App
+        'appointment_booking', // Appointment Booking
+        'teleconsultation'    // Teleconsultation
+      ]);
+      
+      // 3. Set Context
+      setProjectScale('SINGLE_HOSPITAL'); 
       setTimeline('Q1_2026');
     }
     // If source=homepage or no source, no pre-selection (user chooses)

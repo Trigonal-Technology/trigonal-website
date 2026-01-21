@@ -2,13 +2,65 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, FileText, Wrench, Shield, MapPin, ChevronDown } from 'lucide-react'
+import { Menu, X, FileText, Wrench, Shield, MapPin, ChevronDown, Server, CreditCard, Activity, Globe, Eye, BrainCircuit, Smartphone, Scan } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 // ThemeSwitcher removed - forced to Light Blueprint mode
 
+// Platform Links for Dropdown
+const platformLinks = [
+    {
+        href: '/nidanehr',
+        title: 'NidanEHR',
+        desc: 'The Sovereign Hospital OS',
+        icon: Server,
+        color: 'text-blue-600'
+    },
+    {
+        href: '/solutions/fiscal-integrity',
+        title: 'Fiscal Integrity',
+        desc: 'Odoo 19 Revenue Engine',
+        icon: CreditCard,
+        color: 'text-orange-600'
+    },
+    {
+        href: '/solutions/lab-bridge',
+        title: 'Lab-Bridge',
+        desc: 'Universal Diagnostic Middleware',
+        icon: Activity,
+        color: 'text-purple-600'
+    },
+    {
+        href: '/solutions/imaging',
+        title: 'Imaging Core',
+        desc: 'Sovereign PACS Archive',
+        icon: Scan,
+        color: 'text-pink-600'
+    },
+    {
+        href: '/solutions/intelligence',
+        title: 'Health Intelligence',
+        desc: 'DHIS2 & Analytics',
+        icon: BrainCircuit,
+        color: 'text-indigo-600'
+    },
+    {
+        href: '/solutions/mobile',
+        title: 'NidanPHR',
+        desc: 'Patient Mobile App',
+        icon: Smartphone,
+        color: 'text-blue-500'
+    },
+    {
+        href: '/architecture',
+        title: 'Interoperability Spine',
+        desc: 'National Health Grid Gateway',
+        icon: Globe,
+        color: 'text-indigo-600'
+    }
+];
+
 const navLinks = [
-    { href: '/solutions', label: 'Solutions' },
     { href: '/architecture', label: 'Architecture' },
     { href: '/about', label: 'About Us' },
 ]
@@ -44,6 +96,8 @@ export function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const [isResourcesOpen, setIsResourcesOpen] = useState(false)
     const [isMobileResourcesOpen, setIsMobileResourcesOpen] = useState(false)
+    const [isPlatformsOpen, setIsPlatformsOpen] = useState(false)
+    const [isMobilePlatformsOpen, setIsMobilePlatformsOpen] = useState(false)
 
     return (
         <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
@@ -65,6 +119,58 @@ export function Header() {
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center gap-1">
+                        {/* Platforms Dropdown */}
+                        <div
+                            className="relative"
+                            onMouseEnter={() => setIsPlatformsOpen(true)}
+                            onMouseLeave={() => setIsPlatformsOpen(false)}
+                        >
+                            <button
+                                className="px-4 py-2 text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors flex items-center gap-1 rounded-md hover:bg-slate-100"
+                                aria-expanded={isPlatformsOpen}
+                            >
+                                PLATFORMS
+                                <ChevronDown className={cn("w-4 h-4 transition-transform", isPlatformsOpen && "rotate-180")} />
+                            </button>
+
+                            {/* The Dropdown Panel */}
+                            <AnimatePresence>
+                                {isPlatformsOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="absolute top-full left-1/2 -translate-x-1/2 w-[380px] bg-white border border-slate-200 shadow-xl rounded-xl p-3 grid gap-1 mt-2"
+                                    >
+                                        {platformLinks.map((item) => {
+                                            const Icon = item.icon;
+                                            return (
+                                                <Link
+                                                    key={item.href}
+                                                    href={item.href}
+                                                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group/item"
+                                                    onClick={() => setIsPlatformsOpen(false)}
+                                                >
+                                                    <div className="mt-1 p-1.5 bg-slate-100 rounded group-hover/item:bg-white group-hover/item:shadow-sm transition-all">
+                                                        <Icon className={cn("w-5 h-5", item.color)} />
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-bold text-slate-900 text-sm group-hover/item:text-blue-600 transition-colors">
+                                                            {item.title}
+                                                        </div>
+                                                        <div className="text-xs text-slate-500 font-medium">
+                                                            {item.desc}
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                            );
+                                        })}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
                         {navLinks.map((link) => (
                             <Link
                                 key={link.href}
@@ -203,6 +309,52 @@ export function Header() {
                     )}
                 >
                     <div className="flex flex-col gap-1 pt-2">
+                        {/* Mobile Platforms Menu */}
+                        <div>
+                            <button
+                                onClick={() => setIsMobilePlatformsOpen(!isMobilePlatformsOpen)}
+                                className="w-full px-4 py-3 text-sm font-bold text-foreground/80 hover:text-foreground rounded-md transition-colors hover:bg-blueprint-line/30 flex items-center justify-between"
+                            >
+                                PLATFORMS
+                                <ChevronDown className={cn("w-4 h-4 transition-transform", isMobilePlatformsOpen && "rotate-180")} />
+                            </button>
+
+                            <AnimatePresence>
+                                {isMobilePlatformsOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="pl-4 py-2 space-y-1">
+                                            {platformLinks.map((platform) => {
+                                                const Icon = platform.icon;
+                                                return (
+                                                    <Link
+                                                        key={platform.href}
+                                                        href={platform.href}
+                                                        className="flex items-center gap-3 px-4 py-2 text-sm text-foreground/70 hover:text-foreground hover:bg-blueprint-line/30 rounded-md transition-colors group"
+                                                        onClick={() => {
+                                                            setIsMobileMenuOpen(false);
+                                                            setIsMobilePlatformsOpen(false);
+                                                        }}
+                                                    >
+                                                        <Icon className={cn("w-4 h-4", platform.color)} />
+                                                        <div className="flex flex-col">
+                                                            <span className="font-bold">{platform.title}</span>
+                                                            <span className="text-xs text-slate-500">{platform.desc}</span>
+                                                        </div>
+                                                    </Link>
+                                                );
+                                            })}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
                         {navLinks.map((link) => (
                             <Link
                                 key={link.href}
