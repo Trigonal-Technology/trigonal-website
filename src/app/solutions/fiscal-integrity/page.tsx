@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { 
   CreditCard, BarChart3, ShoppingCart, 
   ShieldCheck, ArrowRight, CheckCircle2, 
-  Building2, Utensils
+  Building2, Utensils,
+  type LucideIcon
 } from 'lucide-react';
 
 // Import UI Kit Components
@@ -13,7 +14,7 @@ import { Hero, Section, FeatureCard } from '@/components/ui/trigonal';
 import { FISCAL_INTEGRITY_CONTENT } from '@/config/pages';
 
 // Icon mapping helper
-const iconMap: Record<string, React.ComponentType<any>> = {
+const iconMap: Record<string, LucideIcon> = {
   CreditCard,
   ShoppingCart,
   BarChart3,
@@ -23,7 +24,7 @@ const iconMap: Record<string, React.ComponentType<any>> = {
 
 export default function FiscalIntegrityPage() {
   const content = FISCAL_INTEGRITY_CONTENT;
-  const CtaIcon = iconMap[content.hero.cta.iconName];
+  const CtaIcon = iconMap[content.hero.cta.iconName] || CreditCard;
 
   return (
     <main className="bg-white min-h-screen">
@@ -68,6 +69,10 @@ export default function FiscalIntegrityPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {content.features.map((feature, index) => {
               const Icon = iconMap[feature.iconName];
+              if (!Icon) {
+                console.warn(`Icon not found: ${feature.iconName}`);
+                return null;
+              }
               return (
                 <FeatureCard
                   key={index}

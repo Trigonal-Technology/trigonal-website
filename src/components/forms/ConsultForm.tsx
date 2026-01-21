@@ -2,7 +2,7 @@
 
 import { useActionState } from 'react'
 import { ArrowRight, Loader2, CheckCircle } from 'lucide-react'
-import { Turnstile } from 'react-turnstile'
+import Turnstile from 'react-turnstile'
 import { submitConsultForm, type ConsultFormState } from '@/app/actions/consult'
 
 const projectLocations = ['Nepal', 'India', 'Middle East', 'Africa', 'Other'] as const

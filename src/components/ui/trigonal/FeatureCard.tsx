@@ -6,7 +6,7 @@ interface FeatureCardProps {
   icon: LucideIcon;
   title: string;
   description: string;
-  features: string[];
+  features: readonly string[] | string[];
   color?: 'blue' | 'orange' | 'emerald' | 'purple' | 'indigo' | 'pink';
   className?: string;
 }

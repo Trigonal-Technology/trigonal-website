@@ -3,7 +3,8 @@ import React from 'react';
 import Link from 'next/link';
 import {
   Activity, ArrowLeftRight, CheckCircle2, Database, GitMerge, 
-  Settings, Zap, RefreshCw, Microscope, ArrowRight, Check
+  Settings, Zap, RefreshCw, Microscope, ArrowRight, Check,
+  type LucideIcon
 } from 'lucide-react';
 import { LabBridgeArchitecture } from '@/components/sections/LabBridgeArchitecture';
 
@@ -13,7 +14,7 @@ import { Hero, Section, ServiceCard } from '@/components/ui/trigonal';
 import { LAB_BRIDGE_CONTENT } from '@/config/pages';
 
 // Icon mapping helper
-const iconMap: Record<string, React.ComponentType<any>> = {
+const iconMap: Record<string, LucideIcon> = {
   Activity,
   Database,
   Microscope,
@@ -76,6 +77,10 @@ export default function LabBridgePage() {
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.items.map((item, idx) => {
               const Icon = iconMap[item.iconName];
+              if (!Icon) {
+                console.warn(`Icon not found: ${item.iconName}`);
+                return null;
+              }
               return (
                 <ServiceCard 
                   key={idx}

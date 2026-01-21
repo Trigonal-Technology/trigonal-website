@@ -14,7 +14,7 @@ export default function CaseStudiesIndex() {
     <main className="bg-white min-h-screen">
       <Hero
         badge="RESOURCE: MISSION_LOGS"
-        badgeColor="slate"
+        badgeColor="indigo"
         title="Engineering Evidence."
         subtitle="Real-world deployments. From completed missions to active operations currently in the field."
       />

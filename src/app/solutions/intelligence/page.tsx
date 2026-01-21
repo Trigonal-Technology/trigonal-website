@@ -3,7 +3,8 @@ import React from 'react';
 import Link from 'next/link';
 import {
   BarChart3, BrainCircuit, TrendingUp, Globe, Database,
-  ArrowRight, Network
+  ArrowRight, Network,
+  type LucideIcon
 } from 'lucide-react';
 
 // Import UI Kit Components
@@ -12,7 +13,7 @@ import { Hero, Section, ServiceCard } from '@/components/ui/trigonal';
 import { INTELLIGENCE_CONTENT } from '@/config/pages';
 
 // Icon mapping helper
-const iconMap: Record<string, React.ComponentType<any>> = {
+const iconMap: Record<string, LucideIcon> = {
   BarChart3,
   BrainCircuit,
   TrendingUp,
@@ -112,6 +113,10 @@ export default function IntelligencePage() {
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.items.map((item, idx) => {
               const Icon = iconMap[item.iconName];
+              if (!Icon) {
+                console.warn(`Icon not found: ${item.iconName}`);
+                return null;
+              }
               return (
                 <ServiceCard 
                   key={idx}
