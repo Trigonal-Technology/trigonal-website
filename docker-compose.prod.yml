@@ -1,0 +1,147 @@
+# ===================================================
+# Trigonal Production Stack - Docker Compose
+# ===================================================
+# Production deployment with all services
+# ===================================================
+
+version: '3.8'
+
+services:
+  # ===================================================
+  # Database: PostgreSQL 15 (Alpine)
+  # ===================================================
+  db:
+    image: postgres:15-alpine
+    container_name: trigonal-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-trigonal}
+      POSTGRES_DB: ${POSTGRES_DB:-trigonal_db}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    networks:
+      - trigonal-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-trigonal}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===================================================
+  # AI Engine: Ollama
+  # ===================================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: trigonal-ollama
+    restart: unless-stopped
+    volumes:
+      - ./data/ollama:/root/.ollama
+    networks:
+      - trigonal-network
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+        reservations:
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ===================================================
+  # Backend: FastAPI
+  # ===================================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: trigonal-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-trigonal}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-trigonal_db}
+      OLLAMA_HOST: http://ollama:11434
+      ENVIRONMENT: production
+    networks:
+      - trigonal-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ===================================================
+  # Frontend: Next.js (Standalone)
+  # ===================================================
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: trigonal-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://trigonaltechnology.com/api}
+      NEXT_PUBLIC_GRAPHQL_ENDPOINT: ${NEXT_PUBLIC_GRAPHQL_ENDPOINT:-https://cms.trigonal.technology/graphql}
+    networks:
+      - trigonal-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ===================================================
+  # Gateway: Nginx (Reverse Proxy)
+  # ===================================================
+  nginx:
+    image: nginx:alpine
+    container_name: trigonal-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - frontend
+      - backend
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certbot/conf:/etc/letsencrypt:ro
+      - ./certbot/www:/var/www/certbot:ro
+    networks:
+      - trigonal-network
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ===================================================
+  # Certbot: SSL Certificate Management
+  # ===================================================
+  certbot:
+    image: certbot/certbot:latest
+    container_name: trigonal-certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+networks:
+  trigonal-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  ollama_data:
+  chroma_data:
