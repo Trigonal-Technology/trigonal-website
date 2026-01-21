@@ -1,3 +1,8 @@
+/**
+ * Page Configuration
+ * Centralized configuration for page-specific behaviors
+ */
+
 export const PAGES_WITHOUT_FOOTER_BANNER = [
   '/',
   '/consult',
